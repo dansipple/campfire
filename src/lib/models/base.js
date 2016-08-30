@@ -1,50 +1,41 @@
-import * as firebase from 'firebase';
-
-// Initialize Firebase
-const firebaseConfig = {
-    apiKey: "AIzaSyDL5eYCRR10XXSqDHWvlm3RbUS4dv8FlsU",
-    authDomain: "campfire-10fd2.firebaseapp.com",
-    databaseURL: "https://campfire-10fd2.firebaseio.com",
-    storageBucket: "campfire-10fd2.appspot.com"
-};
+import firebase from '../firebase';
 
 export default class Base {
-    constructor() {
-        this.firebaseApp = firebase.initializeApp(firebaseConfig);
-        this._model = null;
-    }
-    _db() {
-        return this.firebaseApp.database().ref(this._model);
+    constructor(data) {
+        this.fb = firebase;
+        this.model = null;
+        this.data = data;
     }
 
-    get(cb) {
-        return cb(null, this._db());
+    db(ref) {
+        return this.fb.database().ref(this.model + (ref ? '/' + ref : ''));
     }
 
-    getById(id, cb) {
-        if(id) {
-            return cb(null, this._db().child(id));
-        }
+    get(path) {
+        return new Promise((resolve, reject) => {
+            let ref = this.db(path ? path : '');
+            ref.once('value').then((snapshot) => {resolve(snapshot.val())})
+                .catch((err) => {reject(new Error('Read failed: ' + err.code))});
+        });
     }
 
-    create(data, cb) {
+    update(path, data) {
+        return new Promise((resolve, reject) => {
+            let ref = this.db(path ? path : '');
+            ref.update(data).then(() => {resolve('success')})
+                .catch( (err) => {reject(new Error('Write failed: ' + err.code))});
+        });
+    }
+
+    create(data) {
         if(data) {
-            this._db().push(data, function(err) {
-                if(err) return cb(new Error('Problem writing to ' + this._model + ' table.'), null);
+            this.db().push(data, function(err) {
+                if(err) return cb(new Error('Problem writing to ' + this.model + ' table.'), null);
                 else cb(null, data);
             });
         }
     }
-
-    update(data, cb) {
-        if(data) {
-            this._db().update(data, function(err) {
-                if(err) return cb(new Error('Problem writing to ' + this._model + ' table.'), null);
-                else cb(null, data);
-            });
-        }
-    }
-}
+};
 
 
 

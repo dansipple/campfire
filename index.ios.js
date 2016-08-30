@@ -3,14 +3,6 @@ import {
     AppRegistry
 } from 'react-native';
 
-import App from './app.js';
+import App from './src/app.js';
 
-class ardour extends Component {
-    render() {
-        return (
-            <App/>
-        );
-    }
-}
-
-AppRegistry.registerComponent('ardour', () => ardour);
+AppRegistry.registerComponent('ardour', () => App);

@@ -4,9 +4,9 @@ import { StyleSheet, Navigator } from 'react-native';
 
 import { Container, Header, Title, Icon, Content, Button, View } from 'native-base';
 
-import Swiper from './src/views/swiper.js';
+import Swiper from './lib/views/swiper.js';
 
-import MessageThread from './src/views/MessageThread.js';
+import MessageThread from './lib/views/MessageThread.js';
 
 export var globalNav = {};
 

@@ -42,7 +42,7 @@ export default class MessageThread extends Component {
                     card: {
                         name: 'Colin Brauns',
                         title: 'Senior Recruiter',
-                        description: 'I\'d love to talk about space exploration. Mars anyone?',
+                        content: 'I\'d love to talk about space exploration. Mars anyone?',
                         avatar: 'https://media.licdn.com/mpr/mpr/shrinknp_200_200/p/1/005/08d/1f5/0fe67d4.jpg'
                     }
                 }
