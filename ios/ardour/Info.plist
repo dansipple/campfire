@@ -22,6 +22,23 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>localhost</key>
+			<dict>
+				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
+		</dict>
+	</dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string></string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Ionicons.ttf</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -36,37 +53,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSExceptionDomains</key>
-		<dict>
-			<key>localhost</key>
-			<dict>
-				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
-				<true/>
-			</dict>
-		</dict>
-	</dict>
-	<key>UIAppFonts</key>
-	<array>
-		<string>Andale Mono.ttf</string>
-		<string>Arial Black.ttf</string>
-		<string>Arial.ttf</string>
-		<string>Comic Sans MS.ttf</string>
-		<string>Courier New.ttf</string>
-		<string>Georgia.ttf</string>
-		<string>Microsoft Sans Serif.ttf</string>
-		<string>Roboto_medium.ttf</string>
-		<string>Roboto.ttf</string>
-		<string>SF-UI-Text-Regular.otf</string>
-		<string>Skia.ttf</string>
-		<string>Times New Roman.ttf</string>
-		<string>FontAwesome.ttf</string>
-		<string>Foundation.ttf</string>
-		<string>Ionicons.ttf</string>
-		<string>MaterialIcons.ttf</string>
-	</array>
 </dict>
 </plist>
