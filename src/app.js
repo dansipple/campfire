@@ -11,26 +11,21 @@ registerScreens();
 
 // this will start our app
 Navigation.startSingleScreenApp({
-  screen: {
-    screen: 'example.FirstTabScreen',
-    title: 'Discover',
-    navigatorStyle: {
-      navBarBackgroundColor: '#fff',
-      navBarTextColor: '#666',
-      navBarNoBorder: false
-      //navBarButtonColor: '#666'
-    }
+    screen: {
+        screen: 'ConvoSwiper',
+        title: 'Convos',
+        titleImage: require('../img/logo.png'),
+        navigatorStyle: {
+            navBarBackgroundColor: '#fff'
+        }
 
-  },
-  drawer: {
-    type: 'MMDrawer',
-    animationType: 'slide',
-    left: {
-      screen: 'example.SideMenu'
     },
-    right: {
-      screen: 'example.SideMenu'
-    },
-    disableOpenGesture: true
-  }
+    drawer: {
+        type: 'MMDrawer',
+        animationType: 'slide',
+        right: {
+            screen: 'SideMenu'
+        },
+        disableOpenGesture: true
+    }
 });

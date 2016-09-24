@@ -8,4 +8,11 @@ const firebaseConfig = {
     storageBucket: "convos-17643.appspot.com"
 };
 
-export default firebase.initializeApp(firebaseConfig);
+function getCurrentTime() {
+    return firebase.database.ServerValue.TIMESTAMP;
+}
+
+export default {
+    app: firebase.initializeApp(firebaseConfig),
+    getCurrentTime: getCurrentTime
+}

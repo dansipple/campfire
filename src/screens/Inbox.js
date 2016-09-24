@@ -1,11 +1,15 @@
 
 import React, { Component } from 'react';
-import { TouchableHighlight, Image, StyleSheet, Dimensions, ListView, View } from 'react-native';
+import { TouchableHighlight, TouchableOpacity, Image, StyleSheet, Dimensions, ListView, View } from 'react-native';
 import { Container, Content, Thumbnail, Text, Button, Icon, List, ListItem} from 'native-base';
 
 import Conversation from '../components/conversation';
 
 export default class Inbox extends Component {
+
+    static navigatorStyle = {
+        navBarNoBorder: false
+    };
 
     constructor(props) {
         super(props);
@@ -71,22 +75,50 @@ export default class Inbox extends Component {
 
     render() {
         return (
-            <ListView
-                dataSource={this.state.conversations}
-                renderRow={this._renderRow}
-                style={{ flex: 1 }}
-            />
+            <View style={{ flex: 1 }}>
+                <View style={styles.newMatchContainer}>
+                    <View style={styles.newMatchRow}>
+                        <TouchableOpacity>
+                            <Image style={styles.newMatchThumnnail} source={{uri: 'https://media.licdn.com/media/p/4/005/097/089/0bebe5a.jpg'}} />
+                        </TouchableOpacity>
+                    </View>
+                </View>
+                <View style={{ flex: 1 }}>
+                    <ListView
+                        dataSource={this.state.conversations}
+                        renderRow={this._renderRow}
+                        style={{ flex: 1 }}
+                    />
+                </View>
+            </View>
         );
     }
     _onPress(conversationData) {
         this.props.navigator.push({
             title: conversationData.user.first,
-            backButtonTitle: 'Back',
-            screen: 'example.MessageThread'
+            screen: 'MessageThread'
         })
     }
 }
 
 const styles = StyleSheet.create({
-
+    newMatchContainer: {
+        //flex: 0.2,
+        padding: 10,
+        backgroundColor: '#f9f9f9',
+        borderBottomColor: '#ddd',
+        borderBottomWidth: 1
+    },
+    newMatchRow: {
+        flex: 1,
+        padding: 5,
+        flexDirection: 'row'
+    },
+    newMatchThumnnail: {
+        height: 60,
+        width: 60,
+        borderRadius: 30,
+        borderWidth: 5,
+        borderColor: '#fff'
+    }
 });

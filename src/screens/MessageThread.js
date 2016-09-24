@@ -9,6 +9,11 @@ import Card from './../components/card.js';
 
 export default class MessageThread extends Component {
 
+    static navigatorStyle = {
+        navBarNoBorder: false
+    };
+
+
     constructor(props) {
         super(props);
         this.state = {
@@ -46,7 +51,8 @@ export default class MessageThread extends Component {
                             title: 'Film Director',
                             avatar: 'https://media.licdn.com/media/p/4/005/097/089/0bebe5a.jpg'
                         },
-                        content: 'I\'d love to talk about space exploration. Mars anyone?'
+                        content: 'I\'d love to talk about space exploration. Mars anyone?',
+                        category: 'Science'
                     }
                 }
             ]

@@ -1,17 +1,19 @@
 
 import React, { Component } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View, Text, Dimensions } from 'react-native';
 
-import { Spinner, CardSwiper, View, Text } from 'native-base';
+import LinearGradient from 'react-native-linear-gradient';
+
+import { Spinner, CardSwiper } from 'native-base';
 
 import SwiperController from '../lib/controllers/swiper.js';
 
 import Card from './../components/card.js';
 
-export default class Swiper extends Component {
+export default class ConvoSwiper extends Component {
     static navigatorButtons = {
         leftButtons: [{
-            icon: require('../../img/navicon_menu.png'),
+            icon: require('../../img/three_selected.png'),
             id: 'menu'
         }],
         rightButtons: [
@@ -26,8 +28,9 @@ export default class Swiper extends Component {
         ]
     };
     static navigatorStyle = {
-        navBarButtonColor: '#666',
-        drawUnderTabBar: true
+        navBarButtonColor: '#777',
+        navBarNoBorder: true,
+        drawUnderNavBar: true
     };
 
     constructor(props) {
@@ -48,15 +51,17 @@ export default class Swiper extends Component {
 
     onNavigatorEvent(event) {
         if (event.id == 'menu') {
-                this.props.navigator.showModal({
-                    title: 'Create a Convo',
-                    screen: "example.NewConvo"
-                });
             /*
             this.props.navigator.toggleDrawer({
-                side: 'left',
-                animated: true
-            });*/
+                side: 'left', // the side of the drawer since you can have two, 'left' / 'right'
+                animated: true // does the toggle have transition animation or does it happen immediately (optional)
+            });
+            */
+            this.props.navigator.push({
+                title: 'Your Convos',
+                backButtonTitle: 'Back',
+                screen: 'MyConvos'
+            });
         }
         if (event.id == 'more') {
             this.props.navigator.toggleDrawer({
@@ -68,8 +73,8 @@ export default class Swiper extends Component {
             this.props.navigator.push({
                 title: 'Messages',
                 backButtonTitle: 'Back',
-                screen: 'example.inbox'
-            })
+                screen: 'Inbox'
+            });
         }
     }
 
@@ -129,13 +134,19 @@ export default class Swiper extends Component {
             )
         } else {
             return (
-                <View style={ styles.cardViewer }>
-                    <CardSwiper
-                        onSwipeRight={this.swipeRight}
-                        onSwipeLeft={this.swipeLeft}
-                    >
-                        <Card cardData={this.state.cardDeck[this.state.activeCard]}/>
-                    </CardSwiper>
+                <View>
+                    <LinearGradient colors={['#fff', '#ecf0f9']} style={ styles.cardViewer }>
+                        <CardSwiper
+                            onSwipeRight={this.swipeRight}
+                            onSwipeLeft={this.swipeLeft}
+                            style={{zIndex: 5}}
+                        >
+                            <Card cardData={this.state.cardDeck[this.state.activeCard]}/>
+                        </CardSwiper>
+                        <View style={styles.currentNetworkContainer}>
+                            <Text style={styles.currentNetworkText}>HackerNest NYC</Text>
+                        </View>
+                    </LinearGradient>
                 </View>
             );
         }
@@ -144,8 +155,19 @@ export default class Swiper extends Component {
 
 const styles = StyleSheet.create({
     cardViewer: {
-        backgroundColor: '#fff',
-        padding: 10,
+        padding: 15,
+        paddingTop: 5,
+        flexDirection: 'column',
         flex: 1
+    },
+    currentNetworkContainer: {
+        padding: 15
+    },
+    currentNetworkText: {
+        backgroundColor: 'transparent',
+        fontSize: 18,
+        lineHeight: 24,
+        textAlign: 'center',
+        color: '#666'
     }
 });

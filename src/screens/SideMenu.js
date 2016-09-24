@@ -1,68 +1,55 @@
 import React, {Component} from 'react';
 import {
   Text,
+StatusBar,
   View,
   ScrollView,
   TouchableOpacity,
-  StyleSheet,
-  AlertIOS
+  StyleSheet
 } from 'react-native';
 
 export default class SideMenu extends Component {
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+    static navigatorStyle = {
+        statusBarHidden: true
+    };
 
-        <Text style={styles.title}>Side Menu</Text>
-
-        <TouchableOpacity onPress={ this.onReplaceTab2Press.bind(this) }>
-          <Text style={styles.button}>Replace Tab#2 Root</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={ this.onModalPress.bind(this) }>
-          <Text style={styles.button}>Show Modal Screen</Text>
-        </TouchableOpacity>
-
-      </View>
-    );
-  }
-  onReplaceTab2Press() {
-    this.props.navigator.toggleDrawer({
-      to: 'closed',
-      side: 'left',
-      animated: true
-    });
-    // push/pop navigator actions affect the navigation stack of the current screen only.
-    // since side menu actions are normally directed at sibling tabs, push/pop will
-    // not help us. the recommended alternative is to use deep links for this purpose
-    this.props.navigator.handleDeepLink({
-      link: "tab2/example.PushedScreen"
-    });
-  }
-  onModalPress() {
-    this.props.navigator.showModal({
-      title: "Modal",
-      screen: "example.ModalScreen"
-    });
-  }
+    constructor(props) {
+        super(props);
+    }
+    render() {
+        return (
+            <ScrollView style={styles.sidebar}>
+                <View style={styles.menuItem}>
+                    <Text style={styles.menuItemText}>Edit Profile</Text>
+                </View>
+                <View style={styles.menuItem}>
+                    <Text style={styles.menuItemText}>Settings</Text>
+                </View>
+                <View style={styles.menuItem}>
+                    <Text style={styles.menuItemText}>Notifications</Text>
+                </View>
+                <View style={styles.menuItem}>
+                    <Text style={styles.menuItemText}>Log Out</Text>
+                </View>
+            </ScrollView>
+        );
+    }
 }
 
 const styles = StyleSheet.create({
-  title: {
-    textAlign: 'center',
-    fontSize: 18,
-    marginBottom: 10,
-    marginTop:10,
-    fontWeight: '500'
-  },
-  button: {
-    textAlign: 'center',
-    fontSize: 18,
-    marginBottom: 10,
-    marginTop:10,
-    color: 'blue'
-  }
+    sidebar: {
+        backgroundColor: '#535355',
+        flex: 1,
+        paddingTop: 20
+    },
+    menuItem: {
+        padding: 25,
+        borderBottomWidth: 0.5,
+        borderBottomColor: '#777'
+    },
+    menuItemText: {
+        color: '#fff',
+        paddingLeft: 20,
+        fontSize: 18
+    }
 });

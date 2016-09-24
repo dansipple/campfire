@@ -17,11 +17,12 @@ export default class conversation extends Component {
             return (
                 <View style={styles.conversation}>
                     <View style={styles.thumbnail}>
-                        <Thumbnail style={styles.thumnailImg} size={50} source={{ uri: user.avatar }}/>
+                        <Image style={styles.thumbnailImg} source={{ uri: user.avatar }}/>
                     </View>
                     <View style={styles.content}>
-                        <Text style={styles.time}>Sep 3rd</Text>
-                        <Text style={styles.name}>{this.props.conversationData.user.first} {this.props.conversationData.user.last}</Text>
+                        <View style={styles.nameAndTime}>
+                            <Text style={styles.name}>{this.props.conversationData.user.first} {this.props.conversationData.user.last}</Text>
+                        </View>
                         <Text style={styles.message}>{this.props.conversationData.lastMessage}</Text>
                     </View>
                 </View>
@@ -37,23 +38,31 @@ export default class conversation extends Component {
 const styles = StyleSheet.create({
     conversation: {
         flex: 1,
-        padding: 10,
-        paddingTop: 0,
+        paddingTop: 15,
+        paddingBottom: 15,
+        paddingLeft: 10,
+        paddingRight: 10,
         flexDirection: 'row',
-        borderBottomWidth: 0.5,
-        borderBottomColor: '#ccc'
+        height: 90
     },
     thumbnail: {
-        flex: 0.2,
-        padding: 3,
-        paddingTop: 20
+        width: 70,
+        //padding: 3
     },
     thumbnailImg: {
-        borderWidth: 3,
-        borderColor: '#999'
+        height: 60,
+        width: 60,
+        borderRadius: 30
     },
     content: {
-        flex: 0.8
+        flex: 1,
+        padding: 5,
+        height: 76,
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc'
+    },
+    nameAndTime: {
+        flexDirection: 'row'
     },
     time: {
         fontSize: 12,
@@ -62,9 +71,9 @@ const styles = StyleSheet.create({
     },
     name: {
         fontWeight: '500',
-        lineHeight: 17,
+        lineHeight: 22,
         paddingBottom: 5,
-        fontSize: 17
+        fontSize: 19
     },
     message: {
         fontWeight: '300',
