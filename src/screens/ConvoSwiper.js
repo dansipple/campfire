@@ -1,10 +1,10 @@
 
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, Dimensions } from 'react-native';
+import { StyleSheet, ScrollView , View, Text, Dimensions } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
 
-import { Spinner, CardSwiper } from 'native-base';
+import { Spinner, DeckSwiper } from 'native-base';
 
 import SwiperController from '../lib/controllers/swiper.js';
 
@@ -87,15 +87,12 @@ export default class ConvoSwiper extends Component {
     }
 
     nextCard() {
-        if(this.state.activeCard < this.state.cardDeck.length - 1) {
-            this.setState({
-                activeCard: this.state.activeCard + 1
-            })
-        } else {
-            this.loadCards();
-        }
-    }
+        if (this.state.activeCard === this.state.cardDeck.length - 1) this.loadCards();
 
+        this.setState({
+            activeCard: this.state.activeCard + 1
+        });
+    }
     loadCards() {
         this.setState({
            isLoading: true
@@ -103,8 +100,7 @@ export default class ConvoSwiper extends Component {
             SwiperController.getCards('-KPzFJ697NbkNZoHVBR7', '-KPzFYEKdj3yRQn3teTP').then(
                 (cards) => {
                     this.setState({
-                        cardDeck: cards,
-                        activeCard: 0,
+                        cardDeck: this.state.cardDeck.concat(cards),
                         isLoading: false
                     })
                 }
@@ -126,7 +122,7 @@ export default class ConvoSwiper extends Component {
 
     render() {
 
-        if(this.state.isLoading) {
+        if(this.state.isLoading && !this.state.cardDeck.length) {
             return (
                 <View style={ styles.cardViewer }>
                     <Spinner color="#666" />
@@ -136,13 +132,17 @@ export default class ConvoSwiper extends Component {
             return (
                 <View>
                     <LinearGradient colors={['#fff', '#ecf0f9']} style={ styles.cardViewer }>
-                        <CardSwiper
+                        <DeckSwiper
                             onSwipeRight={this.swipeRight}
                             onSwipeLeft={this.swipeLeft}
-                            style={{zIndex: 5}}
+                            dataSource={this.state.cardDeck}
+                            renderItem={(card)=> {
+                                return (
+                                    <Card cardData={card}/>
+                                )
+                            }}
                         >
-                            <Card cardData={this.state.cardDeck[this.state.activeCard]}/>
-                        </CardSwiper>
+                        </DeckSwiper>
                         <View style={styles.currentNetworkContainer}>
                             <Text style={styles.currentNetworkText}>HackerNest NYC</Text>
                         </View>
@@ -155,13 +155,15 @@ export default class ConvoSwiper extends Component {
 
 const styles = StyleSheet.create({
     cardViewer: {
+        backgroundColor: '#fff',
         padding: 15,
         paddingTop: 5,
-        flexDirection: 'column',
+        //flexDirection: 'column',
         flex: 1
     },
     currentNetworkContainer: {
-        padding: 15
+        padding: 15,
+        elevation: 1
     },
     currentNetworkText: {
         backgroundColor: 'transparent',

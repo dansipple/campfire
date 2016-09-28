@@ -140,14 +140,14 @@ export default class ConvoSwiper extends Component {
                         <Text style={styles.count}>1 of 8</Text>
                     </TouchableOpacity>
 
-                    <ScrollView style={{padding: 5, paddingTop: 60, flex: 1, zIndex: 2}}>
+                    <View style={{padding: 5, paddingTop: 60, flex: 1, zIndex: 2}}>
                         <CardSwiper
                             onSwipeRight={this.swipeRight}
                             onSwipeLeft={this.swipeLeft}
                         >
                             <Profile profileData={this.state.cardDeck[this.state.activeCard]}/>
                         </CardSwiper>
-                    </ScrollView>
+                    </View>
                 </View>
             );
         }

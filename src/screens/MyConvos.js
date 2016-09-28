@@ -59,11 +59,13 @@ export default class MyConvos extends Component {
         return (
             <TouchableHighlight onPress={() => this._onPress(convoData)} underlayColor="#f6f6f6">
                 <View style={styles.convo}>
-                    <View style={[styles.convoContent, convoContentColor.convoContentColor]}>
+                    <View style={styles.convoContent}>
+                        <Text style={styles.convoCategory}>#{convoData.category}</Text>
                         <Text style={styles.convoContentText}>{convoData.content}</Text>
                     </View>
-                    <View style={styles.convoStats}>
+                    <View style={styles.interestedContainer}>
                         <Image style={styles.interestedImage} source={{ uri: 'https://media.licdn.com/mpr/mpr/shrinknp_200_200/p/1/005/08d/1f5/0fe67d4.jpg' }} />
+                        <Image style={styles.interestedImage} source={{ uri: 'https://media.licdn.com/media/p/4/005/097/089/0bebe5a.jpg' }} />
                     </View>
                 </View>
             </TouchableHighlight>
@@ -130,38 +132,44 @@ const styles = StyleSheet.create({
     convo: {
         marginBottom: 15
     },
+    convoCategory: {
+        color: '#fff',
+        fontSize: 16,
+        paddingBottom: 10
+    },
     convoContent: {
-        backgroundColor: '#17BBB0',
+        backgroundColor: '#3498db',
         borderTopLeftRadius: 8,
         borderTopRightRadius: 8,
-        paddingTop: 35,
+        paddingTop: 15,
         paddingBottom: 35,
-        paddingLeft: 10,
-        paddingRight: 10
+        paddingLeft: 15,
+        paddingRight: 15
     },
     convoContentText: {
         color: '#fff',
         fontSize: 20,
-        lineHeight: 25,
-        textAlign: 'center'
+        lineHeight: 25
     },
-    convoStats: {
+    interestedContainer: {
+        flexDirection: 'row',
+        flex: 1,
         backgroundColor: '#fff',
         borderBottomLeftRadius: 8,
         borderBottomRightRadius: 8,
         borderColor: '#ddd',
         borderWidth: 1,
         borderTopWidth: 0,
-        padding: 10
-    },
-    convoStatsText: {
-        textAlign: 'center'
+        padding: 10,
+        justifyContent: 'center'
     },
     interestedImage: {
-        height: 40,
-        width: 40,
-        borderRadius: 20,
-        marginRight: 10,
-        resizeMode: 'contain'
+        height: 46,
+        width: 46,
+        borderRadius: 23,
+        marginRight: -23,
+        resizeMode: 'contain',
+        borderColor: '#ddd',
+        borderWidth: 1
     }
 });

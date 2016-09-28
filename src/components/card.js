@@ -19,22 +19,27 @@ export default class card extends Component {
 
             const styles = StyleSheet.create({
                 cardContainer: {
+                    elevation: 3
                 },
                 cardBody: {
-                    padding: 12,
+                    padding: 20,
                     height: this.props.inMessage ? 200 : height - 205,
-                    backgroundColor: Colors.categories[cardData.category],
-                    justifyContent: 'center',
-                    alignItems: 'center',
+                    backgroundColor: '#3498db',
                     borderTopLeftRadius: 5,
-                    borderTopRightRadius: 5
+                    borderTopRightRadius: 5,
+                },
+                category: {
+                    color: '#fff',
+                    fontSize: 18,
+                    paddingBottom: 25
                 },
                 description: {
                     fontSize: 25,
                     lineHeight: 32,
                     color: '#fff',
-                    textAlign: 'center',
-                    alignSelf: 'center'
+                    flex: 1,
+                    justifyContent: 'center',
+                    //alignSelf: 'center'
                 },
                 creatorInformation: {
                     flex: 1,
@@ -70,6 +75,7 @@ export default class card extends Component {
             return (
                     <View style={styles.cardContainer}>
                         <View style={ styles.cardBody }>
+                            <Text style={styles.category}>#{cardData.category}</Text>
                             <Text style={ styles.description }>{ cardData.content }</Text>
                         </View>
                         <View style={styles.creatorInformation}>

@@ -1,8 +1,5 @@
 import React, {Component} from 'react';
-import {
-  AppRegistry,
-  View
-} from 'react-native';
+
 import {Navigation} from 'react-native-navigation';
 
 // screen related book keeping

@@ -75,22 +75,24 @@ export default class Inbox extends Component {
 
     render() {
         return (
-            <View style={{ flex: 1 }}>
-                <View style={styles.newMatchContainer}>
-                    <View style={styles.newMatchRow}>
-                        <TouchableOpacity>
-                            <Image style={styles.newMatchThumnnail} source={{uri: 'https://media.licdn.com/media/p/4/005/097/089/0bebe5a.jpg'}} />
-                        </TouchableOpacity>
-                    </View>
-                </View>
                 <View style={{ flex: 1 }}>
                     <ListView
                         dataSource={this.state.conversations}
                         renderRow={this._renderRow}
                         style={{ flex: 1 }}
+                        renderHeader={() => {
+                            return (
+                                <View style={styles.newMatchContainer}>
+                                    <View style={styles.newMatchRow}>
+                                        <TouchableOpacity>
+                                            <Image style={styles.newMatchThumnnail} source={{uri: 'https://media.licdn.com/media/p/4/005/097/089/0bebe5a.jpg'}} />
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                            );
+                        }}
                     />
                 </View>
-            </View>
         );
     }
     _onPress(conversationData) {
