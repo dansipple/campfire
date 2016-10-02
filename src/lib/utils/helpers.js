@@ -5,6 +5,7 @@ const Helpers = {
             let newArr = [];
             for (let key in obj) {
                 if (obj.hasOwnProperty(key)) {
+                    obj[key].id = key;
                     newArr.push(obj[key]);
                 }
             }

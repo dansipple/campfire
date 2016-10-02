@@ -1,14 +1,14 @@
 
 import React, { Component } from 'react';
-import { TouchableHighlight, TouchableOpacity, Image, StyleSheet, Dimensions, ListView, View } from 'react-native';
-import { Container, Content, Thumbnail, Text, Button, Icon, List, ListItem} from 'native-base';
+import { TouchableHighlight, TouchableOpacity, Image, StyleSheet, Dimensions, ListView, Text, View } from 'react-native';
 
 import Conversation from '../components/conversation';
 
 export default class Inbox extends Component {
 
     static navigatorStyle = {
-        navBarNoBorder: false
+        navBarButtonColor: '#777',
+        statusBarTextColorScheme: 'dark'
     };
 
     constructor(props) {
@@ -17,12 +17,12 @@ export default class Inbox extends Component {
         ds = ds.cloneWithRows([{
             id: 'fdfasf',
             user: {
-                first: 'Red',
-                last: 'Rainey',
+                first: 'Emily',
+                last: 'Sullivan',
                 email: 'colin@findconvos.com',
-                avatar: 'https://media.licdn.com/media/p/4/005/097/089/0bebe5a.jpg'
+                avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/kfriedson/128.jpg'
             },
-            lastMessage: 'Hey man check this out!'
+            lastMessage: 'Hey check this out!'
         },
             {
                 id: 'fdfasf',
@@ -37,20 +37,20 @@ export default class Inbox extends Component {
             {
                 id: 'fdfasf',
                 user: {
-                    first: 'Colin',
-                    last: 'Brauns',
+                    first: 'Jeff',
+                    last: 'Hamilton',
                     email: 'colin@findconvos.com',
-                    avatar: 'https://media.licdn.com/mpr/mpr/shrinknp_200_200/p/1/005/08d/1f5/0fe67d4.jpg'
+                    avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/jsa/128.jpg'
                 },
                 lastMessage: 'Hey man check this out!'
             },
             {
                 id: 'fdfasf',
                 user: {
-                    first: 'Colin',
-                    last: 'Brauns',
+                    first: 'Red',
+                    last: 'Rainey',
                     email: 'colin@findconvos.com',
-                    avatar: 'https://media.licdn.com/mpr/mpr/shrinknp_200_200/p/1/005/08d/1f5/0fe67d4.jpg'
+                    avatar: 'https://media.licdn.com/media/p/4/005/097/089/0bebe5a.jpg'
                 },
                 lastMessage: 'Hey man check this out!'
             }]);
@@ -61,8 +61,16 @@ export default class Inbox extends Component {
 
         this._renderRow = this._renderRow.bind(this);
 
+        this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
         //this.selectConversation = this.selectConversation.bind(this);
     }
+
+    onNavigatorEvent(event) {
+        if (event.id == 'back') {
+            this.props.navigator.pop();
+        }
+    }
+
     _renderRow(conversationData, sectionID, rowID) {
         return (
             <TouchableHighlight onPress={() => this._onPress(conversationData)} underlayColor="#f6f6f6">
@@ -82,12 +90,17 @@ export default class Inbox extends Component {
                         style={{ flex: 1 }}
                         renderHeader={() => {
                             return (
-                                <View style={styles.newMatchContainer}>
-                                    <View style={styles.newMatchRow}>
-                                        <TouchableOpacity>
-                                            <Image style={styles.newMatchThumnnail} source={{uri: 'https://media.licdn.com/media/p/4/005/097/089/0bebe5a.jpg'}} />
-                                        </TouchableOpacity>
+                                <View>
+                                    <View style={styles.newMatchContainer}>
+                                        <Text style={{fontSize: 11, textAlign: 'center', color: '#888', padding: 10}}>New Matches</Text>
+                                        <View style={styles.newMatchRow}>
+                                            <TouchableOpacity onPress={() => this._onPress({user: {first: 'Charlie'}})}>
+                                                <Image style={styles.newMatchThumnnail} source={{uri: 'https://s3.amazonaws.com/uifaces/faces/twitter/jadlimcaco/128.jpg'}} />
+                                                <Text style={{textAlign: 'center'}}>Charlie</Text>
+                                            </TouchableOpacity>
+                                        </View>
                                     </View>
+                                    <Text style={{fontSize: 11, textAlign: 'center', color: '#888', padding: 10}}>Messages</Text>
                                 </View>
                             );
                         }}
@@ -98,7 +111,8 @@ export default class Inbox extends Component {
     _onPress(conversationData) {
         this.props.navigator.push({
             title: conversationData.user.first,
-            screen: 'MessageThread'
+            screen: 'MessageThread',
+            backButtonTitle: ''
         })
     }
 }
@@ -107,7 +121,8 @@ const styles = StyleSheet.create({
     newMatchContainer: {
         //flex: 0.2,
         padding: 10,
-        backgroundColor: '#f9f9f9',
+        paddingTop: 2,
+        backgroundColor: '#eee',
         borderBottomColor: '#ddd',
         borderBottomWidth: 1
     },
@@ -120,7 +135,6 @@ const styles = StyleSheet.create({
         height: 60,
         width: 60,
         borderRadius: 30,
-        borderWidth: 5,
-        borderColor: '#fff'
+        marginBottom: 5
     }
 });

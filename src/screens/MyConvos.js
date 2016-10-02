@@ -19,7 +19,10 @@ export default class MyConvos extends Component {
         ]
     };
     static navigatorStyle = {
-        navBarNoBorder: false
+        navBarNoBorder: false,
+        navBarButtonColor: '#777',
+        nabBarTextColor: '#555',
+        statusBarTextColorScheme: 'dark'
     };
 
     constructor(props) {

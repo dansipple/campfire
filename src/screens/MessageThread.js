@@ -97,7 +97,7 @@ export default class MessageThread extends Component {
                 {...props}
                 wrapperStyle={{
                     right: {
-                        backgroundColor: '#17BBB0',
+                        backgroundColor: '#3498db',
                         padding: 6
                     },
                     left: {

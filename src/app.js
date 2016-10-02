@@ -9,20 +9,13 @@ registerScreens();
 // this will start our app
 Navigation.startSingleScreenApp({
     screen: {
-        screen: 'ConvoSwiper',
+        screen: 'Root',
         title: 'Convos',
-        titleImage: require('../img/logo.png'),
         navigatorStyle: {
-            navBarBackgroundColor: '#fff'
+            navBarBackgroundColor: '#fff',
+            navBarTextColor: '#666',
+            navBarHidden: true
         }
 
-    },
-    drawer: {
-        type: 'MMDrawer',
-        animationType: 'slide',
-        right: {
-            screen: 'SideMenu'
-        },
-        disableOpenGesture: true
     }
 });

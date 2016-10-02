@@ -2,8 +2,6 @@
 import React, { Component } from 'react';
 import { Image, StyleSheet, Text, View, Dimensions } from 'react-native';
 
-import Colors from '../lib/utils/colors';
-
 export default class card extends Component {
 
     constructor(props) {
@@ -19,24 +17,28 @@ export default class card extends Component {
 
             const styles = StyleSheet.create({
                 cardContainer: {
-                    elevation: 3
+                    elevation: 3,
+                    backgroundColor: this.props.inMessage ? '#f9f9f9' : '#fff',
+                    borderRadius: 8,
+                    shadowColor: '#000',
+                    shadowOpacity: this.props.inMessage ? 0 : 0.2,
+                    shadowRadius: 8,
+                    borderColor: '#ddd',
+                    borderWidth: this.props.inMessage ? 1 : 0
                 },
                 cardBody: {
-                    padding: 20,
-                    height: this.props.inMessage ? 200 : height - 205,
-                    backgroundColor: '#3498db',
-                    borderTopLeftRadius: 5,
-                    borderTopRightRadius: 5,
+                    padding: 30,
+                    height: this.props.inMessage ? 200 : height - 205
                 },
                 category: {
-                    color: '#fff',
-                    fontSize: 18,
+                    color: '#777',
+                    fontSize: 14,
                     paddingBottom: 25
                 },
                 description: {
-                    fontSize: 25,
-                    lineHeight: 32,
-                    color: '#fff',
+                    fontSize: 18,
+                    lineHeight: 25,
+                    color: '#555',
                     flex: 1,
                     justifyContent: 'center',
                     //alignSelf: 'center'
@@ -44,29 +46,28 @@ export default class card extends Component {
                 creatorInformation: {
                     flex: 1,
                     flexDirection: 'row',
-                    backgroundColor: '#fff',
+                    //backgroundColor: '#fff',
                     padding: 15,
-                    borderBottomLeftRadius: 5,
-                    borderBottomRightRadius: 5,
-                    borderColor: '#ddd',
-                    borderWidth: 1,
-                    borderTopWidth: 0
+                    //borderColor: '#ddd',
+                    //borderWidth: 1,
+                    //borderTopWidth: 0
                 },
                 creatorNameContainer: {
                     flexDirection: 'column'
                 },
                 name: {
-                    fontSize: 18,
-                    lineHeight: 20
+                    fontSize: 16,
+                    color: '#555',
+                    lineHeight: 18
                 },
                 title: {
-                    fontSize: 15,
+                    fontSize: 13,
                     color: '#666'
                 },
                 thumbnail: {
-                    borderRadius: 20,
-                    height: 40,
-                    width: 40,
+                    borderRadius: 18,
+                    height: 36,
+                    width: 36,
                     marginRight: 10,
                     resizeMode: 'contain'
                 }
