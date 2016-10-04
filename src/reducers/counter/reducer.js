@@ -2,7 +2,7 @@ import * as types from './actionTypes';
 import Immutable from 'seamless-immutable';
 
 const initialState = Immutable({
-  count: 0
+    count: 0
 });
 
 export default function counter(state = initialState, action = {}) {

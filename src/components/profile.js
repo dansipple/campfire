@@ -1,8 +1,6 @@
 
 import React, { Component } from 'react';
-import { Image, StyleSheet, Text, View, ScrollView, Dimensions } from 'react-native';
-
-import Colors from '../lib/utils/colors';
+import { TouchableHighlight, Image, StyleSheet, Text, View, ScrollView} from 'react-native';
 
 export default class Profile extends Component {
 
@@ -11,7 +9,6 @@ export default class Profile extends Component {
     }
 
     render() {
-        let {height, width} = Dimensions.get('window');
 
         if (this.props.profileData) {
             let profileData = this.props.profileData || {};
@@ -20,16 +17,15 @@ export default class Profile extends Component {
                 profileContainer: {
                     flex: 1,
                     //flexDirection: 'column',
-                    backgroundColor: '#f9f9f9',
-                    borderTopLeftRadius: width/2,
-                    borderTopRightRadius: width/2,
-                    borderBottomLeftRadius: 4,
-                    borderBottomRightRadius: 4,
-                    borderColor: '#ddd',
-                    borderWidth: 1
+                    backgroundColor: '#fff',
+                    borderRadius: 8,
+                    margin: 5,
                 },
                 userInformation: {
-
+                    paddingBottom: 20,
+                    paddingTop: 20,
+                    borderBottomColor: '#ddd',
+                    borderBottomWidth: 1
                 },
                 thumbnailContainer: {
                     flex: 1,
@@ -37,13 +33,13 @@ export default class Profile extends Component {
                     justifyContent: 'center'
                 },
                 thumbnail: {
-                    borderRadius: 50,
-                    borderColor: '#fff',
-                    borderWidth: 5,
-                    height: 100,
-                    width: 100,
-                    resizeMode: 'contain',
-                    marginTop: -50
+                    borderRadius: 40,
+                    //borderColor: '#fff',
+                    //borderWidth: 5,
+                    height: 80,
+                    width: 80,
+                    resizeMode: 'contain'
+                    //marginTop: -50
                 },
                 nameAndTitleContainer: {
                     paddingTop: 10,
@@ -65,25 +61,60 @@ export default class Profile extends Component {
                     paddingRight: 20
                 },
                 userConvos: {
+                    backgroundColor: '#eee',
                     padding: 20,
                     paddingBottom: 0
                 },
                 convo: {
-                    marginBottom: 10
+                    elevation: 3,
+                    backgroundColor: '#fff',
+                    borderRadius: 8,
+                    shadowColor: '#000',
+                    shadowOpacity: 0.2,
+                    shadowRadius: 8,
+                    marginBottom: 15,
+                    flex: 1
                 },
-                convoContent: {
-                    backgroundColor: '#17BBB0',
-                    borderRadius: 4,
-                    paddingTop: 15,
-                    paddingBottom: 15,
-                    paddingLeft: 10,
-                    paddingRight: 10
+                cardBody: {
+                    padding: 20,
+                    height: 180
                 },
-                convoContentText: {
+                category: {
+                    color: '#777',
+                    fontSize: 13,
+                    paddingBottom: 10
+                },
+                description: {
+                    fontSize: 16,
+                    lineHeight: 21,
+                    color: '#555',
+                    flex: 1,
+                    justifyContent: 'center'
+                },
+                actionButtons: {
+                    flexDirection: 'row',
+                    backgroundColor: 'transparent',
+                    borderTopColor: '#fff',
+                    borderTopWidth: 1
+                },
+                actionButton: {
+                    flex: 0.5,
+                    paddingTop: 25,
+                    paddingBottom: 25
+                },
+                actionButtonText: {
                     color: '#fff',
-                    fontSize: 14,
-                    lineHeight: 16,
                     textAlign: 'center'
+                },
+                passButton: {
+                    backgroundColor: '#bbb',
+                    borderBottomLeftRadius: 8,
+                    borderRightWidth: 1,
+                    borderRightColor: '#fff'
+                },
+                matchButton: {
+                    backgroundColor: '#3498db',
+                    borderBottomRightRadius: 8
                 }
             });
 
@@ -98,18 +129,27 @@ export default class Profile extends Component {
                             <Text style={styles.title}>{ profileData.title }</Text>
                         </View>
                     </View>
-                    <View style={styles.userConvos}>
+                    <ScrollView style={styles.userConvos}>
                         <View style={styles.convo}>
-                            <View style={styles.convoContent}>
-                                <Text style={styles.convoContentText}>I want to do some experiments with bunsen burners</Text>
+                            <View style={styles.cardBody}>
+                                <Text style={styles.category}>#{this.props.convos[0].category}</Text>
+                                <Text style={styles.description}>{this.props.convos[0].content}</Text>
                             </View>
                         </View>
                         <View style={styles.convo}>
-                            <View style={styles.convoContent}>
-                                <Text style={styles.convoContentText}>Was pangea a real thing? What do you think the earth looked like a million years ago?</Text>
+                            <View style={styles.cardBody}>
+                                <Text style={styles.category}>#{this.props.convos[1].category}</Text>
+                                <Text style={styles.description}>{this.props.convos[1].content}</Text>
                             </View>
                         </View>
-
+                    </ScrollView>
+                    <View style={styles.actionButtons}>
+                        <TouchableHighlight onPress={this.props.pass} underlayColor="#999" style={[styles.actionButton, styles.passButton]}>
+                            <Text style={styles.actionButtonText}>Pass</Text>
+                        </TouchableHighlight>
+                        <TouchableHighlight onPress={this.props.match} underlayColor="#145683" style={[styles.actionButton, styles.matchButton]}>
+                            <Text style={styles.actionButtonText}>Match</Text>
+                        </TouchableHighlight>
                     </View>
                 </View>
             );

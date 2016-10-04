@@ -14,16 +14,7 @@ export default class Inbox extends Component {
     constructor(props) {
         super(props);
         var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-        ds = ds.cloneWithRows([{
-            id: 'fdfasf',
-            user: {
-                first: 'Emily',
-                last: 'Sullivan',
-                email: 'colin@findconvos.com',
-                avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/kfriedson/128.jpg'
-            },
-            lastMessage: 'Hey check this out!'
-        },
+        ds = ds.cloneWithRows([
             {
                 id: 'fdfasf',
                 user: {
@@ -33,6 +24,16 @@ export default class Inbox extends Component {
                     avatar: 'https://media.licdn.com/mpr/mpr/shrinknp_200_200/p/1/005/08d/1f5/0fe67d4.jpg'
                 },
                 lastMessage: 'Hey man check this out!'
+            },
+            {
+                id: 'fdfasf',
+                user: {
+                    first: 'Emily',
+                    last: 'Sullivan',
+                    email: 'colin@findconvos.com',
+                    avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/kfriedson/128.jpg'
+                },
+                lastMessage: 'Hey check this out!'
             },
             {
                 id: 'fdfasf',
@@ -47,10 +48,10 @@ export default class Inbox extends Component {
             {
                 id: 'fdfasf',
                 user: {
-                    first: 'Red',
-                    last: 'Rainey',
+                    first: 'Charles',
+                    last: 'Lee',
                     email: 'colin@findconvos.com',
-                    avatar: 'https://media.licdn.com/media/p/4/005/097/089/0bebe5a.jpg'
+                    avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/jadlimcaco/128.jpg'
                 },
                 lastMessage: 'Hey man check this out!'
             }]);
@@ -94,9 +95,9 @@ export default class Inbox extends Component {
                                     <View style={styles.newMatchContainer}>
                                         <Text style={{fontSize: 11, textAlign: 'center', color: '#888', padding: 10}}>New Matches</Text>
                                         <View style={styles.newMatchRow}>
-                                            <TouchableOpacity onPress={() => this._onPress({user: {first: 'Charlie'}})}>
-                                                <Image style={styles.newMatchThumnnail} source={{uri: 'https://s3.amazonaws.com/uifaces/faces/twitter/jadlimcaco/128.jpg'}} />
-                                                <Text style={{textAlign: 'center'}}>Charlie</Text>
+                                            <TouchableOpacity onPress={() => this._onPress({user: {first: 'Red'}})}>
+                                                <Image style={styles.newMatchThumnnail} source={{uri: 'https://media.licdn.com/media/p/4/005/097/089/0bebe5a.jpg'}} />
+                                                <Text style={{textAlign: 'center'}}>Red</Text>
                                             </TouchableOpacity>
                                         </View>
                                     </View>

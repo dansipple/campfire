@@ -7,8 +7,8 @@ import {
   StyleSheet
 } from 'react-native';
 import {connect} from 'react-redux';
-import * as counterActions from '../reducers/counter/actions';
-import * as appActions from '../reducers/app/actions';
+import * as counterActions from '../../src/reducers/counter/actions';
+import * as appActions from '../../src/reducers/app/actions';
 
 // this is a traditional React component connected to the redux store
 class LoginScreen extends Component {

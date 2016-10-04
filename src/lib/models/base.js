@@ -2,14 +2,12 @@ import firebase from '../firebase';
 
 export default class Base {
     constructor(data) {
-        this.fb = firebase.app;
-        //this.getCurrentTime = firebase.getCurrentTime;
         this.model = null;
         this.data = data;
     }
 
     db(ref) {
-        return this.fb.database().ref(this.model + (ref ? '/' + ref : ''));
+        return firebase.app.database().ref(this.model + (ref ? '/' + ref : ''));
     }
 
     get(path, orderBy) {

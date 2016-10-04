@@ -3,7 +3,7 @@ import {Provider} from 'react-redux';
 import {Navigation} from 'react-native-navigation';
 import thunk from 'redux-thunk';
 import * as reducers from './reducers';
-import * as appActions from './reducers/app/actions';
+import * as appActions from '../src/reducers/app/actions';
 
 // redux related book keeping
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);

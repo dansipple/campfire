@@ -9,7 +9,7 @@ AppRegistry.registerComponent('ardour', () => App);*/
 
 import App from './src/app';
 
-//const app = new App();
+const app = new App();
 
 
 //AppRegistry.registerComponent('ardour', () => app);

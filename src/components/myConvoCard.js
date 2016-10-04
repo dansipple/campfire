@@ -20,10 +20,10 @@ export default class myConvoCard extends Component {
                         <Text style={ styles.description }>{ cardData.content }</Text>
                     </View>
                     <View style={styles.actionButtons}>
-                        <TouchableHighlight onPress={() => {this.props.router('viewInterested', cardData.id)}} underlayColor="#f1f1f1" style={[styles.actionButton, styles.interestedButton, {borderBottomLeftRadius: 8}]}>
+                        <TouchableHighlight onPress={this.props.viewInterested} underlayColor="#f1f1f1" style={[styles.actionButton, styles.interestedButton, {borderBottomLeftRadius: 8}]}>
                             <Text style={styles.actionButtonText}>View Interested</Text>
                         </TouchableHighlight>
-                        <TouchableHighlight onPress={() => {this.props.router('editConvo', cardData.id)}} underlayColor="#f1f1f1" style={[styles.actionButton, {borderBottomRightRadius: 8}]}>
+                        <TouchableHighlight onPress={this.props.editCard} underlayColor="#f1f1f1" style={[styles.actionButton, {borderBottomRightRadius: 8}]}>
                             <Text style={styles.actionButtonText}>Edit</Text>
                         </TouchableHighlight>
                     </View>

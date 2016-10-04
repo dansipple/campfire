@@ -8,7 +8,7 @@ import {
   Alert
 } from 'react-native';
 import {connect} from 'react-redux';
-import * as counterActions from '../reducers/counter/actions';
+import * as counterActions from '../../src/reducers/counter/actions';
 
 let topBarVisible = true;
 

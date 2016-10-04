@@ -1,10 +1,11 @@
-
 import React, { Component } from 'react';
 import Swiper from 'react-native-swiper';
-import ConvoSwiper from './../components/convoSwiper';
-import MyConvos from './../components/myConvos';
+import ConvoSwiper from './ConvoSwiper';
+import MyConvos from './MyConvos';
 
-export default class Root extends Component {
+import {connect} from 'react-redux';
+
+class Root extends Component {
     static navigatorStyle = {
         navBarHidden: true,
         drawUnderNavBar: true
@@ -13,9 +14,11 @@ export default class Root extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            renderMyConvos: false
+            renderMyConvos: false,
+            swipingEnabled: false
         };
         this.router = this.router.bind(this);
+        this._onMomentumScrollEnd = this._onMomentumScrollEnd.bind(this);
     }
     
 
@@ -24,7 +27,6 @@ export default class Root extends Component {
             case 'messages':
                 this.props.navigator.push({
                     title: 'Messages',
-                    //titleImage: require('../../img/chat.png'),
                     backButtonTitle: '',
                     screen: 'Inbox'
                 });
@@ -49,16 +51,31 @@ export default class Root extends Component {
                 });
                 return;
             case 'myConvos':
-                this.setState({
-                   renderMyConvos: true
-                }, () => {
+                if(!this.state.renderMyConvos) {
+                    this.setState({
+                        renderMyConvos: true
+                    }, () => {
+                        setTimeout(() => {
+                            this.swiper.scrollBy(1);
+                        }, 500);
+                    });
+                } else {
                     this.swiper.scrollBy(1);
-                });
+                }
                 return;
             case 'editConvo':
                 this.props.navigator.showModal({
                     title: 'Edit Convo',
                     screen: 'NewConvo'
+                });
+                return;
+            case 'viewInterested':
+                this.props.navigator.showLightBox({
+                    screen: "ProfileSwiper",
+                    passProps: {},
+                    style: {
+                        backgroundBlur: "dark"
+                    }
                 });
                 return;
             case 'home':
@@ -68,21 +85,63 @@ export default class Root extends Component {
     }
 
 
+
+    _onMomentumScrollEnd(e, state, context) {
+        let enableSwiping = true;
+
+        if(state.index === 0) {
+            enableSwiping = false;
+        }
+
+        this.setState({
+            swipingEnabled: enableSwiping
+        });
+    }
+
     render() {
+        const appState = this.props.appState;
+        const convoSwiperState = this.props.convoSwiperState;
+        const myConvosState = this.props.myConvosState;
+
         return (
             <Swiper
                 ref={component => this.swiper = component}
                 horizontal={false}
                 loop={false}
                 showsPagination={false}
-                scrollEnabled={false}
+                scrollEnabled={this.state.swipingEnabled}
                 scrollsToTop={true}
                 loadMinimal={true}
+                onMomentumScrollEnd={this._onMomentumScrollEnd}
                 index={0}>
 
-                <ConvoSwiper router={this.router} />
-                {this.state.renderMyConvos ? <MyConvos router={this.router} /> : null }
+                <ConvoSwiper
+                    dispatch={this.props.dispatch}
+                    currentUserId={appState.currentUser.id}
+                    networkId={appState.currentNetwork.id}
+                    state={convoSwiperState}
+                    router={this.router}
+                />
+
+                {this.state.renderMyConvos ?
+                    <MyConvos
+                        dispatch={this.props.dispatch}
+                        currentUserId={appState.currentUser.id}
+                        networkId={appState.currentNetwork.id}
+                        state={myConvosState}
+                        router={this.router}
+                    /> : null }
             </Swiper>
         );
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        appState: state.app,
+        convoSwiperState: state.convoSwiper,
+        myConvosState: state.myConvos
+    };
+}
+
+export default connect(mapStateToProps)(Root);

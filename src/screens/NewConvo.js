@@ -91,7 +91,7 @@ export default class ModalScreen extends Component {
                 backgroundColor: '#fff',
                 flex: 1,
                 fontSize: 18,
-                lineHeight: 23,
+                lineHeight: 26,
                 color: '#666',
                 padding: 15
             },
@@ -196,6 +196,7 @@ export default class ModalScreen extends Component {
                         <Picker.Item label="food" value="food" />
                         <Picker.Item label="music" value="music" />
                         <Picker.Item label="business" value="business" />
+                        <Picker.Item label="travel" value="travel" />
                     </Picker>
                     <TouchableHighlight
                         style={styles.doneButton}

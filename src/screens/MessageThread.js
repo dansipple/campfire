@@ -46,13 +46,13 @@ export default class MessageThread extends Component {
                     },
                     card: {
                         creator: {
-                            first: 'Red',
-                            last: 'Rainey',
-                            title: 'Film Director',
-                            avatar: 'https://media.licdn.com/media/p/4/005/097/089/0bebe5a.jpg'
+                            first: 'Dan',
+                            last: 'Sipple',
+                            title: 'Cofounder at Convos Inc.',
+                            avatar: 'https://media.licdn.com/mpr/mpr/shrinknp_200_200/p/4/005/078/320/2a2a329.jpg'
                         },
-                        content: 'I\'d love to talk about space exploration. Mars anyone?',
-                        category: 'Science'
+                        content: 'Does anyone here go to burning man? Show me the ropes?',
+                        category: 'travel'
                     }
                 }
             ]
@@ -104,7 +104,7 @@ export default class MessageThread extends Component {
                         padding: 6,
                         backgroundColor: props.currentMessage.card ? '#fff' : '#f0f0f0',
                         marginRight: props.currentMessage.card ? 5 : 60,
-                        paddingBottom: props.currentMessage.card && this.state.messages.length == 1 ? 150 : 6
+                        paddingBottom: props.currentMessage.card && this.state.messages.length == 1 ? 60 : 6
                     }
                 }}
             />

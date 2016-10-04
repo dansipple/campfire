@@ -1,178 +1,115 @@
-
 import React, { Component } from 'react';
-import { TouchableHighlight, Image, StyleSheet, Dimensions, ListView, Text, View } from 'react-native';
+import { TouchableOpacity, StyleSheet, ListView, ScrollView, Image, View, Text} from 'react-native';
+import moment from 'moment';
 
-import LinearGradient from 'react-native-linear-gradient';
+import MyConvoCard from './../components/myConvoCard';
+import * as myConvosActions from '../reducers/myConvos/actions';
 
-import UserCardController from '../lib/controllers/userCard';
-
-import Colors from '../lib/utils/colors';
 
 export default class MyConvos extends Component {
-
-    static navigatorButtons = {
-        rightButtons: [
-            {
-                title: 'New',
-                id: 'new'
-            }
-        ]
-    };
-    static navigatorStyle = {
-        navBarNoBorder: false,
-        navBarButtonColor: '#777',
-        nabBarTextColor: '#555',
-        statusBarTextColorScheme: 'dark'
-    };
 
     constructor(props) {
         super(props);
         var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
         this.state = {
-            conversations: ds
+            dataSource: ds
         };
-
         this._isMounted = false;
-
         this._renderRow = this._renderRow.bind(this);
 
-        this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
-
-        //this.selectConversation = this.selectConversation.bind(this);
+        this.loadConvos = this.loadConvos.bind(this);
     }
 
-    onNavigatorEvent(event) {
-        if (event.id == 'new') {
-            this.props.navigator.showModal({
-                title: 'New Convo',
-                //backButtonTitle: 'Back',
-                screen: 'NewConvo'
-            });
-        }
-    }
-
-    _renderRow(convoData, sectionID, rowID) {
-        let convoContentColor = StyleSheet.create({
-            convoContentColor: {
-                backgroundColor: Colors.categories[convoData.category]
-            }
-        });
-
-        return (
-            <TouchableHighlight onPress={() => this._onPress(convoData)} underlayColor="#f6f6f6">
-                <View style={styles.convo}>
-                    <View style={styles.convoContent}>
-                        <Text style={styles.convoCategory}>#{convoData.category}</Text>
-                        <Text style={styles.convoContentText}>{convoData.content}</Text>
-                    </View>
-                    <View style={styles.interestedContainer}>
-                        <Image style={styles.interestedImage} source={{ uri: 'https://media.licdn.com/mpr/mpr/shrinknp_200_200/p/1/005/08d/1f5/0fe67d4.jpg' }} />
-                        <Image style={styles.interestedImage} source={{ uri: 'https://media.licdn.com/media/p/4/005/097/089/0bebe5a.jpg' }} />
-                    </View>
-                </View>
-            </TouchableHighlight>
-        );
+    loadConvos() {
+        this.props.dispatch(myConvosActions.loadConvos(this.props.currentUserId, this.props.networkId));
     }
 
     componentWillMount() {
-        this.loadCards();
+        this.loadConvos();
     }
 
-    loadCards() {
-        this.setState({
-            isLoading: true
-        }, () => {
-            UserCardController.getCards('-KPzFJ697NbkNZoHVBR7', '-KPzFYEKdj3yRQn3teTP').then(
-                (cards) => {
-                    cards.reverse();
-                    let ds = this.state.conversations.cloneWithRows(cards);
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.state.convos !== this.props.state.convos) {
+            this.setState({
+                dataSource: this.state.dataSource.cloneWithRows(nextProps.state.convos)
+            })
+        }
+    }
 
-                    this.setState({
-                        conversations: ds,
-                        isLoading: false
-                    })
-                }
-            ).catch(
-                (err) => {
-                    console.log(err);
-                    this.setState({
-                        isLoading: false
-                    })
-                }
-            );
-        });
-
+    _renderRow(convoData) {
+        const updatedTime = moment(convoData.createdAt).format('MMM D');
+        return (
+            <View>
+                <Text style={styles.timestamp}>{updatedTime}</Text>
+                <MyConvoCard
+                    cardData={convoData} 
+                    router={this.props.router}
+                    viewInterested={() => {this.props.router('viewInterested', convoData.id)}}
+                    editCard={() => {this.props.router('editConvo', convoData.id)}}
+                />
+            </View>
+        );
     }
 
     render() {
         return (
-            <LinearGradient colors={['#fff', '#ecf0f9']} style={styles.viewer}>
+            <View style={{flex: 1, backgroundColor: '#eee'}}>
+                <View style={[styles.header, styles.headerWhite]}>
+                    <TouchableOpacity onPress={() => this.props.router('home')}>
+                        <Image style={styles.headerIcon} source={require('../../img/settings.png')}/>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.props.router('home')}>
+                        <Text style={{color: '#666', fontSize: 16, fontWeight: 'bold'}}>Your Convos</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.props.router('newConvo')}>
+                        <Text>New</Text>
+                    </TouchableOpacity>
+                </View>
                 <ListView
-                    dataSource={this.state.conversations}
+                    dataSource={this.state.dataSource}
                     renderRow={this._renderRow}
-                    style={{ flex: 1, padding: 10 }}
+                    style={{ flex: 1, padding: 25 }}
                 />
-            </LinearGradient>
-        );
+
+            </View>
+        )
     }
-    _onPress(conversationData) {
-        this.props.navigator.showLightBox({
-            screen: "ProfileSwiper", // unique ID registered with Navigation.registerScreen
-            passProps: {}, // simple serializable object that will pass as props to the lightbox (optional)
-            style: {
-                backgroundBlur: "dark" // 'dark' / 'light' / 'xlight' / 'none' - the type of blur on the background
-            }
-        });
-    }
-}
+};
 
 const styles = StyleSheet.create({
-    viewer: {
-        flex: 1,
-        flexDirection: 'column'
-    },
-    convo: {
-        marginBottom: 15
-    },
-    convoCategory: {
-        color: '#fff',
-        fontSize: 16,
-        paddingBottom: 10
-    },
-    convoContent: {
+    header: {
         backgroundColor: '#3498db',
-        borderTopLeftRadius: 8,
-        borderTopRightRadius: 8,
-        paddingTop: 15,
-        paddingBottom: 35,
-        paddingLeft: 15,
-        paddingRight: 15
-    },
-    convoContentText: {
-        color: '#fff',
-        fontSize: 20,
-        lineHeight: 25
-    },
-    interestedContainer: {
+        padding: 15,
+        paddingTop: 30,
         flexDirection: 'row',
-        flex: 1,
-        backgroundColor: '#fff',
-        borderBottomLeftRadius: 8,
-        borderBottomRightRadius: 8,
-        borderColor: '#ddd',
-        borderWidth: 1,
-        borderTopWidth: 0,
-        padding: 10,
-        justifyContent: 'center'
+        justifyContent: 'space-between'
     },
-    interestedImage: {
-        height: 46,
-        width: 46,
-        borderRadius: 23,
-        marginRight: -23,
-        resizeMode: 'contain',
-        borderColor: '#ddd',
-        borderWidth: 1
+    headerWhite: {
+        backgroundColor: '#fff',
+        borderBottomWidth: 1,
+        borderBottomColor: '#ddd',
+        padding: 10,
+        paddingTop: 30
+    },
+    headerText: {
+        color: '#fff',
+        fontSize: 15,
+        lineHeight: 20
+    },
+    headerIcon: {
+        tintColor: '#fff'
+    },
+    interestedThumbnail: {
+        height: 60,
+        width: 60,
+        borderRadius: 30,
+        margin: 5
+    },
+    timestamp: {
+        fontSize: 13,
+        textAlign: 'center',
+        paddingBottom: 10,
+        color: '#888'
     }
 });

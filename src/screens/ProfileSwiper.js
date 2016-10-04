@@ -1,95 +1,36 @@
 import React, { Component } from 'react';
-import { StyleSheet, ScrollView, View, Text, Dimensions, TouchableOpacity } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import { Image, StyleSheet, ScrollView, View, Text, Dimensions, TouchableOpacity } from 'react-native';
 
 import { Spinner, CardSwiper } from 'native-base';
 
-import SwiperController from '../lib/controllers/swiper';
+import Swiper from 'react-native-swiper';
 
 import Profile from './../components/profile';
 
-export default class ConvoSwiper extends Component {
-    static navigatorButtons = {
-        leftButtons: [{
-            icon: require('../../img/three_selected.png'),
-            id: 'menu'
-        }],
-        rightButtons: [
-            {
-                icon: require('../../img/more.png'),
-                id: 'more'
-            },
-            {
-                icon: require('../../img/chat.png'),
-                id: 'chat'
-            }
-        ]
-    };
-    static navigatorStyle = {
-        navBarButtonColor: '#777',
-        navBarNoBorder: true,
-        drawUnderNavBar: true,
-        statusBarHidden: true
-    };
+export default class ProfileSwiper extends Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
             isLoading: false,
-            activeCard: 0,
+            activeCard: 1,
             cardDeck: [],
             err: false
         };
 
-        this.swipeLeft = this.swipeLeft.bind(this);
-        this.swipeRight = this.swipeRight.bind(this);
-    }
-
-    onNavigatorEvent(event) {
-        if (event.id == 'menu') {
-            /*
-             this.props.navigator.toggleDrawer({
-             side: 'left', // the side of the drawer since you can have two, 'left' / 'right'
-             animated: true // does the toggle have transition animation or does it happen immediately (optional)
-             });
-             */
-            this.props.navigator.push({
-                title: 'Your Convos',
-                backButtonTitle: 'Back',
-                screen: 'MyConvos'
-            });
-        }
-        if (event.id == 'more') {
-            this.props.navigator.toggleDrawer({
-                side: 'right',
-                animated: true
-            });
-        }
-        if (event.id == 'chat') {
-            this.props.navigator.push({
-                title: 'Messages',
-                backButtonTitle: 'Back',
-                screen: 'Inbox'
-            });
-        }
-    }
-
-    swipeLeft() {
-        this.nextCard();
-    }
-
-    swipeRight() {
-        this.nextCard();
+        this.pass = this.pass.bind(this);
+        this.match = this.match.bind(this);
     }
 
     nextCard() {
-        if(this.state.activeCard < this.state.cardDeck.length - 1) {
+        if(this.state.activeCard < this.state.cardDeck.length) {
             this.setState({
                 activeCard: this.state.activeCard + 1
-            })
+            });
+            this.swiper.scrollBy(1);
         } else {
-            this.loadCards();
+            this.props.navigator.dismissLightBox();
         }
     }
 
@@ -113,7 +54,7 @@ export default class ConvoSwiper extends Component {
             ];
             this.setState({
                 cardDeck: profileCards,
-                activeCard: 0,
+                activeCard: 1,
                 isLoading: false
             })
         });
@@ -124,7 +65,17 @@ export default class ConvoSwiper extends Component {
         this.loadCards();
     }
 
+    pass() {
+        this.nextCard();
+    }
+
+    match() {
+        this.nextCard();
+    }
+
     render() {
+
+        const that = this;
 
         if(this.state.isLoading) {
             return (
@@ -135,39 +86,68 @@ export default class ConvoSwiper extends Component {
         } else {
             let {height, width} = Dimensions.get('window');
             return (
-                <View style={{ width: width, height: height - 30 }}>
+                <View style={{ width: width, height: height }}>
                     <TouchableOpacity style={styles.top} onPress={() => this.props.navigator.dismissLightBox()}>
-                        <Text style={styles.count}>1 of 8</Text>
+                        <Text style={styles.count}>{this.state.activeCard} of {this.state.cardDeck.length}</Text>
+                        <Image style={styles.closeButton} source={require('../../img/close.png')} />
                     </TouchableOpacity>
+                        <Swiper
+                            ref={component => this.swiper = component}
+                            horizontal={true}
+                            loop={false}
+                            scrollEnabled={false}
+                            showsPagination={false}
+                            loadMinimal={true}
+                            index={0}>
 
-                    <View style={{padding: 5, paddingTop: 60, flex: 1, zIndex: 2}}>
-                        <CardSwiper
-                            onSwipeRight={this.swipeRight}
-                            onSwipeLeft={this.swipeLeft}
-                        >
-                            <Profile profileData={this.state.cardDeck[this.state.activeCard]}/>
-                        </CardSwiper>
-                    </View>
+                            {this.state.cardDeck.map(function(card, i){
+                                return(
+                                    <View key={i} style={{height: height - 50}}>
+                                        <Profile convos={cards[i]} pass={that.pass} match={that.match} profileData={card}/>
+                                    </View>
+                                );
+                            })}
+                        </Swiper>
                 </View>
             );
         }
     }
 }
 
+const cards = [
+    [
+        {
+            category: 'art',
+            content: 'I want to learn about art. Anyone want to checkout some new exhibits at the MET?'
+        },
+        {
+            category: 'business',
+            content: 'I want to learn about investing. Now that I have a steady income I want to be smart about it. Can anyone help me?'
+        },
+    ],
+    [
+        {
+            category: 'science',
+            content: 'Was pangea a real thing? What do you think the earth looked like a million years ago?'
+        },
+        {
+            category: 'travel',
+            content: 'I\'m planning a backpacking trip through South America. Am I following in your footsteps? Any tips?'
+        }
+    ]
+]
+
 const styles = StyleSheet.create({
     top: {
-        padding: 10 ,
-        zIndex: 1
-        //flex: 1,
-        //flexDirection: 'row'
+        padding: 20,
+        paddingBottom: 5,
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     },
     closeButton: {
-        color: '#fff',
-        fontSize: 25,
-        //alignSelf: 'flex-start'
+        tintColor: '#fff',
     },
     count: {
-        color: '#fff',
-        //alignSelf: 'flex-end'
+        color: '#fff'
     }
 });

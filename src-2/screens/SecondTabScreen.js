@@ -9,7 +9,7 @@ import {
   Alert
 } from 'react-native';
 import { connect } from 'react-redux';
-import * as counterActions from '../reducers/counter/actions';
+import * as counterActions from '../../src/reducers/counter/actions';
 
 // this is a traditional React component connected to the redux store
 class SecondTabScreen extends Component {

@@ -6,17 +6,17 @@ import Inbox from './Inbox';
 import Settings from './Settings';
 import NewConvo from './NewConvo';
 import ProfileSwiper from './ProfileSwiper';
-import SideMenu from './SideMenu';
+import Login from './Login';
 import ChooseNetwork from './ChooseNetwork';
 
 // register all screens of the app (including internal ones)
-export function registerScreens() {
-    Navigation.registerComponent('Root', () => Root);
-    Navigation.registerComponent('Inbox', () => Inbox);
-    Navigation.registerComponent('MessageThread', () => MessageThread);
-    Navigation.registerComponent('Settings', () => Settings);
-    Navigation.registerComponent('NewConvo', () => NewConvo);
-    Navigation.registerComponent('ProfileSwiper', () => ProfileSwiper);
-    Navigation.registerComponent('SideMenu', () => SideMenu);
-    Navigation.registerComponent('ChooseNetwork', () => ChooseNetwork);
-};
+export function registerScreens(store, Provider) {
+    Navigation.registerComponent('Root', () => Root, store, Provider);
+    Navigation.registerComponent('Inbox', () => Inbox, store, Provider);
+    Navigation.registerComponent('MessageThread', () => MessageThread, store, Provider);
+    Navigation.registerComponent('Settings', () => Settings, store, Provider);
+    Navigation.registerComponent('NewConvo', () => NewConvo, store, Provider);
+    Navigation.registerComponent('ProfileSwiper', () => ProfileSwiper, store, Provider);
+    Navigation.registerComponent('Login', () => Login, store, Provider);
+    Navigation.registerComponent('ChooseNetwork', () => ChooseNetwork, store, Provider);
+}
