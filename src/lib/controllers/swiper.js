@@ -2,6 +2,8 @@
 import Card from '../models/card';
 import UserCardDeckPointer from '../models/userCardDeckPointer';
 
+import Swipe from '../models/swipe';
+
 import Helpers from './../utils/helpers';
 
 class SwiperController {
@@ -24,6 +26,12 @@ class SwiperController {
     getUserPointer(userId, networkId) {
         UserCardDeckPointer.get(`${userId}/${networkId}/pointer`).then((pointer) => {return pointer})
             .catch((err) => { console.log(err) });
+    }
+
+    swipe(userId, networkId, cardId, decision) {
+        return new Promise((resolve, reject) => {
+            Swipe.set(`${networkId}/${cardId}/${userId}`, decision).then(resolve).catch(reject);
+        });
     }
 
 }

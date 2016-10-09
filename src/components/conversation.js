@@ -4,7 +4,7 @@ import { Image, StyleSheet, Dimensions } from 'react-native';
 
 import { Card, CardItem, Thumbnail, Text, View } from 'native-base';
 
-export default class conversation extends Component {
+export default class Conversation extends Component {
 
     constructor(props) {
         super(props);

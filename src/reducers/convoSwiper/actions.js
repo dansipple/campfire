@@ -2,11 +2,13 @@ import * as types from './actionTypes';
 
 import SwiperController from '../../lib/controllers/swiper';
 
-export function loadConvos(userId, networkId) {
+export function loadConvos() {
     return async (dispatch, getState) => {
+        const {app} = getState();
+
         dispatch(fetchConvos());
 
-        SwiperController.getCards(userId, networkId).then(
+        SwiperController.getCards(app.currentUser.id, app.currentNetwork.id).then(
             (cards) => {dispatch(receivedConvos(cards))}
         ).catch(
             (err) => {dispatch(loadingError(err))}
@@ -26,23 +28,29 @@ export function loadingError(err) {
     return {type: types.LOADING_ERROR, error: err};
 }
 
-export function nextCard() {
+function checkPosition() {
     return (dispatch, getState) => {
-        const {convoSwiper, app} = getState();
-        (convoSwiper.activeCard === convoSwiper.cardDeck.length - 1) ?
-            dispatch(loadConvos(app.currentUser.id, app.currentNetwork.id)) : {type: types.NEXT_CARD};
-    }
-}
-export function swipeLeft(userId, networkId) {
-    return (dispatch, getState) => {
+        const {convoSwiper} = getState();
 
-        dispatch(nextCard());
+        if (convoSwiper.activeCard === convoSwiper.cardDeck.length - 1) {
+            dispatch(loadConvos());
+        }
     }
 }
 
-export function swipeRight(userId, networkId) {
-    return (dispatch, getState) => {
+function nextCard() {
+    return {type: types.NEXT_CARD};
+}
 
-        dispatch(nextCard());
+export function swipe(cardId, decision) {
+    return (dispatch, getState) => {
+        const {app} = getState();
+
+        SwiperController.swipe(app.currentUser.id, app.currentNetwork.id, cardId, decision).then(() => {
+            dispatch(checkPosition());
+            dispatch(nextCard());
+        }).catch(
+            (err) => {dispatch(loadingError(err))}
+        );
     }
 }

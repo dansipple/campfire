@@ -5,7 +5,7 @@ import { GiftedChat, Actions, Bubble } from 'react-native-gifted-chat';
 
 import { Container, Content, Thumbnail, Text, Button, Icon, List, ListItem, View } from 'native-base';
 
-import Card from './../components/card.js';
+import Card from './../components/Card';
 
 export default class MessageThread extends Component {
 
@@ -144,7 +144,6 @@ export default class MessageThread extends Component {
                     }}
                     renderCustomView={this.renderCustomView}
                     renderBubble={this.renderBubble}
-                    renderActions={this.renderCustomActions}
                     renderFooter={this.renderFooter}
                     renderTime={() => {return null}}
                     renderAvatar={() => {return null}}

@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { Image, StyleSheet, Text, View, Dimensions } from 'react-native';
 
-export default class card extends Component {
+export default class Card extends Component {
 
     constructor(props) {
         super(props);

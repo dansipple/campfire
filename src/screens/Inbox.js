@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { TouchableHighlight, TouchableOpacity, Image, StyleSheet, Dimensions, ListView, Text, View } from 'react-native';
 
-import Conversation from '../components/conversation';
+import Conversation from '../components/Conversation';
 
 export default class Inbox extends Component {
 

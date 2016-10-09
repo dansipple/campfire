@@ -19,6 +19,13 @@ export default class Base {
         });
     }
 
+    subscribe(path, cb) {
+        let ref = this.db(path ? path : '');
+        ref.on('child_added', (snapshot) => {
+            cb(snapshot)
+        });
+    }
+
     update(path, data) {
         return new Promise((resolve, reject) => {
             data.updatedAt = firebase.getCurrentTime();
@@ -45,6 +52,13 @@ export default class Base {
             let ref = this.db(path ? path : '');
             ref.set(data).then((ref) => {resolve(ref)})
                 .catch( (err) => {reject(new Error('Write failed: ' + err.code))});
+        });
+    }
+
+    remove(path){
+        return new Promise((resolve, reject) => {
+            let ref = this.db(path ? path : undefined);
+            ref.update({deletedAt: firebase.getCurrentTime()}).then(resolve).catch(reject);
         });
     }
 

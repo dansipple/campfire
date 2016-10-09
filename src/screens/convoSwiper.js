@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { TouchableOpacity, StyleSheet, Image, View, Text} from 'react-native';
-import { Spinner, DeckSwiper } from 'native-base';
-import Card from './../components/card';
+
+import Card from './../components/Card';
+import DeckSwiper from './../components/DeckSwiper';
 
 import * as convoSwiperActions from '../reducers/convoSwiper/actions';
 
@@ -20,42 +21,47 @@ export default class ConvoSwiper extends Component {
     }
 
     swipeLeft() {
-        this.props.dispatch(convoSwiperActions.swipeLeft(this.props.currentUserId, this.props.networkId));
+        this.props.dispatch(convoSwiperActions.swipe(this.props.state.cardDeck[this.props.state.activeCard].id, false));
     }
 
     swipeRight() {
-        this.props.dispatch(convoSwiperActions.swipeRight(this.props.currentUserId, this.props.networkId));
+        this.props.dispatch(convoSwiperActions.swipe(this.props.state.cardDeck[this.props.state.activeCard].id, true));
     }
 
     loadConvos() {
-        this.props.dispatch(convoSwiperActions.loadConvos(this.props.currentUserId, this.props.networkId));
+        this.props.dispatch(convoSwiperActions.loadConvos());
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.loadConvos();
     }
 
     renderLoader() {
         return (
-            <View style={ {flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
                 <Image source={require('../../img/ripple.gif')} />
             </View>
         );
     }
 
     renderDeck() {
+        const state = this.props.state;
+
         return (
-            <DeckSwiper
-                onSwipeRight={this.props.swipeRight}
-                onSwipeLeft={this.props.swipeLeft}
-                dataSource={this.props.state.cardDeck}
-                renderItem={(card)=> {
-                    return (
-                        <Card cardData={card}/>
-                    )
-                }}
-            >
-            </DeckSwiper>
+            <View style={{flex: 1}}>
+                <DeckSwiper
+                    onSwipeRight={this.swipeRight}
+                    onSwipeLeft={this.swipeLeft}
+                    topCard={state.cardDeck[state.activeCard]}
+                    bottomCard={state.cardDeck[state.activeCard + 1]}
+                    renderItem={(card)=> {
+                        return (
+                            <Card cardData={card}/>
+                        )
+                    }}
+                >
+                </DeckSwiper>
+            </View>
         );
     }
 
@@ -68,7 +74,7 @@ export default class ConvoSwiper extends Component {
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => this.props.router('network')}>
                         <View style={{alignItems: 'center', flexDirection: 'row'}}>
-                            <Text style={styles.headerText}>Boston Beta</Text>
+                            <Text style={styles.headerText}>{this.props.appState.currentNetwork.name}</Text>
                             <Image style={styles.headerDownArrow}
                                    source={require('../../img/down-arrow.png')}/>
                         </View>
@@ -131,7 +137,7 @@ const styles = StyleSheet.create({
         margin: 5
     },
     myConvosButton: {
-        padding: 15,
+        padding: 5,
         alignItems: 'center'
     }
 });

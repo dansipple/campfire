@@ -1,12 +1,15 @@
 import * as types from './actionTypes';
 
-import UserCardController from '../../lib/controllers/userCard';
+import MyConvosController from '../../lib/controllers/myConvos';
+import CardController from '../../lib/controllers/card';
 
-export function loadConvos(userId, networkId) {
-    return async (dispatch, getState) => {
+export function loadConvos() {
+    return (dispatch, getState) => {
+        const {app} = getState();
+
         dispatch(fetchConvos());
 
-        UserCardController.getCards(userId, networkId).then(
+        MyConvosController.getCards(app.currentUser.id, app.currentNetwork.id).then(
             (cards) => {
                 cards.reverse();
                 dispatch(receivedConvos(cards));
@@ -27,4 +30,40 @@ export function receivedConvos(convos) {
 
 export function loadingError(err) {
     return {type: types.LOADING_ERROR, error: err};
+}
+
+export function createConvo(content, category) {
+    return (dispatch, getState) => {
+        const {app} = getState();
+
+        CardController.create(app.currentUser.id, app.currentNetwork.id, content, category)
+            .then(() => {
+                dispatch(loadConvos());
+            }).catch((err) => {dispatch(loadingError(err))}
+        );
+    }
+}
+
+export function updateConvo(cardId, content, category) {
+    return (dispatch, getState) => {
+        const {app} = getState();
+
+        CardController.update(app.currentUser.id, app.currentNetwork.id, cardId, content, category)
+            .then(() => {
+                dispatch(loadConvos());
+            }).catch((err) => {dispatch(loadingError(err))}
+        );
+    }
+}
+
+export function deleteConvo(cardId) {
+    return (dispatch, getState) => {
+        const {app} = getState();
+
+        CardController.remove(app.currentUser.id, app.currentNetwork.id, cardId)
+            .then(() => {
+                dispatch(loadConvos());
+            }).catch((err) => {dispatch(loadingError(err))}
+        );
+    }
 }

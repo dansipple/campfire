@@ -57,7 +57,7 @@ class Root extends Component {
                     }, () => {
                         setTimeout(() => {
                             this.swiper.scrollBy(1);
-                        }, 500);
+                        }, 100);
                     });
                 } else {
                     this.swiper.scrollBy(1);
@@ -66,13 +66,18 @@ class Root extends Component {
             case 'editConvo':
                 this.props.navigator.showModal({
                     title: 'Edit Convo',
-                    screen: 'NewConvo'
+                    screen: 'NewConvo',
+                    passProps: {
+                        card: data
+                    }
                 });
                 return;
             case 'viewInterested':
                 this.props.navigator.showLightBox({
                     screen: "ProfileSwiper",
-                    passProps: {},
+                    passProps: {
+                        card: data
+                    },
                     style: {
                         backgroundBlur: "dark"
                     }
@@ -117,17 +122,14 @@ class Root extends Component {
 
                 <ConvoSwiper
                     dispatch={this.props.dispatch}
-                    currentUserId={appState.currentUser.id}
-                    networkId={appState.currentNetwork.id}
                     state={convoSwiperState}
+                    appState={appState}
                     router={this.router}
                 />
 
                 {this.state.renderMyConvos ?
                     <MyConvos
                         dispatch={this.props.dispatch}
-                        currentUserId={appState.currentUser.id}
-                        networkId={appState.currentNetwork.id}
                         state={myConvosState}
                         router={this.router}
                     /> : null }

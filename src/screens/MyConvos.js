@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { TouchableOpacity, StyleSheet, ListView, ScrollView, Image, View, Text} from 'react-native';
 import moment from 'moment';
 
-import MyConvoCard from './../components/myConvoCard';
+import MyConvoCard from './../components/MyConvoCard';
 import * as myConvosActions from '../reducers/myConvos/actions';
 
 
@@ -22,7 +22,7 @@ export default class MyConvos extends Component {
     }
 
     loadConvos() {
-        this.props.dispatch(myConvosActions.loadConvos(this.props.currentUserId, this.props.networkId));
+        this.props.dispatch(myConvosActions.loadConvos());
     }
 
     componentWillMount() {
@@ -45,8 +45,8 @@ export default class MyConvos extends Component {
                 <MyConvoCard
                     cardData={convoData} 
                     router={this.props.router}
-                    viewInterested={() => {this.props.router('viewInterested', convoData.id)}}
-                    editCard={() => {this.props.router('editConvo', convoData.id)}}
+                    viewInterested={() => {this.props.router('viewInterested', convoData)}}
+                    editCard={() => {this.props.router('editConvo', convoData)}}
                 />
             </View>
         );

@@ -9,7 +9,7 @@ import Helpers from './../utils/helpers';
 
 class CardController {
 
-    create(networkId, content, category, creatorId){
+    create(creatorId, networkId, content, category){
         return new Promise((resolve, reject) => {
             User.get(creatorId).then((creatorUserObj) => {
                 creatorUserObj.uid = creatorId;
@@ -21,7 +21,7 @@ class CardController {
                         creator: creatorUserObj
                     }
                 ).then((ref) => {
-                    UserCard.set(networkId+'/'+creatorId+'/'+ref.key, {
+                    UserCard.set(`${networkId}/${creatorId}/${ref.key}`, {
                         category: category,
                         content: content
                     })
@@ -29,6 +29,37 @@ class CardController {
             }, (err) => {
                 console.log(err)
             });
+        });
+    }
+
+    update(creatorId, networkId, cardId, content, category){
+        return new Promise((resolve, reject) => {
+            User.get(creatorId).then((creatorUserObj) => {
+                creatorUserObj.uid = creatorId;
+
+                Card.update(`${networkId}/${cardId}`,
+                    {
+                        category: category,
+                        content: content,
+                        creator: creatorUserObj
+                    }
+                ).then(() => {
+                    UserCard.update(`${networkId}/${creatorId}/${cardId}`, {
+                        category: category,
+                        content: content
+                    })
+                }).then(resolve).catch(reject);
+            }, (err) => {
+                console.log(err)
+            });
+        });
+    }
+
+    remove(creatorId, networkId, cardId) {
+        return new Promise((resolve, reject) => {
+            Card.remove(`${networkId}/${cardId}`).then(() => {
+                UserCard.remove(`${networkId}/${creatorId}/${cardId}`).then(resolve).catch(reject);
+            })
         });
     }
 

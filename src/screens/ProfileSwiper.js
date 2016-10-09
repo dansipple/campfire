@@ -1,26 +1,28 @@
 import React, { Component } from 'react';
 import { Image, StyleSheet, ScrollView, View, Text, Dimensions, TouchableOpacity } from 'react-native';
 
-import { Spinner, CardSwiper } from 'native-base';
-
 import Swiper from 'react-native-swiper';
 
-import Profile from './../components/profile';
+import Profile from './../components/Profile';
 
-export default class ProfileSwiper extends Component {
+import {connect} from 'react-redux';
+
+import * as profileSwiperActions from '../reducers/profileSwiper/actions';
+
+class ProfileSwiper extends Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
-            isLoading: false,
-            activeCard: 1,
             cardDeck: [],
-            err: false
+            activeCard: 1,
+            isLoading: false
         };
 
         this.pass = this.pass.bind(this);
-        this.match = this.match.bind(this);
+        this.connect = this.connect.bind(this);
+        this.loadProfiles = this.loadProfiles.bind(this);
     }
 
     nextCard() {
@@ -34,7 +36,10 @@ export default class ProfileSwiper extends Component {
         }
     }
 
-    loadCards() {
+    loadProfiles() {
+        this.props.dispatch(profileSwiperActions.loadProfiles(this.props.card.id));
+
+        /*
         this.setState({
             isLoading: true
         }, () => {
@@ -58,58 +63,58 @@ export default class ProfileSwiper extends Component {
                 isLoading: false
             })
         });
-
+        */
     }
 
     componentWillMount() {
-        this.loadCards();
+        this.loadProfiles();
     }
 
     pass() {
         this.nextCard();
     }
 
-    match() {
+    connect() {
         this.nextCard();
     }
 
     render() {
-
         const that = this;
 
-        if(this.state.isLoading) {
-            return (
-                <View style={ styles.cardViewer }>
-                    <Spinner color="#666" />
-                </View>
-            )
-        } else {
-            let {height, width} = Dimensions.get('window');
+        console.log(this.props.state.profiles);
+
+        let {height, width} = Dimensions.get('window');
+        if(this.props.state.profiles.length) {
             return (
                 <View style={{ width: width, height: height }}>
                     <TouchableOpacity style={styles.top} onPress={() => this.props.navigator.dismissLightBox()}>
-                        <Text style={styles.count}>{this.state.activeCard} of {this.state.cardDeck.length}</Text>
-                        <Image style={styles.closeButton} source={require('../../img/close.png')} />
+                        <Text style={styles.count}>{this.props.state.activeProfile}
+                            of {this.props.state.profiles.length}</Text>
+                        <Image style={styles.closeButton} source={require('../../img/close.png')}/>
                     </TouchableOpacity>
-                        <Swiper
-                            ref={component => this.swiper = component}
-                            horizontal={true}
-                            loop={false}
-                            scrollEnabled={false}
-                            showsPagination={false}
-                            loadMinimal={true}
-                            index={0}>
+                    <Swiper
+                        ref={component => this.swiper = component}
+                        horizontal={true}
+                        loop={false}
+                        scrollEnabled={false}
+                        showsPagination={false}
+                        loadMinimal={true}
+                        index={0}
+                    >
 
-                            {this.state.cardDeck.map(function(card, i){
-                                return(
-                                    <View key={i} style={{height: height - 50}}>
-                                        <Profile convos={cards[i]} pass={that.pass} match={that.match} profileData={card}/>
-                                    </View>
-                                );
-                            })}
-                        </Swiper>
+                        {this.props.state.profiles.map(function (card, i) {
+                            return (
+                                <View key={i} style={{height: height - 50}}>
+                                    <Profile convos={cards[i]} pass={that.pass} connect={that.connect}
+                                             profileData={card}/>
+                                </View>
+                            );
+                        })}
+                    </Swiper>
                 </View>
             );
+        } else {
+            return <View />
         }
     }
 }
@@ -135,7 +140,7 @@ const cards = [
             content: 'I\'m planning a backpacking trip through South America. Am I following in your footsteps? Any tips?'
         }
     ]
-]
+];
 
 const styles = StyleSheet.create({
     top: {
@@ -145,9 +150,17 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     closeButton: {
-        tintColor: '#fff',
+        tintColor: '#fff'
     },
     count: {
         color: '#fff'
     }
 });
+
+function mapStateToProps(state) {
+    return {
+        state: state.profileSwiper
+    };
+}
+
+export default connect(mapStateToProps)(ProfileSwiper);
