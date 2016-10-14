@@ -20,15 +20,15 @@ export function loadConvos() {
     };
 }
 
-export function fetchConvos() {
+function fetchConvos() {
     return {type: types.FETCH_CONVOS};
 }
 
-export function receivedConvos(convos) {
+function receivedConvos(convos) {
     return {type: types.RECEIVE_CONVOS, convos: convos};
 }
 
-export function loadingError(err) {
+function loadingError(err) {
     return {type: types.LOADING_ERROR, error: err};
 }
 

@@ -66,12 +66,12 @@ export default class MyConvos extends Component {
                         <Text>New</Text>
                     </TouchableOpacity>
                 </View>
-                <ListView
-                    dataSource={this.state.dataSource}
-                    renderRow={this._renderRow}
-                    style={{ flex: 1, padding: 25 }}
-                />
-
+                {this.props.state.convos.length ?
+                    (<ListView
+                        dataSource={this.state.dataSource}
+                        renderRow={this._renderRow}
+                        style={{ flex: 1, padding: 25 }}
+                    />) : (<View />)}
             </View>
         )
     }

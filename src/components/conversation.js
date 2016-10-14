@@ -13,7 +13,7 @@ export default class Conversation extends Component {
     render() {
         if (this.props.conversationData) {
             let conversationData = this.props.conversationData || {};
-            let user = conversationData.user || {};
+            let user = conversationData.participant || {};
             return (
                 <View style={styles.conversation}>
                     <View style={styles.thumbnail}>
@@ -21,7 +21,7 @@ export default class Conversation extends Component {
                     </View>
                     <View style={styles.content}>
                         <View style={styles.nameAndTime}>
-                            <Text style={styles.name}>{this.props.conversationData.user.first} {this.props.conversationData.user.last}</Text>
+                            <Text style={styles.name}>{user.first} {user.last}</Text>
                         </View>
                         <Text style={styles.message}>{this.props.conversationData.lastMessage}</Text>
                     </View>

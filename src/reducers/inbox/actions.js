@@ -1,30 +1,34 @@
 import * as types from './actionTypes';
 
-import MessagingController from '../../lib/controllers/messaging';
+import InboxController from '../../lib/controllers/inbox';
 
-export function loadConversations(userId, networkId) {
+export function loadConversations() {
     return async (dispatch, getState) => {
         dispatch(fetchConversations());
+        const {app} = getState();
 
-        MessagingController.getConverstions(userId, networkId).then(
+        InboxController.getConversations(app.currentUser.id, app.currentNetwork.id).then(
             (conversations) => {
+                console.log(conversations);
                 conversations.reverse();
                 dispatch(receivedConversations(conversations));
             }
         ).catch(
-            (err) => {dispatch(loadingError(err))}
+            (err) => {
+                dispatch(loadingError(err))
+            }
         );
     };
 }
 
-export function fetchConversations() {
-    return {type: types.FETCH_CONVERSTIONS};
+function fetchConversations() {
+    return {type: types.FETCH_CONVERSATIONS};
 }
 
-export function receivedConversations(conversations) {
-    return {type: types.RECEIVE_CONVERSTIONS, conversations: conversations};
+function receivedConversations(conversations) {
+    return {type: types.RECEIVED_CONVERSATIONS, conversations: conversations};
 }
 
-export function loadingError(err) {
+function loadingError(err) {
     return {type: types.LOADING_ERROR, error: err};
 }

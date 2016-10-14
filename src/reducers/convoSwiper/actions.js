@@ -42,11 +42,11 @@ function nextCard() {
     return {type: types.NEXT_CARD};
 }
 
-export function swipe(cardId, decision) {
+export function swipe(card, decision) {
     return (dispatch, getState) => {
         const {app} = getState();
 
-        SwiperController.swipe(app.currentUser.id, app.currentNetwork.id, cardId, decision).then(() => {
+        SwiperController.swipe(app.currentUser.id, app.currentNetwork.id, card, decision).then(() => {
             dispatch(checkPosition());
             dispatch(nextCard());
         }).catch(

@@ -6,23 +6,44 @@ export default class Base {
         this.data = data;
     }
 
-    db(ref) {
-        return firebase.app.database().ref(this.model + (ref ? '/' + ref : ''));
+    db(path) {
+        const db = firebase.app.database();
+        const ref = (path ? '/' + path : '');
+        return db.ref(this.model + ref);
     }
 
-    get(path, orderBy) {
+    get(path, orderBy, limit) {
         return new Promise((resolve, reject) => {
-            let ref = this.db(path ? path : '');
+            let ref = this.db(path ? path : '', orderBy);
             if(orderBy) ref = ref.orderByChild(orderBy);
-            ref.once('value').then((snapshot) => {resolve(snapshot.val())})
-                .catch((err) => {reject(new Error('Read failed: ' + err.code))});
+            if(limit) ref = ref.limitToLast(limit);
+            ref.once('value').then((data) => {
+                const arr = [];
+                data.forEach((snapshot) => {
+                    arr.push(snapshot.val());
+                });
+                resolve(arr);
+            })
+            .catch((err) => {reject(new Error('Read failed: ' + err.code))});
+        });
+    }
+
+    getOne(path, orderBy, limit) {
+        return new Promise((resolve, reject) => {
+            let ref = this.db(path ? path : '', orderBy);
+            if(orderBy) ref = ref.orderByChild(orderBy);
+            if(limit) ref = ref.limitToLast(limit);
+            ref.once('value').then((data) => {
+                resolve(data.val());
+            })
+            .catch(reject);
         });
     }
 
     subscribe(path, cb) {
         let ref = this.db(path ? path : '');
         ref.on('child_added', (snapshot) => {
-            cb(snapshot)
+            cb(snapshot.val(), snapshot.key);
         });
     }
 
@@ -59,6 +80,13 @@ export default class Base {
         return new Promise((resolve, reject) => {
             let ref = this.db(path ? path : undefined);
             ref.update({deletedAt: firebase.getCurrentTime()}).then(resolve).catch(reject);
+        });
+    }
+
+    hardDelete(path){
+        return new Promise((resolve, reject) => {
+            let ref = this.db(path ? path : undefined);
+            ref.set(null).then(resolve).catch(reject);
         });
     }
 

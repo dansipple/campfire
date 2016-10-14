@@ -42,8 +42,8 @@ class NewConvo extends Component {
 
         if(this.props.card) {
             this.setState({
-                content: this.props.card.content,
-                category: this.props.card.category
+                content: this.props.card.content || '',
+                category: this.props.card.category || 'general'
             });
         }
     }

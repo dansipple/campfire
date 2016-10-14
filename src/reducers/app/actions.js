@@ -12,9 +12,14 @@ export function changeAppRoot(root) {
   return {type: types.ROOT_CHANGED, root: root};
 }
 
-export function login() {
+function changeUser(userId) {
+  return {type: types.USER_CHANGED, user: {id: userId}};
+}
+export function login(userId) {
   return async function(dispatch, getState) {
     // login logic would go here, and when it's done, we switch app roots
+    dispatch(changeUser(userId));
+
     dispatch(changeAppRoot('after-login'));
   };
 }

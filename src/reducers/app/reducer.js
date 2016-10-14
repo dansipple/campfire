@@ -8,12 +8,16 @@ const initialState = Immutable({
 });
 
 export default function app(state = initialState, action = {}) {
-  switch (action.type) {
-    case types.ROOT_CHANGED:
-      return state.merge({
-        root: action.root
-      });
-    default:
-      return state;
-  }
+    switch (action.type) {
+        case types.ROOT_CHANGED:
+            return Object.assign({}, state, {
+                root: action.root
+            });
+        case types.USER_CHANGED:
+            return Object.assign({}, state, {
+                currentUser: action.user
+            });
+        default:
+            return state;
+    }
 }

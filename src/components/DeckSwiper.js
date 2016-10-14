@@ -88,10 +88,8 @@ export default class DeckSwiper extends Component {
 
                     if (velocity>0) {
                         (this.props.onSwipeRight) ? this.props.onSwipeRight() : undefined;
-                        //this.selectNext();
                     } else {
                         (this.props.onSwipeLeft) ? this.props.onSwipeLeft() : undefined;
-                        //this.selectNext();
                     }
 
                     Animated.decay(this.state.pan, {
@@ -147,7 +145,7 @@ export default class DeckSwiper extends Component {
         return(
             <View style={{position: 'relative', flexDirection: 'column'}}>{(this.state.topCard)===undefined ? (<View />) :
                 (<View>
-                        <Animated.View style={[this.getCardStyles()[1],{opacity: this.state.fadeAnim}]} {...this._panResponder.panHandlers}>
+                        <Animated.View style={[this.getCardStyles()[1],{/*opacity: this.state.fadeAnim*/}]} {...this._panResponder.panHandlers}>
                             {this.props.renderItem(this.state.bottomCard)}
                         </Animated.View>
                         <Animated.View style={[ this.getCardStyles()[0], this.getInitialStyle().topCard] } {...this._panResponder.panHandlers} >

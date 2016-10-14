@@ -17,6 +17,7 @@ export default function profileSwiper(state = initialState, action = {}) {
         case types.RECEIVE_PROFILES:
             return Object.assign({}, state, {
                 profiles: action.profiles,
+                activeProfile: 0,
                 isLoading: false
             });
         case types.LOADING_ERROR:
@@ -24,6 +25,10 @@ export default function profileSwiper(state = initialState, action = {}) {
                 profiles: [],
                 isLoading: false,
                 error: action.error
+            });
+        case types.NEXT_PROFILE:
+            return Object.assign({}, state, {
+                activeProfile: state.activeProfile + 1
             });
         default:
             return state;

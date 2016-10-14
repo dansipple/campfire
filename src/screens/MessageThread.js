@@ -1,13 +1,15 @@
 
 import React, { Component } from 'react';
-import { Image, StyleSheet, Dimensions } from 'react-native';
+import { Image, StyleSheet, Dimensions, View, Text } from 'react-native';
 import { GiftedChat, Actions, Bubble } from 'react-native-gifted-chat';
-
-import { Container, Content, Thumbnail, Text, Button, Icon, List, ListItem, View } from 'native-base';
 
 import Card from './../components/Card';
 
-export default class MessageThread extends Component {
+import * as messagesActions from '../reducers/messages/actions';
+
+import {connect} from 'react-redux';
+
+class MessageThread extends Component {
 
     static navigatorStyle = {
         navBarNoBorder: false
@@ -31,33 +33,14 @@ export default class MessageThread extends Component {
         this.renderCustomView = this.renderCustomView.bind(this);
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this._isMounted = true;
 
-        this.setState({
-            messages: [
-                {
-                    _id: 1,
-                    text: 'Hi Dan, you have a new connection! Talk to Red and see if you two match.',
-                    createdAt: new Date(Date.UTC(2016, 7, 30, 17, 20, 0)),
-                    user: {
-                        _id: 2,
-                        name: 'Dan Sipple'
-                    },
-                    card: {
-                        creator: {
-                            first: 'Dan',
-                            last: 'Sipple',
-                            title: 'Cofounder at Convos Inc.',
-                            avatar: 'https://media.licdn.com/mpr/mpr/shrinknp_200_200/p/4/005/078/320/2a2a329.jpg'
-                        },
-                        content: 'Does anyone here go to burning man? Show me the ropes?',
-                        category: 'travel'
-                    }
-                }
-            ]
-        });
+        if(!this.props.messagesState.messages[this.props.conversationId])
+            this.props.dispatch(messagesActions.loadMessages(this.props.conversationId));
     }
+    
+    
 
     componentWillUnmount() {
         this._isMounted = false;
@@ -71,12 +54,8 @@ export default class MessageThread extends Component {
         });
     }
 
-    onSend(messages = []) {
-        this.setState((previousState) => {
-            return {
-                messages: GiftedChat.append(previousState.messages, messages)
-            };
-        });
+    onSend(message = []) {
+        this.props.dispatch(messagesActions.sendMessage(this.props.conversationId, message[0].text));
     }
 
     renderFooter(props) {
@@ -97,14 +76,20 @@ export default class MessageThread extends Component {
                 {...props}
                 wrapperStyle={{
                     right: {
-                        backgroundColor: '#3498db',
-                        padding: 6
+                        backgroundColor: props.currentMessage.card ? '#fff' : '#3498db',
+                        padding: 6,
+                        marginLeft: props.currentMessage.card ? 5 : 60,
+                        marginRight: 5,
+                        paddingBottom: props.currentMessage.card &&
+                        this.props.messagesState.messages[this.props.conversationId].length == 1 ? 60 : 6
                     },
                     left: {
                         padding: 6,
                         backgroundColor: props.currentMessage.card ? '#fff' : '#f0f0f0',
                         marginRight: props.currentMessage.card ? 5 : 60,
-                        paddingBottom: props.currentMessage.card && this.state.messages.length == 1 ? 60 : 6
+                        marginLeft: 5,
+                        paddingBottom: props.currentMessage.card &&
+                        this.props.messagesState.messages[this.props.conversationId].length == 1 ? 60 : 6
                     }
                 }}
             />
@@ -114,7 +99,7 @@ export default class MessageThread extends Component {
     renderCustomView(props) {
         if (props.currentMessage.card) {
             return (
-                <View style={{ flex: 1}}>
+                <View>
                     <Card
                         inMessage={true}
                         cardData={props.currentMessage.card}
@@ -133,14 +118,13 @@ export default class MessageThread extends Component {
         return (
             <View style={{ flex: 1 }}>
                 <GiftedChat
-                    messages={this.state.messages}
+                    messages={this.props.messagesState.messages[this.props.conversationId] || []}
                     onSend={this.onSend}
                     loadEarlier={this.state.loadEarlier}
                     onLoadEarlier={this.onLoadEarlier}
                     isLoadingEarlier={this.state.isLoadingEarlier}
-
                     user={{
-                      _id: 1 // sent messages should have same user._id
+                      _id: this.props.appState.currentUser.id // sent messages should have same user._id
                     }}
                     renderCustomView={this.renderCustomView}
                     renderBubble={this.renderBubble}
@@ -165,3 +149,12 @@ const styles = StyleSheet.create({
         color: '#aaa'
     }
 });
+
+function mapStateToProps(state) {
+    return {
+        messagesState: state.messages,
+        appState: state.app
+    };
+}
+
+export default connect(mapStateToProps)(MessageThread);

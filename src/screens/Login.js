@@ -14,19 +14,25 @@ class Login extends Component {
     constructor(props) {
         super(props);
 
-        this.login = this.login.bind(this);
+        //this.login = this.login.bind(this);
     }
 
-    login() {
-        this.props.dispatch(appActions.login());
+    login(userId) {
+        this.props.dispatch(appActions.login(userId));
     }
 
     render() {
         return (
                 <View style={styles.container}>
                     <Image style={styles.logo} source={require('../../img/logo-big.png')} />
-                    <TouchableHighlight onPress={this.login} style={styles.fbLogin}>
-                        <Text style={styles.fbLoginText}>Login with Facebook</Text>
+                    <TouchableHighlight onPress={this.login.bind(this, '-KPzFJ697NbkNZoHVBR7')} style={styles.fbLogin}>
+                        <Text style={styles.fbLoginText}>Login with Colin</Text>
+                    </TouchableHighlight>
+                    <TouchableHighlight onPress={this.login.bind(this, '-KPzFJ697NbkNZoHVBR8')} style={styles.fbLogin}>
+                        <Text style={styles.fbLoginText}>Login with Dan</Text>
+                    </TouchableHighlight>
+                    <TouchableHighlight onPress={this.login.bind(this, '-KPzFJ697NbkNZoHVBR9')} style={styles.fbLogin}>
+                        <Text style={styles.fbLoginText}>Login with Red</Text>
                     </TouchableHighlight>
                 </View>
         );

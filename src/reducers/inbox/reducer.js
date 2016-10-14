@@ -2,25 +2,25 @@ import * as types from './actionTypes';
 import Immutable from 'seamless-immutable';
 
 const initialState = Immutable({
-    convos: [],
+    conversations: [],
     isLoading: false,
     error: {}
 });
 
-export default function myConvos(state = initialState, action = {}) {
+export default function inbox(state = initialState, action = {}) {
     switch (action.type) {
-        case types.FETCH_CONVOS:
+        case types.FETCH_CONVERSATIONS:
             return Object.assign({}, state, {
                 isLoading: true
             });
-        case types.RECEIVE_CONVOS:
+        case types.RECEIVED_CONVERSATIONS:
             return Object.assign({}, state, {
-                convos: action.convos,
+                conversations: action.conversations,
                 isLoading: false
             });
         case types.LOADING_ERROR:
             return Object.assign({}, state, {
-                convos: [],
+                conversations: [],
                 isLoading: false,
                 error: action.error
             });

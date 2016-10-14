@@ -21,11 +21,11 @@ export default class ConvoSwiper extends Component {
     }
 
     swipeLeft() {
-        this.props.dispatch(convoSwiperActions.swipe(this.props.state.cardDeck[this.props.state.activeCard].id, false));
+        this.props.dispatch(convoSwiperActions.swipe(this.props.state.cardDeck[this.props.state.activeCard], false));
     }
 
     swipeRight() {
-        this.props.dispatch(convoSwiperActions.swipe(this.props.state.cardDeck[this.props.state.activeCard].id, true));
+        this.props.dispatch(convoSwiperActions.swipe(this.props.state.cardDeck[this.props.state.activeCard], true));
     }
 
     loadConvos() {

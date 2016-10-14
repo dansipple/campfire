@@ -1,7 +1,6 @@
 import * as types from './actionTypes';
 
 import ProfileSwiperController from '../../lib/controllers/profileSwiper';
-import CardController from '../../lib/controllers/card';
 
 export function loadProfiles(cardId) {
     return (dispatch, getState) => {
@@ -11,13 +10,51 @@ export function loadProfiles(cardId) {
 
         ProfileSwiperController.getProfilesThatSwipedRight(app.currentNetwork.id, cardId).then(
             (profiles) => {
-                profiles.reverse();
                 dispatch(receivedProfiles(profiles));
             }
         ).catch(
             (err) => {dispatch(loadingError(err))}
         );
     };
+}
+
+export function connect(userId, cardId) {
+    return (dispatch, getState) => {
+        const {app} = getState();
+
+        ProfileSwiperController.createConversation(app.currentNetwork.id, cardId, userId, app.currentUser.id)
+            .then(() => {
+                ProfileSwiperController.deleteSwipe(app.currentNetwork.id, cardId, userId)
+                    .then(() => {
+                        dispatch(checkIfOutOfProfiles(cardId));
+                    });
+            });
+    }
+}
+
+export function pass(userId, cardId) {
+    return (dispatch, getState) => {
+        const {app} = getState();
+        
+        ProfileSwiperController.deleteSwipe(app.currentNetwork.id, cardId, userId).then(() => {
+            dispatch(checkIfOutOfProfiles(cardId));
+        });
+    }
+}
+
+function checkIfOutOfProfiles(cardId) {
+    return (dispatch, getState) => {
+        const {profileSwiper, app} = getState();
+
+        if(profileSwiper.activeProfile == profileSwiper.profiles.length - 1) {
+            ProfileSwiperController.updateUserCard(app.currentUser.id, app.currentNetwork.id, cardId);
+        }
+        dispatch(nextProfile());
+    }
+}
+
+function nextProfile() {
+    return {type: types.NEXT_PROFILE};
 }
 
 function fetchProfiles() {

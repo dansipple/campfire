@@ -25,18 +25,17 @@ export default class Profile extends Component {
                         </View>
                     </View>
                     <ScrollView style={styles.userConvos}>
-                        <View style={styles.convo}>
-                            <View style={styles.cardBody}>
-                                <Text style={styles.category}>#{this.props.convos[0].category}</Text>
-                                <Text style={styles.description}>{this.props.convos[0].content}</Text>
-                            </View>
-                        </View>
-                        <View style={styles.convo}>
-                            <View style={styles.cardBody}>
-                                <Text style={styles.category}>#{this.props.convos[1].category}</Text>
-                                <Text style={styles.description}>{this.props.convos[1].content}</Text>
-                            </View>
-                        </View>
+                        {
+                            profileData.cards.map((card, i) => {
+                                return (
+                                    <View key={i} style={styles.convo}>
+                                        <View style={styles.cardBody}>
+                                            <Text style={styles.category}>#{card.category}</Text>
+                                            <Text style={styles.description}>{card.content}</Text>
+                                        </View>
+                                    </View>)
+                            })
+                        }
                     </ScrollView>
                     <View style={styles.actionButtons}>
                         <TouchableHighlight onPress={this.props.pass} underlayColor="#999" style={[styles.actionButton, styles.passButton]}>

@@ -11,8 +11,8 @@ class CardController {
 
     create(creatorId, networkId, content, category){
         return new Promise((resolve, reject) => {
-            User.get(creatorId).then((creatorUserObj) => {
-                creatorUserObj.uid = creatorId;
+            User.getOne(creatorId).then((creatorUserObj) => {
+                creatorUserObj._id = creatorId;
 
                 Card.create(networkId,
                     {
@@ -23,19 +23,20 @@ class CardController {
                 ).then((ref) => {
                     UserCard.set(`${networkId}/${creatorId}/${ref.key}`, {
                         category: category,
-                        content: content
+                        content: content,
+                        hasInterested: false
                     })
                 }).then(resolve).catch(reject);
             }, (err) => {
-                console.log(err)
+                reject(err);
             });
         });
     }
 
     update(creatorId, networkId, cardId, content, category){
         return new Promise((resolve, reject) => {
-            User.get(creatorId).then((creatorUserObj) => {
-                creatorUserObj.uid = creatorId;
+            User.getOne(creatorId).then((creatorUserObj) => {
+                creatorUserObj._id = creatorId;
 
                 Card.update(`${networkId}/${cardId}`,
                     {
@@ -50,7 +51,7 @@ class CardController {
                     })
                 }).then(resolve).catch(reject);
             }, (err) => {
-                console.log(err)
+                reject(err);
             });
         });
     }
