@@ -30,6 +30,10 @@ export default function profileSwiper(state = initialState, action = {}) {
             return Object.assign({}, state, {
                 activeProfile: state.activeProfile + 1
             });
+        case types.UPDATE_ACTIVE_PROFILE:
+            return Object.assign({}, state, {
+                activeProfile: action.index
+            });
         default:
             return state;
       }

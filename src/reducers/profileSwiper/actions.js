@@ -57,6 +57,10 @@ function nextProfile() {
     return {type: types.NEXT_PROFILE};
 }
 
+export function updateActiveProfile(idx) {
+    return {type: types.UPDATE_ACTIVE_PROFILE, index: idx};
+}
+
 function fetchProfiles() {
     return {type: types.FETCH_PROFILES};
 }

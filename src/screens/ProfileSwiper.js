@@ -19,6 +19,7 @@ class ProfileSwiper extends Component {
         this.pass = this.pass.bind(this);
         this.connect = this.connect.bind(this);
         this.loadProfiles = this.loadProfiles.bind(this);
+        this._onMomentumScrollEnd = this._onMomentumScrollEnd.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -30,6 +31,9 @@ class ProfileSwiper extends Component {
                 this.props.dispatch(myConvosActions.loadConvos());
                 this.props.navigator.dismissLightBox();
             }
+        }
+        if(this.props.state.isLoading === true && nextProps.state.isLoading === false) {
+            if(nextProps.state.profiles.length === 0) this.props.navigator.dismissLightBox();
         }
     }
 
@@ -47,6 +51,13 @@ class ProfileSwiper extends Component {
 
     connect() {
         this.props.dispatch(profileSwiperActions.connect(this.props.state.profiles[this.props.state.activeProfile]._id, this.props.card._id));
+    }
+
+    _onMomentumScrollEnd(e, state) {
+        if(state.index !== this.props.state.activeProfile) {
+            console.log('fired');
+            this.props.dispatch(profileSwiperActions.updateActiveProfile(state.index));
+        }
     }
 
     render() {

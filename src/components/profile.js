@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     },
     cardBody: {
         padding: 20,
-        height: 180
+        minHeight: 180
     },
     category: {
         color: '#777',

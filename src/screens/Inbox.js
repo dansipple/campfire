@@ -26,7 +26,7 @@ class Inbox extends Component {
         this._renderRow = this._renderRow.bind(this);
 
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
-        
+
         this.loadConversations = this.loadConversations.bind(this);
     }
 
@@ -58,7 +58,10 @@ class Inbox extends Component {
             screen: 'MessageThread',
             backButtonTitle: '',
             passProps: {
-                conversationId: conversationData.conversationId
+                conversationId: conversationData.conversationId,
+                hasUnread: conversationData.hasUnread || false,
+                otherUser: conversationData._id,
+                loadConversations: this.loadConversations
             }
         })
     }
@@ -70,6 +73,22 @@ class Inbox extends Component {
                     <Conversation conversationData={conversationData} />
                 </View>
             </TouchableHighlight>
+        );
+    }
+    renderHeader() {
+        return (
+            <View>
+                <View style={styles.newMatchContainer}>
+                    <Text style={{fontSize: 11, textAlign: 'center', color: '#888', padding: 10}}>New Connections</Text>
+                    <View style={styles.newMatchRow}>
+                        <TouchableOpacity onPress={() => {}}>
+                            <Image style={styles.newMatchThumbnail} source={{uri: 'https://media.licdn.com/media/p/4/005/097/089/0bebe5a.jpg'}} />
+                            <Text style={{textAlign: 'center'}}>Red</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+                <Text style={{fontSize: 11, textAlign: 'center', color: '#888', padding: 10}}>Messages</Text>
+            </View>
         );
     }
 
@@ -87,22 +106,6 @@ class Inbox extends Component {
                             onRefresh={this.loadConversations}
                           />
                         }
-                        renderHeader={() => {
-                            return (
-                                <View>
-                                    <View style={styles.newMatchContainer}>
-                                        <Text style={{fontSize: 11, textAlign: 'center', color: '#888', padding: 10}}>New Connections</Text>
-                                        <View style={styles.newMatchRow}>
-                                            <TouchableOpacity onPress={() => {}}>
-                                                <Image style={styles.newMatchThumbnail} source={{uri: 'https://media.licdn.com/media/p/4/005/097/089/0bebe5a.jpg'}} />
-                                                <Text style={{textAlign: 'center'}}>Red</Text>
-                                            </TouchableOpacity>
-                                        </View>
-                                    </View>
-                                    <Text style={{fontSize: 11, textAlign: 'center', color: '#888', padding: 10}}>Messages</Text>
-                                </View>
-                            );
-                        }}
                     /> : <View />}
                 </View>
         );

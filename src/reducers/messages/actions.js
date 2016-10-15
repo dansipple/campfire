@@ -2,23 +2,10 @@ import * as types from './actionTypes';
 
 import MessagesController from '../../lib/controllers/messages';
 
-export function loadMessages(conversationId) {
+export function loadMessages(conversationId, hasUnread) {
     return async (dispatch, getState) => {
         dispatch(fetchMessages());
         const {app} = getState();
-
-        /*
-        MessagesController.getMessages(app.currentNetwork.id, conversationId).then(
-            (messages) => {
-                messages.reverse();
-                dispatch(receivedMessages(messages));
-            }
-        ).catch(
-            (err) => {
-                console.log(err);
-                dispatch(loadingError(err))
-            }
-        );*/
 
         MessagesController.getMessagesStream(app.currentNetwork.id, conversationId,
             (message, key) => {

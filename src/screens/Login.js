@@ -1,6 +1,12 @@
-
 import React, { Component } from 'react';
 import { TouchableHighlight, TouchableOpacity, Image, StyleSheet, Dimensions, ListView, Text, View } from 'react-native';
+
+const FBSDK = require('react-native-fbsdk');
+const {
+    LoginButton,
+    AccessToken
+} = FBSDK;
+
 
 import {connect} from 'react-redux';
 import * as appActions from '../../src/reducers/app/actions';
@@ -25,6 +31,8 @@ class Login extends Component {
         return (
                 <View style={styles.container}>
                     <Image style={styles.logo} source={require('../../img/logo-big.png')} />
+
+
                     <TouchableHighlight onPress={this.login.bind(this, '-KPzFJ697NbkNZoHVBR7')} style={styles.fbLogin}>
                         <Text style={styles.fbLoginText}>Login with Colin</Text>
                     </TouchableHighlight>

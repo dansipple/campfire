@@ -31,6 +31,15 @@ class MessageThread extends Component {
         this.onLoadEarlier = this.onLoadEarlier.bind(this);
         this.renderBubble = this.renderBubble.bind(this);
         this.renderCustomView = this.renderCustomView.bind(this);
+
+        this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+    }
+
+    onNavigatorEvent(event) {
+        if (event.id == 'back') {
+            this.props.loadConversations();
+            this.props.navigator.pop();
+        }
     }
 
     componentDidMount() {
@@ -38,9 +47,8 @@ class MessageThread extends Component {
 
         if(!this.props.messagesState.messages[this.props.conversationId])
             this.props.dispatch(messagesActions.loadMessages(this.props.conversationId));
+
     }
-    
-    
 
     componentWillUnmount() {
         this._isMounted = false;
@@ -98,8 +106,9 @@ class MessageThread extends Component {
 
     renderCustomView(props) {
         if (props.currentMessage.card) {
+            let {width} = Dimensions.get('window');
             return (
-                <View>
+                <View style={{flexDirection: 'row', width: width - 35}}>
                     <Card
                         inMessage={true}
                         cardData={props.currentMessage.card}

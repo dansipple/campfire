@@ -7,7 +7,7 @@ class UserCardController {
 
     getCards(userId, networkId) {
         return new Promise((resolve, reject) => {
-            UserCard.get(networkId+'/'+userId, 'updatedAt').then(Helpers.objectToArray).then(Helpers.filterDeleted)
+            UserCard.get(networkId+'/'+userId, 'hasInterested').then(Helpers.filterDeleted)
                 .then(resolve).catch(reject);
         });
     }

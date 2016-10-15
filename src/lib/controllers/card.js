@@ -36,6 +36,7 @@ class CardController {
     update(creatorId, networkId, cardId, content, category){
         return new Promise((resolve, reject) => {
             User.getOne(creatorId).then((creatorUserObj) => {
+                console.log(creatorUserObj);
                 creatorUserObj._id = creatorId;
 
                 Card.update(`${networkId}/${cardId}`,

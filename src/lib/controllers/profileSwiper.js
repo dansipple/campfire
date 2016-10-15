@@ -14,27 +14,25 @@ class ProfileSwiperController {
     getProfilesThatSwipedRight(networkId, cardId) {
         return new Promise((resolve, reject) => {
             let promises = [];
-            Swipe.get(`${networkId}/${cardId}`)
+            Swipe.get(`${networkId}/${cardId}`).then(Helpers.filterDeleted)
                 .then((swipes) => {
-                        for (let key in swipes) {
-                            if(swipes[key] === true){
-                                let user = this.getUserProfile(key, networkId);
-                                promises.push(user);
-                            }
-                        }
-                        Promise.all(promises).then((users) => {
-                            resolve(users);
-                        })
+                    swipes.forEach((swipe) => {
+                        let user = this.getUserProfile(swipe._id, networkId);
+                        promises.push(user);
+                    });
+                    Promise.all(promises).then((users) => {
+                        resolve(users);
+                    })
                 }, reject)
         });
     }
 
     getUserProfile(userId, networkId) {
         return new Promise((resolve, reject) => {
-            User.get(userId).then((user) => {
+            User.getOne(userId).then((user) => {
                 if(user) {
                     user._id = userId;
-                    UserCard.get(networkId+'/'+userId, 'updatedAt', 5).then(Helpers.filterDeleted)
+                    UserCard.get(networkId+'/'+userId, null, 5).then(Helpers.filterDeleted)
                         .then((cards) => {
                             cards.reverse();
                             user.cards = cards;
@@ -49,7 +47,7 @@ class ProfileSwiperController {
     
     deleteSwipe(networkId, cardId, userId) {
         return new Promise((resolve, reject) => {
-            Swipe.hardDelete(`${networkId}/${cardId}/${userId}`)
+            Swipe.remove(`${networkId}/${cardId}/${userId}`)
                 .then(resolve).catch(reject);
         });
     }
@@ -72,22 +70,12 @@ class ProfileSwiperController {
                                 })
                                 .then((ref) => {
                                     refKey = ref.key;
-                                    User.getOne(initiatingUserId).then((user) => {
-                                        UserConversation.set(`${networkId}/${userId}/${initiatingUserId}`, {
-                                            lastMessage: null,
-                                            participant: user,
-                                            conversationId: refKey
-                                        });
-                                    }).catch(reject);
-                                    User.getOne(userId).then((user) => {
-                                        UserConversation.set(`${networkId}/${initiatingUserId}/${userId}`, {
-                                            lastMessage: null,
-                                            participant: user,
-                                            conversationId: refKey
-                                        });
-                                    }).catch(reject);
-                                    resolve(refKey);
-                                });
+                                    this._createUserConversations(networkId, userId, initiatingUserId, refKey)
+                                        .then(() => {
+                                            resolve(refKey);
+                                        }).catch(reject);
+                                })
+                                .catch(reject);
                         } else {
                             refKey = userConversation.conversationId;
                             resolve(refKey);
@@ -112,6 +100,36 @@ class ProfileSwiperController {
             UserCard.update(`${networkId}/${userId}/${cardId}`, {
                 hasInterested: false
             }).then(resolve).catch(reject);
+        });
+    }
+
+    _createUserConversations(networkId, userId, initiatingUserId, refKey) {
+        return new Promise((resolve, reject) => {
+            User.getOne(initiatingUserId)
+                .then((user) => {
+                    UserConversation.set(`${networkId}/${userId}/${initiatingUserId}`, {
+                            lastMessage: null,
+                            participant: user,
+                            conversationId: refKey,
+                            hasUnread: true
+                        })
+                        .catch(reject);
+                })
+                .catch(reject);
+
+            User.getOne(userId)
+                .then((user) => {
+                    UserConversation.set(`${networkId}/${initiatingUserId}/${userId}`, {
+                            lastMessage: null,
+                            participant: user,
+                            conversationId: refKey,
+                            hasUnread: true
+                        })
+                        .catch(reject);
+                })
+                .catch(reject);
+
+            resolve();
         });
     }
 }

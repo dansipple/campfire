@@ -24,11 +24,12 @@ export default class Card extends Component {
                     shadowOpacity: this.props.inMessage ? 0 : 0.2,
                     shadowRadius: 8,
                     borderColor: '#ddd',
-                    borderWidth: this.props.inMessage ? 1 : 0
+                    borderWidth: this.props.inMessage ? 1 : 0,
+                    flex: 1
                 },
                 cardBody: {
                     padding: 30,
-                    height: this.props.inMessage ? 200 : height - 205
+                    minHeight: this.props.inMessage ? 200 : height - 205
                 },
                 category: {
                     color: '#777',

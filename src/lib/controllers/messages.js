@@ -36,7 +36,8 @@ const MessagesController = {
                         })
                         .then(() => {
                             UserConversation.update(`${networkId}/${otherUserId}/${senderUserId}`, {
-                                lastMessage: text
+                                lastMessage: text,
+                                hasUnread: true
                             })
                         }).catch(reject);
                     }

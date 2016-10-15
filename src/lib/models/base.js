@@ -20,19 +20,20 @@ export default class Base {
             ref.once('value').then((data) => {
                 const arr = [];
                 data.forEach((snapshot) => {
-                    arr.push(snapshot.val());
+                    const val = snapshot.val();
+                    val._id = snapshot.key;
+                    arr.push(val);
                 });
                 resolve(arr);
             })
-            .catch((err) => {reject(new Error('Read failed: ' + err.code))});
+            .catch(reject);
         });
     }
 
-    getOne(path, orderBy, limit) {
+    getOne(path, orderBy) {
         return new Promise((resolve, reject) => {
             let ref = this.db(path ? path : '', orderBy);
             if(orderBy) ref = ref.orderByChild(orderBy);
-            if(limit) ref = ref.limitToLast(limit);
             ref.once('value').then((data) => {
                 resolve(data.val());
             })

@@ -31,9 +31,11 @@ class SwiperController {
 
     swipe(userId, networkId, card, decision) {
         return new Promise((resolve, reject) => {
-            Swipe.set(`${networkId}/${card._id}/${userId}`, decision).then(() => {
+            Swipe.set(`${networkId}/${card._id}/${userId}`, {
+                interested: decision
+            }).then(() => {
                 if(decision) {
-                    UserCard.update(`${networkId}/${card.creator.uid}/${card._id}`, {
+                    UserCard.update(`${networkId}/${card.creator._id}/${card._id}`, {
                         hasInterested: true
                     });
                 }
