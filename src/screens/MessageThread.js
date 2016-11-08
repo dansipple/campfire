@@ -133,7 +133,7 @@ class MessageThread extends Component {
                     onLoadEarlier={this.onLoadEarlier}
                     isLoadingEarlier={this.state.isLoadingEarlier}
                     user={{
-                      _id: this.props.appState.currentUser.id // sent messages should have same user._id
+                      _id: this.props.appState.currentUser._id // sent messages should have same user._id
                     }}
                     renderCustomView={this.renderCustomView}
                     renderBubble={this.renderBubble}

@@ -7,9 +7,8 @@ export function loadConversations() {
         dispatch(fetchConversations());
         const {app} = getState();
 
-        InboxController.getConversations(app.currentUser.id, app.currentNetwork.id).then(
+        InboxController.getConversations(app.currentUser._id, app.currentNetwork._id).then(
             (conversations) => {
-                console.log(conversations);
                 conversations.reverse();
                 dispatch(receivedConversations(conversations));
             }

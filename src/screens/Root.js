@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import {TouchableHighlight, Text, Image, View} from 'react-native';
 import Swiper from 'react-native-swiper';
+import ChooseNetwork from './ChooseNetwork';
 import ConvoSwiper from './ConvoSwiper';
 import MyConvos from './MyConvos';
 
@@ -15,6 +17,8 @@ class Root extends Component {
         super(props);
         this.state = {
             renderMyConvos: false,
+            renderNetworks: false,
+            showFab: true,
             swipingEnabled: false
         };
         this.router = this.router.bind(this);
@@ -39,10 +43,17 @@ class Root extends Component {
                 });
                 return;
             case 'network':
-                this.props.navigator.showModal({
-                    title: 'Networks',
-                    screen: 'ChooseNetwork'
-                });
+                if(!this.state.renderNetworks) {
+                    this.setState({
+                        renderNetworks: true
+                    }, () => {
+                        setTimeout(() => {
+                            this.swiper.scrollBy(-1);
+                        }, 100);
+                    });
+                } else {
+                    this.swiper.scrollBy(-1);
+                }
                 return;
             case 'newConvo':
                 this.props.navigator.showModal({
@@ -92,14 +103,9 @@ class Root extends Component {
 
 
     _onMomentumScrollEnd(e, state, context) {
-        let enableSwiping = true;
-
-        if(state.index === 0) {
-            enableSwiping = false;
-        }
-
         this.setState({
-            swipingEnabled: enableSwiping
+            showFab: state.index !== 0,
+            swipingEnabled: state.index !== 1
         });
     }
 
@@ -107,8 +113,10 @@ class Root extends Component {
         const appState = this.props.appState;
         const convoSwiperState = this.props.convoSwiperState;
         const myConvosState = this.props.myConvosState;
+        const networksState = this.props.networksState;
 
         return (
+            <View>
             <Swiper
                 ref={component => this.swiper = component}
                 horizontal={false}
@@ -118,7 +126,14 @@ class Root extends Component {
                 scrollsToTop={true}
                 loadMinimal={true}
                 onMomentumScrollEnd={this._onMomentumScrollEnd}
-                index={0}>
+                index={1}>
+                {this.state.renderNetworks ?
+                <ChooseNetwork
+                    dispatch={this.props.dispatch}
+                    state={networksState}
+                    appState={appState}
+                    router={this.router}
+                /> : null }
 
                 <ConvoSwiper
                     dispatch={this.props.dispatch}
@@ -134,6 +149,25 @@ class Root extends Component {
                         router={this.router}
                     /> : null }
             </Swiper>
+            <TouchableHighlight
+                onPress={this.router.bind(this, 'newConvo')}
+                underlayColor={'#f9f9f9'}
+                style={[{width: 60,
+                        height: 60,
+                        borderRadius: 30,
+                        backgroundColor: '#fff',
+                        position: 'absolute',
+                        shadowColor: '#000',
+                        shadowOpacity: 0.2,
+                        shadowRadius: 8,
+                        bottom: 10,
+                        right: 10,
+                        justifyContent: 'center',
+                        alignItems: 'center'}, !this.state.showFab && {opacity: 0, height: 0, width: 0}]}
+            >
+                <Image style={{tintColor: '#3498db'}} source={require('../../img/add.png')} />
+            </TouchableHighlight>
+        </View>
         );
     }
 }
@@ -142,7 +176,8 @@ function mapStateToProps(state) {
     return {
         appState: state.app,
         convoSwiperState: state.convoSwiper,
-        myConvosState: state.myConvos
+        myConvosState: state.myConvos,
+        networksState: state.networks
     };
 }
 

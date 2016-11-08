@@ -17,8 +17,10 @@ class ProfileSwiperController {
             Swipe.get(`${networkId}/${cardId}`).then(Helpers.filterDeleted)
                 .then((swipes) => {
                     swipes.forEach((swipe) => {
-                        let user = this.getUserProfile(swipe._id, networkId);
-                        promises.push(user);
+                        if(swipe.interested === true) {
+                            let user = this.getUserProfile(swipe._id, networkId);
+                            promises.push(user);
+                        }
                     });
                     Promise.all(promises).then((users) => {
                         resolve(users);

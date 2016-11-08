@@ -2,37 +2,27 @@ import * as types from './actionTypes';
 import Immutable from 'seamless-immutable';
 
 const initialState = Immutable({
-    profiles: [],
-    activeProfile: 0,
+    networks: [],
     isLoading: false,
     error: {}
 });
 
-export default function profileSwiper(state = initialState, action = {}) {
+export default function networks(state = initialState, action = {}) {
     switch (action.type) {
-        case types.FETCH_PROFILES:
+        case types.FETCH_NETWORKS:
             return Object.assign({}, state, {
                 isLoading: true
             });
-        case types.RECEIVED_PROFILES:
+        case types.RECEIVE_NETWORKS:
             return Object.assign({}, state, {
-                profiles: action.profiles,
-                activeProfile: 0,
+                networks: action.networks,
                 isLoading: false
             });
         case types.LOADING_ERROR:
             return Object.assign({}, state, {
-                profiles: [],
+                networks: [],
                 isLoading: false,
                 error: action.error
-            });
-        case types.NEXT_PROFILE:
-            return Object.assign({}, state, {
-                activeProfile: state.activeProfile + 1
-            });
-        case types.UPDATE_ACTIVE_PROFILE:
-            return Object.assign({}, state, {
-                activeProfile: action.index
             });
         default:
             return state;

@@ -3,8 +3,8 @@ import Immutable from 'seamless-immutable';
 
 const initialState = Immutable({
     root: undefined, // 'login' / 'after-login',
-    currentUser: {id: '-KPzFJ697NbkNZoHVBR7'},
-    currentNetwork: {id: '-KPzFYEKdj3yRQn3teTP', name: 'Boston Beta'}
+    currentUser: {},
+    currentNetwork: {_id: '-KPzFYEKdj3yRQn3teTP', name: 'Convos Beta'}
 });
 
 export default function app(state = initialState, action = {}) {
@@ -15,7 +15,8 @@ export default function app(state = initialState, action = {}) {
             });
         case types.USER_CHANGED:
             return Object.assign({}, state, {
-                currentUser: action.user
+                currentUser: action.user,
+                root: 'after-login'
             });
         default:
             return state;

@@ -9,7 +9,7 @@ export function loadConvos() {
 
         dispatch(fetchConvos());
 
-        MyConvosController.getCards(app.currentUser.id, app.currentNetwork.id).then(
+        MyConvosController.getCards(app.currentUser._id, app.currentNetwork._id).then(
             (cards) => {
                 cards.reverse();
                 dispatch(receivedConvos(cards));
@@ -36,7 +36,7 @@ export function createConvo(content, category) {
     return (dispatch, getState) => {
         const {app} = getState();
 
-        CardController.create(app.currentUser.id, app.currentNetwork.id, content, category)
+        CardController.create(app.currentUser._id, app.currentNetwork._id, content, category)
             .then(() => {
                 dispatch(loadConvos());
             }).catch((err) => {dispatch(loadingError(err))}
@@ -48,7 +48,7 @@ export function updateConvo(cardId, content, category) {
     return (dispatch, getState) => {
         const {app} = getState();
 
-        CardController.update(app.currentUser.id, app.currentNetwork.id, cardId, content, category)
+        CardController.update(app.currentUser._id, app.currentNetwork._id, cardId, content, category)
             .then(() => {
                 dispatch(loadConvos());
             }).catch((err) => {dispatch(loadingError(err))}
@@ -60,7 +60,7 @@ export function deleteConvo(cardId) {
     return (dispatch, getState) => {
         const {app} = getState();
 
-        CardController.remove(app.currentUser.id, app.currentNetwork.id, cardId)
+        CardController.remove(app.currentUser._id, app.currentNetwork._id, cardId)
             .then(() => {
                 dispatch(loadConvos());
             }).catch((err) => {dispatch(loadingError(err))}

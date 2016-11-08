@@ -2,36 +2,28 @@ import * as types from './actionTypes';
 import Immutable from 'seamless-immutable';
 
 const initialState = Immutable({
-    cardDeck: [],
-    activeCard: 0,
+    userData: {},
     isLoading: false,
-    hasLoaded: false,
-    error: {}
+    error: null
 });
 
-export default function convoSwiper(state = initialState, action = {}) {
+export default function settings(state = initialState, action = {}) {
     switch (action.type) {
-        case types.FETCH_CONVOS:
+        case types.FETCH_SETTINGS:
             return Object.assign({}, state, {
                 isLoading: true
             });
-        case types.RECEIVE_CONVOS:
+        case types.RECEIVED_SETTINGS:
             return Object.assign({}, state, {
-                cardDeck: state.cardDeck.concat(action.cards),
-                isLoading: false,
-                hasLoaded: true
+                userData: action.userData,
+                isLoading: false
             });
         case types.LOADING_ERROR:
             return Object.assign({}, state, {
-                cardDeck: [],
                 isLoading: false,
                 error: action.error
             });
-        case types.NEXT_CARD:
-            return Object.assign({}, state, {
-                activeCard: state.activeCard + 1
-            });
         default:
             return state;
-      }
+    }
 }

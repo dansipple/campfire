@@ -11,25 +11,33 @@ class SwiperController {
 
     getCards(userId, networkId) {
         return new Promise((resolve, reject) => {
-            Card.getCards(networkId, 20, this.getUserPointer(userId, networkId)).then(Helpers.objectToArray)
-                .then(resolve).catch(reject);
+            this.getUserPointer(userId, networkId)
+                .then((pointer) => {
+                    pointer = pointer ? pointer.pointer : '-A';
+
+                    Card.getCards(networkId, 50, pointer)
+                        .then(Helpers.objectToArray)
+                        .then((cards) => {
+                            const filteredCards = cards.filter((card) => {
+                                return card.creator._id !== userId;
+                            });
+                            resolve(filteredCards)
+                        }).catch(reject);
+                }).catch(reject);
         });
     }
 
     updateUserCardDeckPointer(userId, networkId, newPointer) {
-        UserCardDeckPointer.update(`${userId}/${networkId}/pointer`, newPointer).then(
-            (userCardDeckPointer) => {
-                console.log(userCardDeckPointer);
-            }
-        ).catch((err) => { console.log(err) });
+        return UserCardDeckPointer.update(`${networkId}/${userId}`, {
+            pointer: newPointer
+        });
     }
 
     getUserPointer(userId, networkId) {
-        UserCardDeckPointer.getOne(`${userId}/${networkId}/pointer`).then((pointer) => {return pointer})
-            .catch((err) => { console.log(err) });
+        return UserCardDeckPointer.getOne(`${networkId}/${userId}`);
     }
 
-    swipe(userId, networkId, card, decision) {
+    swipe(userId, networkId, card, nextCardKey, decision) {
         return new Promise((resolve, reject) => {
             Swipe.set(`${networkId}/${card._id}/${userId}`, {
                 interested: decision
@@ -39,7 +47,10 @@ class SwiperController {
                         hasInterested: true
                     });
                 }
-            }).then(resolve).catch(reject);
+                const checkedNextCardKey = nextCardKey ? nextCardKey : (card._id.slice(0,-1) + 'Z');
+                this.updateUserCardDeckPointer(userId, networkId, checkedNextCardKey).catch(reject);
+                resolve();
+            }).catch(reject);
         });
     }
 

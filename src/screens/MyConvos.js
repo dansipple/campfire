@@ -55,17 +55,9 @@ export default class MyConvos extends Component {
     render() {
         return (
             <View style={{flex: 1, backgroundColor: '#eee'}}>
-                <View style={[styles.header, styles.headerWhite]}>
-                    <TouchableOpacity onPress={() => this.props.router('home')}>
-                        <Image style={styles.headerIcon} source={require('../../img/settings.png')}/>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.props.router('home')}>
-                        <Text style={{color: '#666', fontSize: 16, fontWeight: 'bold'}}>Your Convos</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.props.router('newConvo')}>
-                        <Text>New</Text>
-                    </TouchableOpacity>
-                </View>
+                <TouchableOpacity style={[styles.header, styles.headerWhite, {justifyContent:'center'}]} onPress={() => this.props.router('home')}>
+                    <Text style={{color: '#666', fontSize: 16, fontWeight: 'bold', textAlign: 'center'}}>Your Convos</Text>
+                </TouchableOpacity>
                 {this.props.state.convos.length ?
                     (<ListView
                         dataSource={this.state.dataSource}

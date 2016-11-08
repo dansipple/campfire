@@ -70,7 +70,7 @@ class NewConvo extends Component {
         if(!this.props.card) {
             this.props.dispatch(myConvosActions.createConvo(this.state.content, this.state.category));
         } else {
-            this.props.dispatch(myConvosActions.updateConvo(this.props.card.id, this.state.content, this.state.category));
+            this.props.dispatch(myConvosActions.updateConvo(this.props.card._id, this.state.content, this.state.category));
         }
         this.props.navigator.dismissModal();
     }
@@ -83,7 +83,7 @@ class NewConvo extends Component {
                 [
                     {text: 'Cancel', style: 'cancel'},
                     {text: 'Delete', onPress: () => {
-                        this.props.dispatch(myConvosActions.deleteConvo(this.props.card.id));
+                        this.props.dispatch(myConvosActions.deleteConvo(this.props.card._id));
                         this.props.navigator.dismissModal();
                     }}
                 ]

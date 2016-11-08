@@ -7,7 +7,7 @@ export function loadMessages(conversationId, hasUnread) {
         dispatch(fetchMessages());
         const {app} = getState();
 
-        MessagesController.getMessagesStream(app.currentNetwork.id, conversationId,
+        MessagesController.getMessagesStream(app.currentNetwork._id, conversationId,
             (message, key) => {
                 message._id = key;
                 dispatch(receivedMessage(conversationId, message));
@@ -30,7 +30,7 @@ function receivedMessage(conversationId, message) {
 export function sendMessage(conversationId, text) {
     return async (dispatch, getState) => {
         const {app} = getState();
-        MessagesController.sendMessage(app.currentNetwork.id, conversationId, app.currentUser.id, text)
+        MessagesController.sendMessage(app.currentNetwork._id, conversationId, app.currentUser._id, text)
         .catch((err) => {
             return dispatch(loadingError(err));
         });

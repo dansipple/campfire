@@ -8,7 +8,7 @@ export function loadConvos() {
 
         dispatch(fetchConvos());
 
-        SwiperController.getCards(app.currentUser.id, app.currentNetwork.id).then(
+        SwiperController.getCards(app.currentUser._id, app.currentNetwork._id).then(
             (cards) => {dispatch(receivedConvos(cards))}
         ).catch(
             (err) => {dispatch(loadingError(err))}
@@ -42,15 +42,15 @@ function nextCard() {
     return {type: types.NEXT_CARD};
 }
 
-export function swipe(card, decision) {
+export function swipe(card, nextCardKey, decision) {
     return (dispatch, getState) => {
         const {app} = getState();
 
-        SwiperController.swipe(app.currentUser.id, app.currentNetwork.id, card, decision).then(() => {
-            dispatch(checkPosition());
-            dispatch(nextCard());
-        }).catch(
+        SwiperController.swipe(app.currentUser._id, app.currentNetwork._id, card, nextCardKey, decision)
+        .catch(
             (err) => {dispatch(loadingError(err))}
         );
+        dispatch(checkPosition());
+        dispatch(nextCard());
     }
 }

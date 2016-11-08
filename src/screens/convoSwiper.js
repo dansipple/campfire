@@ -21,19 +21,27 @@ export default class ConvoSwiper extends Component {
     }
 
     swipeLeft() {
-        this.props.dispatch(convoSwiperActions.swipe(this.props.state.cardDeck[this.props.state.activeCard], false));
+        const nextCardKey = this.props.state.cardDeck[this.props.state.activeCard + 1]?
+            this.props.state.cardDeck[this.props.state.activeCard + 1]._id : null;
+        this.props.dispatch(convoSwiperActions.swipe(this.props.state.cardDeck[this.props.state.activeCard],
+            nextCardKey, false));
     }
 
     swipeRight() {
-        this.props.dispatch(convoSwiperActions.swipe(this.props.state.cardDeck[this.props.state.activeCard], true));
+        const nextCardKey = this.props.state.cardDeck[this.props.state.activeCard + 1]?
+            this.props.state.cardDeck[this.props.state.activeCard + 1]._id : null;
+        this.props.dispatch(convoSwiperActions.swipe(this.props.state.cardDeck[this.props.state.activeCard],
+            nextCardKey, true));
     }
 
     loadConvos() {
         this.props.dispatch(convoSwiperActions.loadConvos());
     }
 
-    componentDidMount() {
-        this.loadConvos();
+    componentWillReceiveProps(nextProps) {
+        if(this.props.appState.currentUser != nextProps.appState.currentUser && nextProps.state.cardDeck.length == 0){
+            this.loadConvos();
+        }
     }
 
     renderLoader() {
@@ -47,28 +55,46 @@ export default class ConvoSwiper extends Component {
     renderDeck() {
         const state = this.props.state;
 
-        return (
-            <View style={{flex: 1}}>
-                <DeckSwiper
-                    onSwipeRight={this.swipeRight}
-                    onSwipeLeft={this.swipeLeft}
-                    topCard={state.cardDeck[state.activeCard]}
-                    bottomCard={state.cardDeck[state.activeCard + 1]}
-                    renderItem={(card)=> {
+        if(state.activeCard < state.cardDeck.length -1) {
+            return (
+                <View style={{flex: 1}}>
+                    <DeckSwiper
+                        onSwipeRight={this.swipeRight}
+                        onSwipeLeft={this.swipeLeft}
+                        topCard={state.cardDeck[state.activeCard]}
+                        bottomCard={state.cardDeck[state.activeCard + 1]}
+                        renderItem={(card)=> {
                         return (
                             <Card cardData={card}/>
                         )
                     }}
-                >
-                </DeckSwiper>
-            </View>
-        );
+                    >
+                    </DeckSwiper>
+                </View>
+            );
+        }
+
+        else {
+            return (
+                <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                    <View>
+                        <View style={{borderRadius: 4, backgroundColor: '#fff', height: 200, width: 200}}>
+                            <View style={{flex: 0.8, borderTopLeftRadius: 4, borderTopRightRadius: 4, backgroundColor: '#eee'}} />
+                            <View style={{backgroundColor: '#eee', height: 20, margin: 10, marginBottom: 0}}/>
+                            <View style={{backgroundColor: '#eee', height: 20, margin: 10}}/>
+                        </View>
+                        <Text style={{color: '#fff', fontSize: 20, textAlign: 'center', marginTop: 15}}>Out of Convos</Text>
+                    </View>
+                </View>
+            );
+        }
+
     }
 
     render() {
         return (
             <View style={{flex: 1}}>
-                <View style={ styles.header}>
+                <View style={styles.header}>
                     <TouchableOpacity onPress={() => this.props.router('settings')}>
                         <Image style={styles.headerIcon} source={require('../../img/settings.png')}/>
                     </TouchableOpacity>
@@ -78,13 +104,13 @@ export default class ConvoSwiper extends Component {
                             <Image style={styles.headerDownArrow}
                                    source={require('../../img/down-arrow.png')}/>
                         </View>
-                    </TouchableOpacity>
+                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => this.props.router('messages')}>
                         <Image style={styles.headerIcon} source={require('../../img/chat.png')}/>
                     </TouchableOpacity>
                 </View>
-                <View style={ styles.cardViewer }>
+                <View style={styles.cardViewer}>
                     {(this.props.state.isLoading) ? this.renderLoader() : this.renderDeck()}
                     <TouchableOpacity onPress={() => this.props.router('myConvos')} style={styles.myConvosButton}>
                         <Image style={styles.headerIcon} source={require('../../img/three_selected.png')}/>

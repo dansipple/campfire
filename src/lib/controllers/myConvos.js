@@ -3,7 +3,7 @@ import UserCard from '../models/userCard';
 
 import Helpers from './../utils/helpers';
 
-class UserCardController {
+class MyConvosController {
 
     getCards(userId, networkId) {
         return new Promise((resolve, reject) => {
@@ -17,4 +17,4 @@ class UserCardController {
     }
 }
 
-export default new UserCardController();
+export default new MyConvosController();
