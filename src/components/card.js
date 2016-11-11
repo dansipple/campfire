@@ -29,7 +29,7 @@ export default class Card extends Component {
                 },
                 cardBody: {
                     padding: 30,
-                    minHeight: this.props.inMessage ? 200 : height - 205
+                    minHeight: this.props.inMessage ? 200 : height - 215
                 },
                 category: {
                     color: '#777',

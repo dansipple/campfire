@@ -43,7 +43,61 @@ export default class App {
                 });
                 return;
             case 'after-login':
-                Navigation.startSingleScreenApp({
+                Navigation.startTabBasedApp({
+                    tabs: [
+                        {
+                            screen: 'Root',
+                            title: 'Convos',
+                            label: 'Find',
+                            icon: require('../img/ic_home.png'),
+                            navigatorStyle: {
+                                navBarBackgroundColor: '#3498db',
+                                navBarTextColor: '#fff',
+                                statusBarTextColorScheme: 'light',
+                            }
+                        },
+                        {
+                            screen: 'Inbox',
+                            title: 'Messages',
+                            label: 'Messages',
+                            icon: require('../img/chat.png'),
+                            navigatorStyle: {
+                                navBarBackgroundColor: '#3498db',
+                                navBarTextColor: '#fff',
+                                statusBarTextColorScheme: 'light'
+                            }
+                        },
+                        {
+                            screen: 'NewConvo',
+                            title: 'My Convos',
+                            label: 'My Convos',
+                            icon: require('../img/three_selected.png'),
+                            navigatorStyle: {
+                                navBarBackgroundColor: '#3498db',
+                                navBarTextColor: '#fff',
+                                statusBarTextColorScheme: 'light'
+                            }
+                        },
+                        {
+                            screen: 'Settings',
+                            title: 'Settings',
+                            label: 'Settings',
+                            icon: require('../img/settings.png'),
+                            navigatorStyle: {
+                                navBarBackgroundColor: '#fff',
+                                navBarTextColor: '#666'
+                            }
+                        }
+                    ],
+                    tabsStyle: { // optional, add this if you want to style the tab bar beyond the defaults
+                        //tabBarButtonColor: '#ff0000',
+                        tabBarSelectedButtonColor: '#3498db',
+                        tabBarBackgroundColor: '#fff'
+
+                    }
+                });
+                /*
+                Navigation.startTabBasedApp({
                     screen: {
                         screen: 'Root',
                         title: 'Convos',
@@ -55,6 +109,7 @@ export default class App {
 
                     }
                 });
+                */
                 return;
             default:
                 console.error('Unknown app root');

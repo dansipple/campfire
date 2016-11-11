@@ -2,15 +2,14 @@ import React, { Component } from 'react';
 import {TouchableHighlight, Text, Image, View} from 'react-native';
 import Swiper from 'react-native-swiper';
 import ChooseNetwork from './ChooseNetwork';
-import ConvoSwiper from './ConvoSwiper';
+import ConvoSwiper from './convoSwiper';
 import MyConvos from './MyConvos';
 
 import {connect} from 'react-redux';
 
 class Root extends Component {
     static navigatorStyle = {
-        navBarHidden: true,
-        drawUnderNavBar: true
+        statusBarColorScheme: 'light'
     };
 
     constructor(props) {
@@ -149,24 +148,6 @@ class Root extends Component {
                         router={this.router}
                     /> : null }
             </Swiper>
-            <TouchableHighlight
-                onPress={this.router.bind(this, 'newConvo')}
-                underlayColor={'#f9f9f9'}
-                style={[{width: 60,
-                        height: 60,
-                        borderRadius: 30,
-                        backgroundColor: '#fff',
-                        position: 'absolute',
-                        shadowColor: '#000',
-                        shadowOpacity: 0.2,
-                        shadowRadius: 8,
-                        bottom: 10,
-                        right: 10,
-                        justifyContent: 'center',
-                        alignItems: 'center'}, !this.state.showFab && {opacity: 0, height: 0, width: 0}]}
-            >
-                <Image style={{tintColor: '#3498db'}} source={require('../../img/add.png')} />
-            </TouchableHighlight>
         </View>
         );
     }

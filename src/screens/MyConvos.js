@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import { TouchableOpacity, StyleSheet, ListView, ScrollView, Image, View, Text} from 'react-native';
 import moment from 'moment';
 
-import MyConvoCard from './../components/MyConvoCard';
+import MyConvoCard from './../components/myConvoCard';
 import * as myConvosActions from '../reducers/myConvos/actions';
 
+import {connect} from 'react-redux';
 
-export default class MyConvos extends Component {
+class MyConvos extends Component {
 
     constructor(props) {
         super(props);
@@ -55,9 +56,6 @@ export default class MyConvos extends Component {
     render() {
         return (
             <View style={{flex: 1, backgroundColor: '#eee'}}>
-                <TouchableOpacity style={[styles.header, styles.headerWhite, {justifyContent:'center'}]} onPress={() => this.props.router('home')}>
-                    <Text style={{color: '#666', fontSize: 16, fontWeight: 'bold', textAlign: 'center'}}>Your Convos</Text>
-                </TouchableOpacity>
                 {this.props.state.convos.length ?
                     (<ListView
                         dataSource={this.state.dataSource}
@@ -105,3 +103,11 @@ const styles = StyleSheet.create({
         color: '#888'
     }
 });
+
+function mapStateToProps(state) {
+    return {
+        state: state.myConvos
+    };
+}
+
+export default connect(mapStateToProps)(MyConvos);

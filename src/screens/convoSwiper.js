@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { TouchableOpacity, StyleSheet, Image, View, Text} from 'react-native';
 
-import Card from './../components/Card';
+import Card from './../components/card';
 import DeckSwiper from './../components/DeckSwiper';
 
 import * as convoSwiperActions from '../reducers/convoSwiper/actions';
@@ -94,27 +94,8 @@ export default class ConvoSwiper extends Component {
     render() {
         return (
             <View style={{flex: 1}}>
-                <View style={styles.header}>
-                    <TouchableOpacity onPress={() => this.props.router('settings')}>
-                        <Image style={styles.headerIcon} source={require('../../img/settings.png')}/>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.props.router('network')}>
-                        <View style={{alignItems: 'center', flexDirection: 'row'}}>
-                            <Text style={styles.headerText}>{this.props.appState.currentNetwork.name}</Text>
-                            <Image style={styles.headerDownArrow}
-                                   source={require('../../img/down-arrow.png')}/>
-                        </View>
-                     </TouchableOpacity>
-
-                    <TouchableOpacity onPress={() => this.props.router('messages')}>
-                        <Image style={styles.headerIcon} source={require('../../img/chat.png')}/>
-                    </TouchableOpacity>
-                </View>
                 <View style={styles.cardViewer}>
                     {(this.props.state.isLoading) ? this.renderLoader() : this.renderDeck()}
-                    <TouchableOpacity onPress={() => this.props.router('myConvos')} style={styles.myConvosButton}>
-                        <Image style={styles.headerIcon} source={require('../../img/three_selected.png')}/>
-                    </TouchableOpacity>
                 </View>
             </View>
         )

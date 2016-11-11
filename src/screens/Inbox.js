@@ -25,12 +25,11 @@ class Inbox extends Component {
 
         this._renderRow = this._renderRow.bind(this);
 
-        this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
-
         this.loadConversations = this.loadConversations.bind(this);
     }
 
     loadConversations() {
+        console.log('loading conversations');
         this.props.dispatch(inboxActions.loadConversations());
     }
 
@@ -43,13 +42,8 @@ class Inbox extends Component {
     }
 
     componentDidMount() {
+        console.log('mounted');
         this.loadConversations();
-    }
-
-    onNavigatorEvent(event) {
-        if (event.id == 'back') {
-            this.props.navigator.pop();
-        }
     }
 
     selectConversation(conversationData) {
@@ -93,6 +87,7 @@ class Inbox extends Component {
     }
 
     render() {
+        console.log(this.props.state);
         return (
                 <View style={{ flex: 1 }}>
                     {this.props.state.conversations.length ?

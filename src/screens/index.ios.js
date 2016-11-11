@@ -8,6 +8,7 @@ import NewConvo from './NewConvo';
 import ProfileSwiper from './ProfileSwiper';
 import Login from './Login';
 import ChooseNetwork from './ChooseNetwork';
+import MyConvos from './MyConvos';
 
 // register all screens of the app (including internal ones)
 export function registerScreens(store, Provider) {
@@ -19,4 +20,5 @@ export function registerScreens(store, Provider) {
     Navigation.registerComponent('ProfileSwiper', () => ProfileSwiper, store, Provider);
     Navigation.registerComponent('Login', () => Login, store, Provider);
     Navigation.registerComponent('ChooseNetwork', () => ChooseNetwork, store, Provider);
+    Navigation.registerComponent('MyConvos', () => MyConvos, store, Provider);
 }
