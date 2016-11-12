@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Image, StyleSheet, Dimensions, View, Text } from 'react-native';
 import { GiftedChat, Actions, Bubble } from 'react-native-gifted-chat';
 
-import Card from './../components/card';
+import Card from './../components/Card';
 
 import * as messagesActions from '../reducers/messages/actions';
 

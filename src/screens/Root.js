@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {TouchableHighlight, Text, Image, View} from 'react-native';
 import Swiper from 'react-native-swiper';
 import ChooseNetwork from './ChooseNetwork';
-import ConvoSwiper from './convoSwiper';
+import ConvoSwiper from './ConvoSwiper';
 import MyConvos from './MyConvos';
 
 import {connect} from 'react-redux';

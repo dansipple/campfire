@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { TouchableOpacity, StyleSheet, ListView, ScrollView, Image, View, Text} from 'react-native';
 import moment from 'moment';
 
-import MyConvoCard from './../components/myConvoCard';
+import MyConvoCard from './../components/MyConvoCard';
 import * as myConvosActions from '../reducers/myConvos/actions';
 
 import {connect} from 'react-redux';

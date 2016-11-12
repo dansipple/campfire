@@ -19,17 +19,17 @@ export default class Card extends Component {
                 cardContainer: {
                     elevation: 3,
                     backgroundColor: this.props.inMessage ? '#f9f9f9' : '#fff',
-                    borderRadius: 8,
-                    shadowColor: '#000',
-                    shadowOpacity: this.props.inMessage ? 0 : 0.2,
-                    shadowRadius: 8,
+                    borderRadius: 3,
+                    //shadowColor: '#000',
+                    //shadowOpacity: this.props.inMessage ? 0 : 0.2,
+                    //shadowRadius: 8,
                     borderColor: '#ddd',
-                    borderWidth: this.props.inMessage ? 1 : 0,
+                    borderWidth: true ? 1 : 0,
                     flex: 1
                 },
                 cardBody: {
                     padding: 30,
-                    minHeight: this.props.inMessage ? 200 : height - 215
+                    minHeight: this.props.inMessage ? 200 : height - 300
                 },
                 category: {
                     color: '#777',
@@ -47,11 +47,9 @@ export default class Card extends Component {
                 creatorInformation: {
                     flex: 1,
                     flexDirection: 'row',
-                    //backgroundColor: '#fff',
                     padding: 15,
-                    //borderColor: '#ddd',
-                    //borderWidth: 1,
-                    //borderTopWidth: 0
+                    borderColor: '#eee',
+                    borderTopWidth: 0.5
                 },
                 creatorNameContainer: {
                     flexDirection: 'column'

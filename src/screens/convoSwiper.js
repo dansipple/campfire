@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, StyleSheet, Image, View, Text} from 'react-native';
+import { TouchableOpacity, TouchableHighlight, StyleSheet, Image, View, Text} from 'react-native';
 
-import Card from './../components/card';
+import Card from './../components/Card';
 import DeckSwiper from './../components/DeckSwiper';
 
 import * as convoSwiperActions from '../reducers/convoSwiper/actions';
@@ -70,6 +70,14 @@ export default class ConvoSwiper extends Component {
                     }}
                     >
                     </DeckSwiper>
+                    <View style={{flexDirection: 'row', justifyContent: 'center', padding: 15}}>
+                        <TouchableHighlight style={{borderColor: '#ddd', borderWidth: 1, marginRight: 10, justifyContent: 'center', alignItems:'center', width: 70, height: 70, backgroundColor: 'transparent', borderRadius: 35}}>
+                            <Image source={require('../../img/close.png')} />
+                        </TouchableHighlight>
+                        <TouchableHighlight style={{borderColor: '#ddd', borderWidth: 1, justifyContent: 'center', alignItems:'center', width: 70, height: 70, backgroundColor: 'transparent', borderRadius: 35}}>
+                            <Image source={require('../../img/close.png')} />
+                        </TouchableHighlight>
+                    </View>
                 </View>
             );
         }
@@ -77,6 +85,7 @@ export default class ConvoSwiper extends Component {
         else {
             return (
                 <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                    <TouchableOpacity onPress={this.loadConvos}>
                     <View>
                         <View style={{borderRadius: 4, backgroundColor: '#fff', height: 200, width: 200}}>
                             <View style={{flex: 0.8, borderTopLeftRadius: 4, borderTopRightRadius: 4, backgroundColor: '#eee'}} />
@@ -85,6 +94,7 @@ export default class ConvoSwiper extends Component {
                         </View>
                         <Text style={{color: '#fff', fontSize: 20, textAlign: 'center', marginTop: 15}}>Out of Convos</Text>
                     </View>
+                    </TouchableOpacity>
                 </View>
             );
         }
@@ -132,8 +142,8 @@ const styles = StyleSheet.create({
         marginTop: 5
     },
     cardViewer: {
-        backgroundColor: '#3498db',
-        padding: 15,
+        backgroundColor: '#eee',
+        padding: 10,
         paddingTop: 10,
         flex: 1
     },

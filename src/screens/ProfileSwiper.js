@@ -3,7 +3,7 @@ import { Image, StyleSheet, ScrollView, View, Text, Dimensions, TouchableOpacity
 
 import Swiper from 'react-native-swiper';
 
-import Profile from './../components/profile';
+import Profile from './../components/Profile';
 
 import {connect} from 'react-redux';
 

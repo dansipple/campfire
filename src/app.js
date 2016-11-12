@@ -49,11 +49,10 @@ export default class App {
                             screen: 'Root',
                             title: 'Convos',
                             label: 'Find',
-                            icon: require('../img/ic_home.png'),
+                            icon: require('../img/three_selected.png'),
                             navigatorStyle: {
-                                navBarBackgroundColor: '#3498db',
-                                navBarTextColor: '#fff',
-                                statusBarTextColorScheme: 'light',
+                                navBarBackgroundColor: '#fff',
+                                navBarTextColor: '#666'
                             }
                         },
                         {
@@ -62,20 +61,29 @@ export default class App {
                             label: 'Messages',
                             icon: require('../img/chat.png'),
                             navigatorStyle: {
-                                navBarBackgroundColor: '#3498db',
-                                navBarTextColor: '#fff',
-                                statusBarTextColorScheme: 'light'
+                                navBarBackgroundColor: '#fff',
+                                navBarTextColor: '#666'
                             }
                         },
                         {
                             screen: 'NewConvo',
+                            title: 'New Convo',
+                            //label: 'New',
+                            icon: require('../img/add_button.png'),
+                            navigatorStyle: {
+                                navBarBackgroundColor: '#fff',
+                                navBarTextColor: '#666',
+                                tabBarButtonColor: '#666'
+                            }
+                        },
+                        {
+                            screen: 'MyConvos',
                             title: 'My Convos',
                             label: 'My Convos',
-                            icon: require('../img/three_selected.png'),
+                            icon: require('../img/three.png'),
                             navigatorStyle: {
-                                navBarBackgroundColor: '#3498db',
-                                navBarTextColor: '#fff',
-                                statusBarTextColorScheme: 'light'
+                                navBarBackgroundColor: '#fff',
+                                navBarTextColor: '#666'
                             }
                         },
                         {
@@ -90,7 +98,7 @@ export default class App {
                         }
                     ],
                     tabsStyle: { // optional, add this if you want to style the tab bar beyond the defaults
-                        //tabBarButtonColor: '#ff0000',
+                        //tabBarButtonColor: null,
                         tabBarSelectedButtonColor: '#3498db',
                         tabBarBackgroundColor: '#fff'
 
