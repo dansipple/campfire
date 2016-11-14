@@ -3,11 +3,12 @@ import React, { Component } from 'react';
 import { TouchableHighlight, TouchableOpacity, Image, StyleSheet, Dimensions, RefreshControl, ListView, Text, View } from 'react-native';
 
 import * as networksActions from '../reducers/networks/actions';
+import * as appActions from '../reducers/app/actions';
 
 import {connect} from 'react-redux';
 
-export default class ChooseNetwork extends Component {
-    static navigatorButtons = {
+class ChooseNetwork extends Component {
+    /*static navigatorButtons = {
         leftButtons: [{
             title: 'Cancel',
             id: 'close'
@@ -16,7 +17,7 @@ export default class ChooseNetwork extends Component {
             title: 'Find',
             id: 'find'
         }]
-    };
+    };*/
 
     static navigatorStyle = {
         navBarButtonColor: '#777',
@@ -35,10 +36,29 @@ export default class ChooseNetwork extends Component {
 
         this.loadNetworks = this.loadNetworks.bind(this);
 
+        this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+
+    }
+
+    onNavigatorEvent(event) {
+        if (event.type == 'DeepLink') {
+            this.handleDeepLink(event);
+        } else {
+            switch (event.id) {
+                default:
+                    console.log('Unhandled event ' + event.id);
+                    break;
+            }
+        }
     }
 
     loadNetworks() {
         this.props.dispatch(networksActions.loadNetworks());
+    }
+
+    selectNetwork(network) {
+        this.props.dispatch(appActions.selectNetwork(network));
+        //this.props.navigator.dismissModal();
     }
 
     componentWillMount() {
@@ -55,7 +75,7 @@ export default class ChooseNetwork extends Component {
 
     _renderRow(data) {
         return (
-            <TouchableHighlight>
+            <TouchableHighlight onPress={() => {this.selectNetwork(data)}} underlayColor="#f9f9f9">
                 <View style={{backgroundColor: '#fff', padding: 20, borderTopWidth: 0.5, borderColor: '#ccc'}}>
                     <Text style={{color: '#555', fontSize: 18}}>{data.name}</Text>
                 </View>
@@ -63,18 +83,14 @@ export default class ChooseNetwork extends Component {
         );
     }
 
-
     render() {
         return (
-            <View style={{ flex: 1, backgroundColor: '#eee' }}>
-                <View style={[styles.header, styles.headerWhite, {justifyContent:'center'}]}>
-                    <Text style={{color: '#666', fontSize: 16, fontWeight: 'bold', textAlign: 'center'}}>Networks</Text>
-                </View>
+            <View style={{ flex: 1, backgroundColor: '#eee', paddingBottom: 30}}>
                 {this.props.state.networks.length ?
                     <ListView
                         dataSource={this.state.dataSource}
                         renderRow={this._renderRow}
-                        style={{ flex: 1 }}
+                        style={{ flex: 1, paddingTop: 30, paddingBottom: 30 }}
                         refreshControl={
                           <RefreshControl
                             refreshing={this.props.state.isLoading}
@@ -82,6 +98,16 @@ export default class ChooseNetwork extends Component {
                           />
                         }
                     /> : <View />}
+                <TouchableHighlight onPress={() => {}} underlayColor="#f9f9f9">
+                    <View style={{backgroundColor: '#fff', padding: 20, borderTopWidth: 0.5, borderColor: '#ccc'}}>
+                        <Text style={{color: '#555', fontSize: 18}}>Create a Network</Text>
+                    </View>
+                </TouchableHighlight>
+                <TouchableHighlight onPress={() => {}} underlayColor="#f9f9f9">
+                    <View style={{backgroundColor: '#fff', padding: 20, borderTopWidth: 0.5, borderColor: '#ccc'}}>
+                        <Text style={{color: '#555', fontSize: 18}}>Join a Network</Text>
+                    </View>
+                </TouchableHighlight>
             </View>
         );
     }
@@ -112,3 +138,12 @@ const styles = StyleSheet.create({
         tintColor: '#fff'
     }
 });
+
+function mapStateToProps(state) {
+    return {
+        state: state.networks,
+        appState: state.app
+    };
+}
+
+export default connect(mapStateToProps)(ChooseNetwork);

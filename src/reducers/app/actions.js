@@ -13,18 +13,6 @@ export function appInitialized() {
     // since all business logic should be inside redux actions
     // this is a good place to put your app initialization code
 
-      /*
-      const currentUser = firebase.app.auth().currentUser.getToken();
-
-      if(currentUser) {
-          //console.log(JSON.parse(user));
-          dispatch(setUser(JSON.parse(user)));
-      }
-      else {
-          dispatch(changeAppRoot('login'));
-      }
-*/
-
       firebase.auth().onAuthStateChanged(function(user) {
             if(user) {
                 dispatch(login(user));
@@ -33,18 +21,11 @@ export function appInitialized() {
             }
       });
 
-/*
-      AsyncStorage.getItem('@User', (err, user) => {
-          if(user) {
-              console.log(JSON.parse(user));
-              dispatch(setUser(JSON.parse(user)));
-          }
-          else {
-              dispatch(changeAppRoot('login'));
-          }
-      });
-      */
   };
+}
+
+export function selectNetwork(network) {
+    return {type: types.NETWORK_CHANGED, network: network};
 }
 
 export function changeAppRoot(root) {
@@ -73,7 +54,7 @@ export function login(userData) {
              }
           });
 
-    dispatch(changeAppRoot('after-login'));
+    //dispatch(changeAppRoot('after-login'));
   };
 }
 

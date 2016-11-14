@@ -18,17 +18,23 @@ export default class App {
     constructor() {
         // since react-redux only works on components, we need to subscribe this class manually
         this.currentRoot = undefined;
+        this.currentNetwork = undefined;
         store.subscribe(this.onStoreUpdate.bind(this));
         store.dispatch(appActions.appInitialized());
     }
 
     onStoreUpdate() {
-        const {root} = store.getState().app;
+        const {root, currentNetwork} = store.getState().app;
         // handle a root change
         // if your app doesn't change roots in runtime, you can remove onStoreUpdate() altogether
         if (this.currentRoot != root) {
             this.currentRoot = root;
             this.startApp(root);
+        }
+
+        if(this.currentNetwork != currentNetwork && this.currentRoot !== undefined) {
+            this.currentNetwork = currentNetwork;
+            this.startApp(this.currentRoot);
         }
     }
 
@@ -46,7 +52,7 @@ export default class App {
                 Navigation.startTabBasedApp({
                     tabs: [
                         {
-                            screen: 'Root',
+                            screen: 'ConvoSwiper',
                             title: 'Convos',
                             label: 'Find',
                             icon: require('../img/three_selected.png'),
@@ -63,17 +69,6 @@ export default class App {
                             navigatorStyle: {
                                 navBarBackgroundColor: '#fff',
                                 navBarTextColor: '#666'
-                            }
-                        },
-                        {
-                            screen: 'NewConvo',
-                            title: 'New Convo',
-                            //label: 'New',
-                            icon: require('../img/add_button.png'),
-                            navigatorStyle: {
-                                navBarBackgroundColor: '#fff',
-                                navBarTextColor: '#666',
-                                tabBarButtonColor: '#666'
                             }
                         },
                         {

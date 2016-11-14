@@ -11,7 +11,7 @@ export default class DeckSwiper extends Component {
         this.state = {
             pan: new Animated.ValueXY(),
             pan2: new Animated.ValueXY(),
-            enter: new Animated.Value(0.8),
+            enter: new Animated.Value(0.95),
             card1Top: true,
             card2Top: false,
             fadeAnim: new Animated.Value(0.8),
@@ -59,8 +59,8 @@ export default class DeckSwiper extends Component {
             onPanResponderMove: (e, gestureState) => {
                 let val = Math.abs((gestureState.dx*.0013));
                 let opa = Math.abs((gestureState.dx*.0022));
-                if (val>0.2) {
-                    val = 0.2;
+                if (val>0.05) {
+                    val = 0.05;
                 }
                 Animated.timing(
                     this.state.fadeAnim,
@@ -68,7 +68,7 @@ export default class DeckSwiper extends Component {
                 ).start();
                 Animated.spring(
                     this.state.enter,
-                    { toValue: 0.8+val, friction: 7 }
+                    { toValue: 0.95+val, friction: 7 }
                 ).start();
                 Animated.event([
                     null, {dx: this.state.pan.x},

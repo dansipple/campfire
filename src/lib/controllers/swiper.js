@@ -48,7 +48,7 @@ class SwiperController {
                     });
                 }
                 const checkedNextCardKey = nextCardKey ? nextCardKey : (card._id.slice(0,-1) + 'Z');
-                this.updateUserCardDeckPointer(userId, networkId, checkedNextCardKey).catch(reject);
+                //this.updateUserCardDeckPointer(userId, networkId, checkedNextCardKey).catch(reject);
                 resolve();
             }).catch(reject);
         });

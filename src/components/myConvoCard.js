@@ -23,12 +23,12 @@ export default class MyConvoCard extends Component {
                         <TouchableHighlight
                             onPress={cardData.hasInterested ? this.props.viewInterested : null}
                             underlayColor="#f1f1f1"
-                            style={[styles.actionButton, styles.interestedButton, {borderBottomLeftRadius: 8},
+                            style={[styles.actionButton, styles.interestedButton, {borderBottomLeftRadius: 4},
                             !cardData.hasInterested && styles.inactiveButton ]}
                         >
                             <Text style={styles.actionButtonText}>View Interested</Text>
                         </TouchableHighlight>
-                        <TouchableHighlight onPress={this.props.editCard} underlayColor="#f1f1f1" style={[styles.actionButton, {borderBottomRightRadius: 8}]}>
+                        <TouchableHighlight onPress={this.props.editCard} underlayColor="#f1f1f1" style={[styles.actionButton, {borderBottomRightRadius: 4}]}>
                             <Text style={styles.actionButtonText}>Edit</Text>
                         </TouchableHighlight>
                     </View>
@@ -45,12 +45,14 @@ const styles = StyleSheet.create({
     cardContainer: {
         elevation: 3,
         backgroundColor: '#fff',
-        borderRadius: 8,
-        shadowColor: '#000',
-        shadowOpacity: 0.2,
-        shadowRadius: 8,
+        borderRadius: 4,
+        //shadowColor: '#000',
+        //shadowOpacity: 0.2,
+        //shadowRadius: 8,
         marginBottom: 25,
-        flex: 1
+        flex: 1,
+        borderColor: '#ddd',
+        borderWidth: 1
     },
     cardBody: {
         padding: 20,
@@ -80,8 +82,8 @@ const styles = StyleSheet.create({
         borderTopColor: '#ddd',
         borderTopWidth: 1,
         padding: 10,
-        borderBottomLeftRadius: 8,
-        borderBottomRightRadius: 8
+        borderBottomLeftRadius: 4,
+        borderBottomRightRadius: 4
     },
     actionButtons: {
         flexDirection: 'row',

@@ -73,12 +73,14 @@ const styles = StyleSheet.create({
         fontWeight: '500',
         lineHeight: 22,
         paddingBottom: 5,
-        fontSize: 19
+        fontSize: 17,
+        color: '#555'
     },
     message: {
         fontWeight: '300',
         lineHeight: 15,
-        height: 15
+        height: 15,
+        color: '#666'
     }
 });
 

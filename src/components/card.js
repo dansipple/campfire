@@ -19,7 +19,7 @@ export default class Card extends Component {
                 cardContainer: {
                     elevation: 3,
                     backgroundColor: this.props.inMessage ? '#f9f9f9' : '#fff',
-                    borderRadius: 3,
+                    borderRadius: 4,
                     //shadowColor: '#000',
                     //shadowOpacity: this.props.inMessage ? 0 : 0.2,
                     //shadowRadius: 8,

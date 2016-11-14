@@ -20,7 +20,30 @@ class MyConvos extends Component {
         this._renderRow = this._renderRow.bind(this);
 
         this.loadConvos = this.loadConvos.bind(this);
+        this.editConvo = this.editConvo.bind(this);
+        this.viewInterested = this.viewInterested.bind(this);
     }
+
+    static navigatorButtons = {
+        leftButtons: [
+            {
+                icon: require('../../img/grid.png'),
+                title: 'Networks',
+                id: 'networks'
+            }
+        ],
+        rightButtons: [
+            {
+                icon: require('../../img/compose.png'),
+                title: 'Add',
+                id: 'add'
+            }
+        ]
+    };
+
+    static navigatorStyle = {
+        navBarButtonColor: '#666',
+    };
 
     loadConvos() {
         this.props.dispatch(myConvosActions.loadConvos());
@@ -38,6 +61,28 @@ class MyConvos extends Component {
         }
     }
 
+    editConvo(convoData) {
+        this.props.navigator.showModal({
+            title: 'Edit Convo',
+            screen: 'NewConvo',
+            passProps: {
+                card: convoData
+            }
+        });
+    }
+
+    viewInterested(convoData) {
+        this.props.navigator.showLightBox({
+            screen: "ProfileSwiper",
+            passProps: {
+                card: convoData
+            },
+            style: {
+                backgroundBlur: "dark"
+            }
+        });
+    }
+
     _renderRow(convoData) {
         const updatedTime = moment(convoData.createdAt).format('MMM D');
         return (
@@ -46,8 +91,8 @@ class MyConvos extends Component {
                 <MyConvoCard
                     cardData={convoData} 
                     router={this.props.router}
-                    viewInterested={() => {this.props.router('viewInterested', convoData)}}
-                    editCard={() => {this.props.router('editConvo', convoData)}}
+                    viewInterested={() => {this.viewInterested(convoData)}}
+                    editCard={() => {this.editConvo(convoData)}}
                 />
             </View>
         );
@@ -60,7 +105,7 @@ class MyConvos extends Component {
                     (<ListView
                         dataSource={this.state.dataSource}
                         renderRow={this._renderRow}
-                        style={{ flex: 1, padding: 25 }}
+                        style={{ flex: 1, padding: 10 }}
                     />) : (<View />)}
             </View>
         )

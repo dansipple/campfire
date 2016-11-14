@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, TouchableHighlight, StyleSheet, Image, View, Text} from 'react-native';
+import { Alert, TouchableOpacity, TouchableHighlight, StyleSheet, Image, View, Text} from 'react-native';
 
 import Card from './../components/Card';
 import DeckSwiper from './../components/DeckSwiper';
 
 import * as convoSwiperActions from '../reducers/convoSwiper/actions';
 
-export default class ConvoSwiper extends Component {
+import {connect} from 'react-redux';
+
+class ConvoSwiper extends Component {
 
     constructor(props) {
         super(props);
@@ -18,7 +20,57 @@ export default class ConvoSwiper extends Component {
         this.renderLoader = this.renderLoader.bind(this);
         this.renderDeck = this.renderDeck.bind(this);
 
+        this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
     }
+
+    static navigatorButtons = {
+        leftButtons: [
+            {
+                icon: require('../../img/grid.png'),
+                title: 'Networks',
+                id: 'networks'
+            }
+        ],
+        rightButtons: [
+            {
+                icon: require('../../img/compose.png'),
+                title: 'Add',
+                id: 'add'
+            }
+        ]
+    };
+
+    static navigatorStyle = {
+        navBarButtonColor: '#666',
+        //navBarNoBorder: true
+    };
+
+    onNavigatorEvent(event) {
+        if (event.type == 'DeepLink') {
+            this.handleDeepLink(event);
+        } else {
+            switch (event.id) {
+                case 'networks':
+                    this.props.navigator.showModal({
+                        title: 'Networks',
+                        screen: 'ChooseNetwork'
+                    });
+                    break;
+
+                case 'add':
+                    this.props.navigator.showModal({
+                        title: 'New Convo',
+                        screen: 'NewConvo'
+                    });
+                    break;
+
+                default:
+                    console.log('Unhandled event ' + event.id);
+                    break;
+            }
+        }
+    }
+
 
     swipeLeft() {
         const nextCardKey = this.props.state.cardDeck[this.props.state.activeCard + 1]?
@@ -71,11 +123,11 @@ export default class ConvoSwiper extends Component {
                     >
                     </DeckSwiper>
                     <View style={{flexDirection: 'row', justifyContent: 'center', padding: 15}}>
-                        <TouchableHighlight style={{borderColor: '#ddd', borderWidth: 1, marginRight: 10, justifyContent: 'center', alignItems:'center', width: 70, height: 70, backgroundColor: 'transparent', borderRadius: 35}}>
+                        <TouchableHighlight underlayColor="rgba(234, 48, 87, 0.3)" onPress={this.swipeLeft} style={{borderColor: '#ddd', borderWidth: 1, marginRight: 10, justifyContent: 'center', alignItems:'center', width: 70, height: 70, backgroundColor: 'transparent', borderRadius: 35}}>
                             <Image source={require('../../img/close.png')} />
                         </TouchableHighlight>
-                        <TouchableHighlight style={{borderColor: '#ddd', borderWidth: 1, justifyContent: 'center', alignItems:'center', width: 70, height: 70, backgroundColor: 'transparent', borderRadius: 35}}>
-                            <Image source={require('../../img/close.png')} />
+                        <TouchableHighlight underlayColor="rgba(44, 202, 67, 0.3)" onPress={this.swipeRight} style={{borderColor: '#ddd', borderWidth: 1, justifyContent: 'center', alignItems:'center', width: 70, height: 70, backgroundColor: 'transparent', borderRadius: 35}}>
+                            <Image source={require('../../img/check.png')} />
                         </TouchableHighlight>
                     </View>
                 </View>
@@ -87,12 +139,12 @@ export default class ConvoSwiper extends Component {
                 <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
                     <TouchableOpacity onPress={this.loadConvos}>
                     <View>
-                        <View style={{borderRadius: 4, backgroundColor: '#fff', height: 200, width: 200}}>
-                            <View style={{flex: 0.8, borderTopLeftRadius: 4, borderTopRightRadius: 4, backgroundColor: '#eee'}} />
+                        <View style={{borderRadius: 4, borderColor: '#ddd', borderWidth: 4, backgroundColor: '#fff', height: 200, width: 200}}>
+                            <View style={{flex: 0.8, borderTopLeftRadius: 4, borderTopRightRadius: 4, backgroundColor: '#f9f9f9'}} />
                             <View style={{backgroundColor: '#eee', height: 20, margin: 10, marginBottom: 0}}/>
                             <View style={{backgroundColor: '#eee', height: 20, margin: 10}}/>
                         </View>
-                        <Text style={{color: '#fff', fontSize: 20, textAlign: 'center', marginTop: 15}}>Out of Convos</Text>
+                        <Text style={{color: '#666', fontSize: 20, textAlign: 'center', marginTop: 15}}>Out of Convos</Text>
                     </View>
                     </TouchableOpacity>
                 </View>
@@ -158,3 +210,12 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     }
 });
+
+function mapStateToProps(state) {
+    return {
+        state: state.convoSwiper,
+        appState: state.app
+    };
+}
+
+export default connect(mapStateToProps)(ConvoSwiper);

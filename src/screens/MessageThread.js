@@ -27,31 +27,29 @@ class MessageThread extends Component {
         this._isMounted = false;
         this.onSend = this.onSend.bind(this);
         //this.renderCustomActions = this.renderCustomActions.bind(this);
-        this.renderFooter = this.renderFooter.bind(this);
         this.onLoadEarlier = this.onLoadEarlier.bind(this);
         this.renderBubble = this.renderBubble.bind(this);
         this.renderCustomView = this.renderCustomView.bind(this);
-
-        this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
-    }
-
-    onNavigatorEvent(event) {
-        if (event.id == 'back') {
-            this.props.loadConversations();
-            this.props.navigator.pop();
-        }
-    }
-
-    componentDidMount() {
-        this._isMounted = true;
-
-        if(!this.props.messagesState.messages[this.props.conversationId])
-            this.props.dispatch(messagesActions.loadMessages(this.props.conversationId));
 
     }
 
     componentWillUnmount() {
         this._isMounted = false;
+        this.props.loadConversations();
+        this.props.navigator.toggleTabs({
+            to: 'shown'
+        });
+    }
+
+    componentDidMount() {
+        this._isMounted = true;
+        this.props.navigator.toggleTabs({
+            to: 'hidden'
+        });
+
+        if(!this.props.messagesState.messages[this.props.conversationId])
+            this.props.dispatch(messagesActions.loadMessages(this.props.conversationId));
+
     }
 
     onLoadEarlier() {
@@ -122,7 +120,6 @@ class MessageThread extends Component {
         }
 
     }
-
     render() {
         return (
             <View style={{ flex: 1 }}>
@@ -137,7 +134,7 @@ class MessageThread extends Component {
                     }}
                     renderCustomView={this.renderCustomView}
                     renderBubble={this.renderBubble}
-                    renderFooter={this.renderFooter}
+                    renderFooter={() => {return null}}
                     renderTime={() => {return null}}
                     renderAvatar={() => {return null}}
                 />

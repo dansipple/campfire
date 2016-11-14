@@ -18,6 +18,11 @@ export default function app(state = initialState, action = {}) {
                 currentUser: action.user,
                 root: 'after-login'
             });
+        case types.NETWORK_CHANGED:
+            return Object.assign({}, state, {
+                currentNetwork: action.network,
+                root: 'after-login'
+            });
         default:
             return state;
     }

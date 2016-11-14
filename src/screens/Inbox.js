@@ -11,8 +11,7 @@ import {connect} from 'react-redux';
 class Inbox extends Component {
 
     static navigatorStyle = {
-        navBarButtonColor: '#777',
-        statusBarTextColorScheme: 'dark'
+        navBarButtonColor: '#666',
     };
 
     constructor(props) {
@@ -26,10 +25,47 @@ class Inbox extends Component {
         this._renderRow = this._renderRow.bind(this);
 
         this.loadConversations = this.loadConversations.bind(this);
+
+        this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+    }
+
+    static navigatorButtons = {
+        leftButtons: [
+            {
+                icon: require('../../img/grid.png'),
+                title: 'Networks',
+                id: 'networks'
+            }
+        ]
+    };
+
+    onNavigatorEvent(event) {
+        if (event.type == 'DeepLink') {
+            this.handleDeepLink(event);
+        } else {
+            switch (event.id) {
+                case 'add':
+                    this.props.navigator.showModal({
+                        title: 'New Convo',
+                        screen: 'NewConvo'
+                    });
+                    break;
+
+                case 'networks':
+                    this.props.navigator.showModal({
+                        title: 'Networks',
+                        screen: 'ChooseNetwork'
+                    });
+                    break;
+
+                default:
+                    console.log('Unhandled event ' + event.id);
+                    break;
+            }
+        }
     }
 
     loadConversations() {
-        console.log('loading conversations');
         this.props.dispatch(inboxActions.loadConversations());
     }
 
@@ -42,7 +78,6 @@ class Inbox extends Component {
     }
 
     componentDidMount() {
-        console.log('mounted');
         this.loadConversations();
     }
 
@@ -57,7 +92,7 @@ class Inbox extends Component {
                 otherUser: conversationData._id,
                 loadConversations: this.loadConversations
             }
-        })
+        });
     }
 
     _renderRow(conversationData) {
@@ -87,7 +122,6 @@ class Inbox extends Component {
     }
 
     render() {
-        console.log(this.props.state);
         return (
                 <View style={{ flex: 1 }}>
                     {this.props.state.conversations.length ?
