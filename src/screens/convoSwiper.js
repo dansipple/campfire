@@ -39,11 +39,7 @@ class ConvoSwiper extends Component {
             }
         ]
     };
-
-    static navigatorStyle = {
-        navBarButtonColor: '#666',
-        //navBarNoBorder: true
-    };
+    
 
     onNavigatorEvent(event) {
         if (event.type == 'DeepLink') {

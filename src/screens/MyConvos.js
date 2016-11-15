@@ -22,6 +22,8 @@ class MyConvos extends Component {
         this.loadConvos = this.loadConvos.bind(this);
         this.editConvo = this.editConvo.bind(this);
         this.viewInterested = this.viewInterested.bind(this);
+
+        this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
     }
 
     static navigatorButtons = {
@@ -41,9 +43,31 @@ class MyConvos extends Component {
         ]
     };
 
-    static navigatorStyle = {
-        navBarButtonColor: '#666',
-    };
+    onNavigatorEvent(event) {
+        if (event.type == 'DeepLink') {
+            this.handleDeepLink(event);
+        } else {
+            switch (event.id) {
+                case 'networks':
+                    this.props.navigator.showModal({
+                        title: 'Networks',
+                        screen: 'ChooseNetwork'
+                    });
+                    break;
+
+                case 'add':
+                    this.props.navigator.showModal({
+                        title: 'New Convo',
+                        screen: 'NewConvo'
+                    });
+                    break;
+
+                default:
+                    console.log('Unhandled event ' + event.id);
+                    break;
+            }
+        }
+    }
 
     loadConvos() {
         this.props.dispatch(myConvosActions.loadConvos());

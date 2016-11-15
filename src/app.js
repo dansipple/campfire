@@ -55,10 +55,12 @@ export default class App {
                             screen: 'ConvoSwiper',
                             title: 'Convos',
                             label: 'Find',
+                            titleImage: require('../img/logo-small.png'),
                             icon: require('../img/three_selected.png'),
                             navigatorStyle: {
                                 navBarBackgroundColor: '#fff',
-                                navBarTextColor: '#666'
+                                navBarTextColor: '#666',
+                                navBarButtonColor: '#666'
                             }
                         },
                         {
@@ -68,7 +70,8 @@ export default class App {
                             icon: require('../img/chat.png'),
                             navigatorStyle: {
                                 navBarBackgroundColor: '#fff',
-                                navBarTextColor: '#666'
+                                navBarTextColor: '#666',
+                                navBarButtonColor: '#666'
                             }
                         },
                         {
@@ -78,7 +81,8 @@ export default class App {
                             icon: require('../img/three.png'),
                             navigatorStyle: {
                                 navBarBackgroundColor: '#fff',
-                                navBarTextColor: '#666'
+                                navBarTextColor: '#666',
+                                navBarButtonColor: '#666'
                             }
                         },
                         {
@@ -88,7 +92,8 @@ export default class App {
                             icon: require('../img/settings.png'),
                             navigatorStyle: {
                                 navBarBackgroundColor: '#fff',
-                                navBarTextColor: '#666'
+                                navBarTextColor: '#666',
+                                navBarButtonColor: '#666'
                             }
                         }
                     ],
