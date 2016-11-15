@@ -133,6 +133,7 @@ class Inbox extends Component {
                           <RefreshControl
                             refreshing={this.props.state.isLoading}
                             onRefresh={this.loadConversations}
+                            style={{ backgroundColor: 'transparent' }}
                           />
                         }
                     /> : <View />}

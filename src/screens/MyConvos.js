@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, StyleSheet, ListView, ScrollView, Image, View, Text} from 'react-native';
+import { TouchableOpacity, StyleSheet, ListView, RefreshControl, Image, View, Text} from 'react-native';
 import moment from 'moment';
 
 import MyConvoCard from './../components/MyConvoCard';
@@ -130,6 +130,13 @@ class MyConvos extends Component {
                         dataSource={this.state.dataSource}
                         renderRow={this._renderRow}
                         style={{ flex: 1, padding: 10 }}
+                        refreshControl={
+                          <RefreshControl
+                            refreshing={this.props.state.isLoading}
+                            onRefresh={this.loadConvos}
+                            style={{ backgroundColor: 'transparent' }}
+                          />
+                        }
                     />) : (<View />)}
             </View>
         )
