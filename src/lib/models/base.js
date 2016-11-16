@@ -67,10 +67,12 @@ export default class Base {
         });
     }
 
-    set(path, data) {
+    set(path, data, timestamps) {
         return new Promise((resolve, reject) => {
-            data.createdAt = firebase.getCurrentTime();
-            data.updatedAt = firebase.getCurrentTime();
+            if(timestamps && timestamps === false) {
+                data.createdAt = firebase.getCurrentTime();
+                data.updatedAt = firebase.getCurrentTime();
+            }
             let ref = this.db(path ? path : '');
             ref.set(data).then((ref) => {resolve(ref)})
                 .catch( (err) => {reject(new Error('Write failed: ' + err.code))});

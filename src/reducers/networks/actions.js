@@ -18,12 +18,29 @@ export function loadNetworks() {
     };
 }
 
+export function loadNetwork(id) {
+    return (dispatch, getState) => {
+
+        NetworksController.getNetwork(id)
+            .then((network) => {
+                dispatch(receivedAdminNetwork(network));
+            })
+            .catch(
+                (err) => {dispatch(loadingError(err))}
+            );
+    }
+}
+
 function fetchNetworks() {
     return {type: types.FETCH_NETWORKS};
 }
 
 function receivedNetworks(networks) {
     return {type: types.RECEIVE_NETWORKS, networks: networks};
+}
+
+function receivedAdminNetwork(network) {
+    return {type: types.RECEIVE_ADMIN_NETWORK, network: network};
 }
 
 function loadingError(err) {

@@ -8,19 +8,16 @@ import * as appActions from '../reducers/app/actions';
 import {connect} from 'react-redux';
 
 class ChooseNetwork extends Component {
-    /*static navigatorButtons = {
-        leftButtons: [{
-            title: 'Cancel',
-            id: 'close'
-        }],
+    static navigatorButtons = {
         rightButtons: [{
-            title: 'Find',
-            id: 'find'
+            title: 'Cancel',
+            id: 'close',
+            icon: require('../../img/close.png')
         }]
-    };*/
+    };
 
     static navigatorStyle = {
-        navBarButtonColor: '#777',
+        navBarButtonColor: '#666',
         navBarTextColor: '#666'
     };
 
@@ -35,6 +32,9 @@ class ChooseNetwork extends Component {
         this._renderRow = this._renderRow.bind(this);
 
         this.loadNetworks = this.loadNetworks.bind(this);
+        this.createNetwork = this.createNetwork.bind(this);
+        this.joinNetwork = this.joinNetwork.bind(this);
+        this.goToAdmin = this.goToAdmin.bind(this);
 
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
 
@@ -45,11 +45,31 @@ class ChooseNetwork extends Component {
             this.handleDeepLink(event);
         } else {
             switch (event.id) {
+                case 'close':
+                    this.props.navigator.dismissModal();
+                    break;
+
                 default:
                     console.log('Unhandled event ' + event.id);
                     break;
             }
         }
+    }
+
+    createNetwork() {
+        this.props.navigator.push({
+            title: 'Create a Network',
+            screen: 'CreateNetwork',
+            backButtonTitle: ''
+        });
+    }
+
+    joinNetwork() {
+        this.props.navigator.push({
+            title: 'Join a Network',
+            screen: 'JoinNetwork',
+            backButtonTitle: ''
+        });
     }
 
     loadNetworks() {
@@ -58,7 +78,17 @@ class ChooseNetwork extends Component {
 
     selectNetwork(network) {
         this.props.dispatch(appActions.selectNetwork(network));
-        //this.props.navigator.dismissModal();
+    }
+
+    goToAdmin(network) {
+        this.props.navigator.push({
+            title: 'Manage Network',
+            screen: 'Invite',
+            backButtonTitle: '',
+            passProps: {
+                network: network
+            }
+        });
     }
 
     componentWillMount() {
@@ -74,13 +104,34 @@ class ChooseNetwork extends Component {
     }
 
     _renderRow(data) {
-        return (
-            <TouchableHighlight onPress={() => {this.selectNetwork(data)}} underlayColor="#f9f9f9">
-                <View style={{backgroundColor: '#fff', padding: 20, borderTopWidth: 0.5, borderColor: '#ccc'}}>
-                    <Text style={{color: '#555', fontSize: 18}}>{data.name}</Text>
+        if(data.isAdmin) {
+            return (
+                <View style={{ flexDirection: 'row', backgroundColor: '#fff', borderTopWidth: 0.5, borderColor: '#ccc'}}>
+                    <TouchableHighlight style={{flex: 1, padding: 20}} onPress={() => {this.selectNetwork(data)}} underlayColor="#f9f9f9">
+                        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                            <Text style={{color: '#555', fontSize: 18}}>{data.name}</Text>
+                            { data._id === this.props.appState.currentNetwork._id ? <Image style={{tintColor: '#3498db'}} source={require('../../img/check.png')} /> : null }
+                        </View>
+                    </TouchableHighlight>
+                    <TouchableOpacity style={{padding: 20, paddingLeft: 0}}  onPress={() => {this.goToAdmin(data)}} underlayColor="#f9f9f9">
+                        <Image style={{tintColor: '#666'}} source={require('../../img/settings.png')} />
+                    </TouchableOpacity>
                 </View>
-            </TouchableHighlight>
-        );
+            );
+        }
+        else {
+            return (
+
+                    <TouchableHighlight onPress={() => {this.selectNetwork(data)}} underlayColor="#f9f9f9">
+                        <View style={{backgroundColor: '#fff', padding: 20, borderTopWidth: 0.5, borderColor: '#ccc'}}>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                <Text style={{color: '#555', fontSize: 18}}>{data.name}</Text>
+                                { data._id === this.props.appState.currentNetwork._id ? <Image style={{tintColor: '#3498db'}} source={require('../../img/check.png')} /> : null }
+                            </View>
+                        </View>
+                    </TouchableHighlight>
+            );
+        }
     }
 
     render() {
@@ -95,17 +146,18 @@ class ChooseNetwork extends Component {
                           <RefreshControl
                             refreshing={this.props.state.isLoading}
                             onRefresh={this.loadNetworks}
+                            style={{ backgroundColor: 'transparent' }}
                           />
                         }
-                    /> : <View />}
-                <TouchableHighlight onPress={() => {}} underlayColor="#f9f9f9">
-                    <View style={{backgroundColor: '#fff', padding: 20, borderTopWidth: 0.5, borderColor: '#ccc'}}>
-                        <Text style={{color: '#555', fontSize: 18}}>Create a Network</Text>
-                    </View>
-                </TouchableHighlight>
-                <TouchableHighlight onPress={() => {}} underlayColor="#f9f9f9">
+                    /> : <View style={{ flex: 1, paddingTop: 30, paddingBottom: 30 }} />}
+                <TouchableHighlight onPress={this.joinNetwork} underlayColor="#f9f9f9">
                     <View style={{backgroundColor: '#fff', padding: 20, borderTopWidth: 0.5, borderColor: '#ccc'}}>
                         <Text style={{color: '#555', fontSize: 18}}>Join a Network</Text>
+                    </View>
+                </TouchableHighlight>
+                <TouchableHighlight onPress={this.createNetwork} underlayColor="#f9f9f9">
+                    <View style={{backgroundColor: '#fff', padding: 20, borderTopWidth: 0.5, borderColor: '#ccc'}}>
+                        <Text style={{color: '#555', fontSize: 18}}>Create a Network</Text>
                     </View>
                 </TouchableHighlight>
             </View>

@@ -17,7 +17,7 @@ export default function convoSwiper(state = initialState, action = {}) {
             });
         case types.RECEIVE_CONVOS:
             return Object.assign({}, state, {
-                cardDeck: state.cardDeck.concat(action.cards),
+                cardDeck: action.cards,
                 isLoading: false,
                 hasLoaded: true
             });

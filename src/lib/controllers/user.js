@@ -1,6 +1,8 @@
 
 import User from '../models/user.js';
 
+import NetworksController from './networks';
+
 const UserUtil = {
 
     createUserAndAddToOrganization(userData, cb) {
@@ -28,6 +30,10 @@ const UserUtil = {
             };
             User.set(userObject.uid, newUser).then(() => {
                 newUser._id = userObject.uid;
+
+                // add user to convos beta network
+                NetworksController.addUserToNetwork(userObject.uid, '-KPzFYEKdj3yRQn3teTP');
+
                 resolve(newUser);
             });
         });

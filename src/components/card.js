@@ -20,11 +20,8 @@ export default class Card extends Component {
                     elevation: 3,
                     backgroundColor: this.props.inMessage ? '#f9f9f9' : '#fff',
                     borderRadius: 4,
-                    //shadowColor: '#000',
-                    //shadowOpacity: this.props.inMessage ? 0 : 0.2,
-                    //shadowRadius: 8,
                     borderColor: '#ddd',
-                    borderWidth: true ? 1 : 0,
+                    borderWidth: 1,
                     flex: 1
                 },
                 cardBody: {

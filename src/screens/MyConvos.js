@@ -124,7 +124,7 @@ class MyConvos extends Component {
 
     render() {
         return (
-            <View style={{flex: 1, backgroundColor: '#eee'}}>
+            <View style={{flex: 1, backgroundColor: '#f5f7f9'}}>
                 {this.props.state.convos.length ?
                     (<ListView
                         dataSource={this.state.dataSource}
@@ -137,7 +137,20 @@ class MyConvos extends Component {
                             style={{ backgroundColor: 'transparent' }}
                           />
                         }
-                    />) : (<View />)}
+                    />) : (
+                    <View style={{flex: 1, justifyContent: 'center'}}>
+                        <TouchableOpacity onPress={this.loadConvos}>
+                            <View style={{alignItems: 'center'}}>
+                                <View style={{borderRadius: 4, borderColor: '#ddd', borderWidth: 4, backgroundColor: '#fff', height: 200, width: 200}}>
+                                    <View style={{flex: 0.8, borderTopLeftRadius: 4, borderTopRightRadius: 4, backgroundColor: '#f9f9f9'}} />
+                                    <View style={{backgroundColor: '#eee', height: 20, margin: 10, marginBottom: 0}}/>
+                                    <View style={{backgroundColor: '#eee', height: 20, margin: 10}}/>
+                                </View>
+                                <Text style={{color: '#666', fontSize: 16, textAlign: 'center', marginTop: 15}}>You haven't created any convos</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                )}
             </View>
         )
     }

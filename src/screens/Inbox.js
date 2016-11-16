@@ -11,7 +11,7 @@ import {connect} from 'react-redux';
 class Inbox extends Component {
 
     static navigatorStyle = {
-        navBarButtonColor: '#666',
+        navBarButtonColor: '#666'
     };
 
     constructor(props) {
@@ -123,8 +123,8 @@ class Inbox extends Component {
 
     render() {
         return (
-                <View style={{ flex: 1 }}>
-                    {this.props.state.conversations.length ?
+            <View style={{ flex: 1 }}>
+                {this.props.state.conversations.length ?
                     <ListView
                         dataSource={this.state.dataSource}
                         renderRow={this._renderRow}
@@ -136,13 +136,23 @@ class Inbox extends Component {
                             style={{ backgroundColor: 'transparent' }}
                           />
                         }
-                    /> : <View />}
-                </View>
-        );
+                    /> :
+                    <View style={{ flex: 1, backgroundColor: '#f5f7f9', alignItems: 'center', justifyContent: 'center' }}>
+                        <Image style={{tintColor: '#ddd', marginBottom: 15}} source={require('../../img/empty-chat.png')} />
+                        <Text style={styles.noMessages}>You have no messages</Text>
+                    </View>
+                }
+            </View>
+        )
     }
 }
 
 const styles = StyleSheet.create({
+    noMessages: {
+        fontSize: 20,
+        textAlign: 'center',
+        color: '#666'
+    },
     newMatchContainer: {
         padding: 10,
         paddingTop: 2,

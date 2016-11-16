@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Alert, TouchableOpacity, TouchableHighlight, StyleSheet, Image, View, Text} from 'react-native';
 
 import Card from './../components/Card';
+import EmptyCard from './../components/EmptyCard';
 import DeckSwiper from './../components/DeckSwiper';
 
 import * as convoSwiperActions from '../reducers/convoSwiper/actions';
@@ -39,7 +40,7 @@ class ConvoSwiper extends Component {
             }
         ]
     };
-    
+
 
     onNavigatorEvent(event) {
         if (event.type == 'DeepLink') {
@@ -86,16 +87,22 @@ class ConvoSwiper extends Component {
         this.props.dispatch(convoSwiperActions.loadConvos());
     }
 
-    componentWillReceiveProps(nextProps) {
-        if(this.props.appState.currentUser != nextProps.appState.currentUser && nextProps.state.cardDeck.length == 0){
-            this.loadConvos();
-        }
+    componentDidMount() {
+        this.loadConvos();
     }
 
     renderLoader() {
         return (
-            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                <Image source={require('../../img/ripple.gif')} />
+            <View style={{flex: 1}}>
+                <EmptyCard />
+                <View style={{flexDirection: 'row', justifyContent: 'center', padding: 15}}>
+                    <View style={{borderColor: '#ddd', borderWidth: 1, marginRight: 10, justifyContent: 'center', alignItems:'center', width: 70, height: 70, backgroundColor: 'transparent', borderRadius: 35}}>
+                        <Image source={require('../../img/close.png')} />
+                    </View>
+                    <View style={{borderColor: '#ddd', borderWidth: 1, justifyContent: 'center', alignItems:'center', width: 70, height: 70, backgroundColor: 'transparent', borderRadius: 35}}>
+                        <Image source={require('../../img/check.png')} />
+                    </View>
+                </View>
             </View>
         );
     }
@@ -190,7 +197,7 @@ const styles = StyleSheet.create({
         marginTop: 5
     },
     cardViewer: {
-        backgroundColor: '#eee',
+        backgroundColor: '#f5f7f9',
         padding: 10,
         paddingTop: 10,
         flex: 1

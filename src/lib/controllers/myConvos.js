@@ -7,7 +7,7 @@ class MyConvosController {
 
     getCards(userId, networkId) {
         return new Promise((resolve, reject) => {
-            UserCard.get(networkId+'/'+userId, 'hasInterested').then(Helpers.filterDeleted)
+            UserCard.get(networkId+'/'+userId).then(Helpers.filterDeleted)
                 .then(resolve).catch(reject);
         });
     }

@@ -13,8 +13,14 @@ import * as settingsActions from '../../src/reducers/settings/actions';
 class Settings extends Component {
 
     static navigatorStyle = {
-        navBarButtonColor: '#777',
-        statusBarTextColorScheme: 'dark'
+        navBarButtonColor: '#666',
+    };
+
+    static navigatorButtons = {
+        rightButtons: [{
+            title: 'Save',
+            id: 'save'
+        }]
     };
 
     constructor(props) {
@@ -43,7 +49,7 @@ class Settings extends Component {
         const currentUser = this.props.state.userData || {};
 
         return (
-            <KeyboardAwareScrollView style={{ backgroundColor: '#eee'}}>
+            <KeyboardAwareScrollView style={{ backgroundColor: '#f5f7f9'}}>
                 <View style={{backgroundColor: '#fff', marginTop: 50, height: 80}}>
                 </View>
                 <View style={{flexDirection: 'row', marginTop: -105}}>

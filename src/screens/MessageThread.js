@@ -37,14 +37,16 @@ class MessageThread extends Component {
         this._isMounted = false;
         this.props.loadConversations();
         this.props.navigator.toggleTabs({
-            to: 'shown'
+            to: 'shown',
+            animated: false
         });
     }
 
     componentDidMount() {
         this._isMounted = true;
         this.props.navigator.toggleTabs({
-            to: 'hidden'
+            to: 'hidden',
+            animated: false
         });
 
         if(!this.props.messagesState.messages[this.props.conversationId])
@@ -137,6 +139,7 @@ class MessageThread extends Component {
                     renderFooter={() => {return null}}
                     renderTime={() => {return null}}
                     renderAvatar={() => {return null}}
+                    bottomOffset={50}
                 />
             </View>
         );
