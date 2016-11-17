@@ -13,7 +13,6 @@ export default class EmptyCard extends Component {
 
         const styles = StyleSheet.create({
             cardContainer: {
-                elevation: 3,
                 backgroundColor: this.props.inMessage ? '#f9f9f9' : '#fff',
                 borderRadius: 4,
                 borderColor: '#ddd',
@@ -22,27 +21,16 @@ export default class EmptyCard extends Component {
             },
             cardBody: {
                 padding: 30,
-                minHeight: this.props.inMessage ? 200 : height - 300
+                height: this.props.inMessage ? 200 : height - 310
             },
             category: {
                 color: '#777',
                 fontSize: 14,
                 paddingBottom: 25
             },
-            description: {
-                fontSize: 18,
-                lineHeight: 25,
-                color: '#555',
-                flex: 1,
-                justifyContent: 'center',
-                //alignSelf: 'center'
-            },
             creatorInformation: {
-                flex: 1,
                 flexDirection: 'row',
-                padding: 15,
-                borderColor: '#eee',
-                borderTopWidth: 0.5
+                padding: 15
             },
             creatorNameContainer: {
                 flexDirection: 'column',
@@ -68,6 +56,13 @@ export default class EmptyCard extends Component {
                 backgroundColor: '#eee',
                 height: 14,
                 marginBottom: 10
+            },
+            divider: {
+                width: 50,
+                backgroundColor: '#3498db',
+                height: 5,
+                borderRadius: 3,
+                marginBottom: 25
             }
         });
 
@@ -75,6 +70,7 @@ export default class EmptyCard extends Component {
             <View style={styles.cardContainer}>
                 <View style={ styles.cardBody }>
                     <View style={[styles.grayBlock, {width: 150, marginBottom: 25}]} />
+                    <View style={styles.divider} />
                     <View style={[styles.grayBlock]} />
                     <View style={[styles.grayBlock]} />
                     <View style={[styles.grayBlock]} />

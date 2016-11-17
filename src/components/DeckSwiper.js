@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import clamp from 'clamp';
 import {Animated, PanResponder, View} from 'react-native';
 
-var SWIPE_THRESHOLD = 30;
+var SWIPE_THRESHOLD = 120;
 
 export default class DeckSwiper extends Component {
 
@@ -128,15 +128,31 @@ export default class DeckSwiper extends Component {
         let [translateX, translateY] = [pan.x, pan.y];
         // let [translateX, translateY] = [pan2.x, pan2.y];
 
-        let rotate = pan.x.interpolate({inputRange: [-700, 0, 700], outputRange: ['10deg', '0deg', '-10deg']});
+        let rotate = pan.x.interpolate({inputRange: [-700, 0, 700], outputRange: ['15deg', '0deg', '-15deg']});
 
-        let opacity = pan.x.interpolate({inputRange: [-320, 0, 320], outputRange: [0.9, 1, 0.9]})
+        let opacity = pan.x.interpolate({inputRange: [-320, 0, 320], outputRange: [0.9, 1, 0.9]});
         let scale = enter;
 
         let animatedCardStyles = {transform: [{translateX}, {translateY}, {rotate}], opacity};
         let animatedCardStyles2 = {transform: [{scale}]};
 
-        return [animatedCardStyles, animatedCardStyles2]
+        return [animatedCardStyles, animatedCardStyles2];
+    }
+
+    getOverlayStyle(type) {
+        let { pan } = this.state;
+        let cardOverlay = {};
+
+        if(type === 'yes') {
+            let opacity = pan.x.interpolate({inputRange: [-320, 0, 320], outputRange: [0, 0, 0.4]});
+            cardOverlay = {opacity, backgroundColor: 'rgb(44, 202, 67)', position: 'absolute', top: 0, left: 0, bottom: 0, right: 0};
+        }
+        else {
+            let opacity = pan.x.interpolate({inputRange: [-320, 0, 320], outputRange: [0.4, 0, 0]});
+            cardOverlay = {opacity, backgroundColor: 'rgb(234, 48, 87)', position: 'absolute', top: 0, left: 0, bottom: 0, right: 0};
+        }
+
+        return cardOverlay;
     }
 
     render() {
@@ -150,6 +166,8 @@ export default class DeckSwiper extends Component {
                         </Animated.View>
                         <Animated.View style={[ this.getCardStyles()[0], this.getInitialStyle().topCard] } {...this._panResponder.panHandlers} >
                             {this.props.renderItem(this.state.topCard)}
+                            <Animated.View style={this.getOverlayStyle('no')} />
+                            <Animated.View style={this.getOverlayStyle('yes')} />
                         </Animated.View>
                     </View>
                 )

@@ -37,8 +37,7 @@ class MessageThread extends Component {
         this._isMounted = false;
         this.props.loadConversations();
         this.props.navigator.toggleTabs({
-            to: 'shown',
-            animated: false
+            to: 'shown'
         });
     }
 
@@ -50,7 +49,7 @@ class MessageThread extends Component {
         });
 
         if(!this.props.messagesState.messages[this.props.conversationId])
-            this.props.dispatch(messagesActions.loadMessages(this.props.conversationId));
+            this.props.dispatch(messagesActions.loadMessages(this.props.conversationId, this.props.isUnread));
 
     }
 

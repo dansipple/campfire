@@ -2,12 +2,12 @@ import * as types from './actionTypes';
 
 import MessagesController from '../../lib/controllers/messages';
 
-export function loadMessages(conversationId, hasUnread) {
+export function loadMessages(conversationId, isUnread) {
     return async (dispatch, getState) => {
         dispatch(fetchMessages());
         const {app} = getState();
 
-        MessagesController.getMessagesStream(app.currentNetwork._id, conversationId,
+        MessagesController.getMessagesStream(app.currentNetwork._id, app.currentUser._id, conversationId, isUnread,
             (message, key) => {
                 message._id = key;
                 dispatch(receivedMessage(conversationId, message));

@@ -88,7 +88,7 @@ class Inbox extends Component {
             backButtonTitle: '',
             passProps: {
                 conversationId: conversationData.conversationId,
-                hasUnread: conversationData.hasUnread || false,
+                isUnread: conversationData.isUnread || false,
                 otherUser: conversationData._id,
                 loadConversations: this.loadConversations
             }

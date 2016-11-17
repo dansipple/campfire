@@ -49,7 +49,7 @@ class Settings extends Component {
         const currentUser = this.props.state.userData || {};
 
         return (
-            <KeyboardAwareScrollView style={{ backgroundColor: '#f5f7f9'}}>
+            <KeyboardAwareScrollView style={{ backgroundColor: '#eee'}}>
                 <View style={{backgroundColor: '#fff', marginTop: 50, height: 80}}>
                 </View>
                 <View style={{flexDirection: 'row', marginTop: -105}}>

@@ -32,9 +32,10 @@ function checkPosition() {
     return (dispatch, getState) => {
         const {convoSwiper} = getState();
 
-        if (convoSwiper.activeCard === convoSwiper.cardDeck.length - 1) {
+        if (convoSwiper.activeCard === convoSwiper.cardDeck.length - 2) {
             dispatch(loadConvos());
         }
+        dispatch(nextCard());
     }
 }
 
@@ -51,6 +52,5 @@ export function swipe(card, nextCardKey, decision) {
             (err) => {dispatch(loadingError(err))}
         );
         dispatch(checkPosition());
-        dispatch(nextCard());
     }
 }

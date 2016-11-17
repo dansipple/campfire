@@ -27,13 +27,10 @@ export default class App {
         const {root, currentNetwork} = store.getState().app;
         // handle a root change
         // if your app doesn't change roots in runtime, you can remove onStoreUpdate() altogether
-        if (this.currentRoot != root) {
-            this.currentRoot = root;
-            this.startApp(root);
-        }
 
-        if(this.currentNetwork != currentNetwork && this.currentRoot !== undefined) {
+        if(this.currentRoot != root || (this.currentNetwork != currentNetwork && this.currentRoot !== undefined)) {
             this.currentNetwork = currentNetwork;
+            this.currentRoot = root;
             this.startApp(this.currentRoot);
         }
     }
@@ -58,20 +55,10 @@ export default class App {
                             titleImage: require('../img/logo-small.png'),
                             icon: require('../img/three_selected.png'),
                             navigatorStyle: {
-                                navBarBackgroundColor: '#fff',
+                                navBarBackgroundColor: '#eee',
                                 navBarTextColor: '#666',
-                                navBarButtonColor: '#666'
-                            }
-                        },
-                        {
-                            screen: 'Inbox',
-                            title: 'Messages',
-                            label: 'Messages',
-                            icon: require('../img/chat.png'),
-                            navigatorStyle: {
-                                navBarBackgroundColor: '#fff',
-                                navBarTextColor: '#666',
-                                navBarButtonColor: '#666'
+                                navBarButtonColor: '#666',
+                                navBarNoBorder: true
                             }
                         },
                         {
@@ -79,6 +66,17 @@ export default class App {
                             title: 'My Convos',
                             label: 'My Convos',
                             icon: require('../img/three.png'),
+                            navigatorStyle: {
+                                navBarBackgroundColor: '#fff',
+                                navBarTextColor: '#666',
+                                navBarButtonColor: '#666',
+                            }
+                        },
+                        {
+                            screen: 'Inbox',
+                            title: 'Messages',
+                            label: 'Messages',
+                            icon: require('../img/chat.png'),
                             navigatorStyle: {
                                 navBarBackgroundColor: '#fff',
                                 navBarTextColor: '#666',

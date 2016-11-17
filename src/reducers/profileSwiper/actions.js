@@ -24,7 +24,7 @@ export function connect(userId, cardId) {
 
         ProfileSwiperController.createConversation(app.currentNetwork._id, cardId, userId, app.currentUser._id)
             .then(() => {
-                ProfileSwiperController.deleteSwipe(app.currentNetwork._id, cardId, userId)
+                ProfileSwiperController.deleteSwipe(app.currentNetwork._id, cardId, userId, app.currentUser._id)
                     .then(() => {
                         dispatch(checkIfOutOfProfiles(cardId));
                     });

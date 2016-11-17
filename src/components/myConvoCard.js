@@ -22,11 +22,11 @@ export default class MyConvoCard extends Component {
                     <View style={styles.actionButtons}>
                         <TouchableHighlight
                             onPress={cardData.hasInterested ? this.props.viewInterested : null}
-                            underlayColor="#f1f1f1"
-                            style={[styles.actionButton, styles.interestedButton, {borderBottomLeftRadius: 4},
+                            underlayColor="#145683"
+                            style={[styles.actionButton, styles.interestedButton, {borderBottomLeftRadius: 4, backgroundColor: '#3498db'},
                             !cardData.hasInterested && styles.inactiveButton ]}
                         >
-                            <Text style={styles.actionButtonText}>View Interested</Text>
+                            <Text style={[styles.actionButtonText, cardData.hasInterested && {color: '#fff'}]}>View Interested</Text>
                         </TouchableHighlight>
                         <TouchableHighlight onPress={this.props.editCard} underlayColor="#f1f1f1" style={[styles.actionButton, {borderBottomRightRadius: 4}]}>
                             <Text style={styles.actionButtonText}>Edit</Text>
@@ -106,5 +106,12 @@ const styles = StyleSheet.create({
     },
     inactiveButton : {
         backgroundColor: '#f3f3f3'
+    },
+    divider: {
+        width: 50,
+        backgroundColor: '#3498db',
+        height: 5,
+        borderRadius: 3,
+        marginBottom: 25
     }
 });

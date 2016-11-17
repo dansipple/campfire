@@ -1,6 +1,7 @@
 
 import UserCard from '../models/userCard';
 import Card from '../models/card';
+import Badge from '../models/badge';
 import User from '../models/user';
 import Conversation from '../models/conversation';
 import UserConversation from '../models/userConversation';
@@ -47,10 +48,19 @@ class ProfileSwiperController {
         });
     }
     
-    deleteSwipe(networkId, cardId, userId) {
+    deleteSwipe(networkId, cardId, userId, currentUserId) {
         return new Promise((resolve, reject) => {
             Swipe.remove(`${networkId}/${cardId}/${userId}`)
-                .then(resolve).catch(reject);
+                .then(() => {
+                    Badge.getOne(`${currentUserId}/${networkId}`)
+                        .then((badgeObj) => {
+                            const currentCount = badgeObj && badgeObj.myConvos ? badgeObj.myConvos : 0;
+                            Badge.update(`${currentUserId}/${networkId}`, {
+                                myConvos: currentCount - 1
+                            });
+                        });
+                    resolve()
+                }).catch(reject);
         });
     }
 

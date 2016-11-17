@@ -21,32 +21,32 @@ export default class Card extends Component {
                     backgroundColor: this.props.inMessage ? '#f9f9f9' : '#fff',
                     borderRadius: 4,
                     borderColor: '#ddd',
-                    borderWidth: 1,
+                    borderWidth: this.props.inMessage ? 1 : 0,
+                    shadowColor: '#bbb',
+                    shadowOpacity: this.props.inMessage ? 0 : 0.6,
+                    shadowRadius: 8,
                     flex: 1
                 },
                 cardBody: {
                     padding: 30,
-                    minHeight: this.props.inMessage ? 200 : height - 300
+                    minHeight: this.props.inMessage ? 200 : height - 310
                 },
                 category: {
                     color: '#777',
-                    fontSize: 14,
+                    fontSize: 16,
                     paddingBottom: 25
                 },
                 description: {
-                    fontSize: 18,
+                    fontSize: 19,
                     lineHeight: 25,
                     color: '#555',
                     flex: 1,
-                    justifyContent: 'center',
-                    //alignSelf: 'center'
+                    justifyContent: 'center'
                 },
                 creatorInformation: {
                     flex: 1,
                     flexDirection: 'row',
-                    padding: 15,
-                    borderColor: '#eee',
-                    borderTopWidth: 0.5
+                    padding: 15
                 },
                 creatorNameContainer: {
                     flexDirection: 'column'
@@ -66,6 +66,13 @@ export default class Card extends Component {
                     width: 36,
                     marginRight: 10,
                     resizeMode: 'contain'
+                },
+                divider: {
+                    width: 50,
+                    backgroundColor: '#3498db',
+                    height: 5,
+                    borderRadius: 3,
+                    marginBottom: 25
                 }
             });
 
@@ -73,6 +80,7 @@ export default class Card extends Component {
                     <View style={styles.cardContainer}>
                         <View style={ styles.cardBody }>
                             <Text style={styles.category}>#{cardData.category}</Text>
+                            <View style={styles.divider} />
                             <Text style={ styles.description }>{ cardData.content }</Text>
                         </View>
                         <View style={styles.creatorInformation}>

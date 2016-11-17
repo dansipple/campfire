@@ -31,14 +31,14 @@ class MyConvos extends Component {
             {
                 icon: require('../../img/grid.png'),
                 title: 'Networks',
-                id: 'networks'
+                id: 'change-networks'
             }
         ],
         rightButtons: [
             {
                 icon: require('../../img/compose.png'),
                 title: 'Add',
-                id: 'add'
+                id: 'add-convo'
             }
         ]
     };
@@ -48,14 +48,14 @@ class MyConvos extends Component {
             this.handleDeepLink(event);
         } else {
             switch (event.id) {
-                case 'networks':
+                case 'change-networks':
                     this.props.navigator.showModal({
                         title: 'Networks',
                         screen: 'ChooseNetwork'
                     });
                     break;
 
-                case 'add':
+                case 'add-convo':
                     this.props.navigator.showModal({
                         title: 'New Convo',
                         screen: 'NewConvo'
@@ -81,8 +81,11 @@ class MyConvos extends Component {
         if (nextProps.state.convos !== this.props.state.convos) {
             this.setState({
                 dataSource: this.state.dataSource.cloneWithRows(nextProps.state.convos)
-            })
+            });
         }
+/*        if (nextProps.badges.myConvos !== this.badges.myConvos) {
+
+        }*/
     }
 
     editConvo(convoData) {
@@ -124,12 +127,12 @@ class MyConvos extends Component {
 
     render() {
         return (
-            <View style={{flex: 1, backgroundColor: '#f5f7f9'}}>
+            <View style={{flex: 1, backgroundColor: '#eee'}}>
                 {this.props.state.convos.length ?
                     (<ListView
                         dataSource={this.state.dataSource}
                         renderRow={this._renderRow}
-                        style={{ flex: 1, padding: 10 }}
+                        style={{ flex: 1, padding: 20 }}
                         refreshControl={
                           <RefreshControl
                             refreshing={this.props.state.isLoading}

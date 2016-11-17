@@ -158,10 +158,8 @@ class ConvoSwiper extends Component {
 
     render() {
         return (
-            <View style={{flex: 1}}>
-                <View style={styles.cardViewer}>
-                    {(this.props.state.isLoading) ? this.renderLoader() : this.renderDeck()}
-                </View>
+            <View style={styles.cardViewer}>
+                {(this.props.state.isLoading) ? this.renderLoader() : this.renderDeck()}
             </View>
         )
     }
@@ -197,9 +195,9 @@ const styles = StyleSheet.create({
         marginTop: 5
     },
     cardViewer: {
-        backgroundColor: '#f5f7f9',
-        padding: 10,
-        paddingTop: 10,
+        backgroundColor: '#eee',
+        padding: 20,
+        paddingBottom: 10,
         flex: 1
     },
     interestedThumbnail: {

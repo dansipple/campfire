@@ -2,7 +2,7 @@
 import Card from '../models/card';
 import UserCardDeckPointer from '../models/userCardDeckPointer';
 import UserCard from '../models/userCard';
-
+import Badge from '../models/badge';
 import Swipe from '../models/swipe';
 
 import Helpers from './../utils/helpers';
@@ -15,7 +15,7 @@ class SwiperController {
                 .then((pointer) => {
                     pointer = pointer ? pointer.pointer : '-A';
 
-                    Card.getCards(networkId, 50, pointer)
+                    Card.getCards(networkId, 20, pointer)
                         .then(Helpers.objectToArray)
                         .then((cards) => {
                             const filteredCards = cards.filter((card) => {
@@ -46,9 +46,17 @@ class SwiperController {
                     UserCard.update(`${networkId}/${card.creator._id}/${card._id}`, {
                         hasInterested: true
                     });
+                    Badge.getOne(`${card.creator._id}/${networkId}`)
+                        .then((badgeObj) => {
+                            const currentCount = badgeObj && badgeObj.myConvos ? badgeObj.myConvos : 0;
+                            Badge.update(`${card.creator._id}/${networkId}`, {
+                                myConvos: currentCount + 1
+                            });
+                    });
+
                 }
                 const checkedNextCardKey = nextCardKey ? nextCardKey : (card._id.slice(0,-1) + 'Z');
-                //this.updateUserCardDeckPointer(userId, networkId, checkedNextCardKey).catch(reject);
+                this.updateUserCardDeckPointer(userId, networkId, checkedNextCardKey).catch(reject);
                 resolve();
             }).catch(reject);
         });

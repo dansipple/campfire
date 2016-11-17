@@ -1,5 +1,6 @@
 
 import Message from '../models/message';
+import Badge from '../models/badge';
 import Conversation from '../models/conversation';
 import UserConversation from '../models/userConversation';
 
@@ -14,7 +15,16 @@ const MessagesController = {
         });
     },
 
-    getMessagesStream(networkId, conversationId, cb) {
+    getMessagesStream(networkId, userId, conversationId, isUnread, cb) {
+        if (isUnread) {
+            Badge.getOne(`${userId}/${networkId}`)
+                .then((badgeObj) => {
+                    const currentCount = badgeObj && badgeObj.messages ? badgeObj.messages : 0;
+                    Badge.update(`${userId}/${networkId}`, {
+                        messages: currentCount - 1
+                    });
+                });
+        }
         Message.subscribe(`${networkId}/${conversationId}`, cb)
     },
 
@@ -37,8 +47,15 @@ const MessagesController = {
                         .then(() => {
                             UserConversation.update(`${networkId}/${otherUserId}/${senderUserId}`, {
                                 lastMessage: text,
-                                hasUnread: true
-                            })
+                                isUnread: true
+                            });
+                            Badge.getOne(`${otherUserId}/${networkId}`)
+                                .then((badgeObj) => {
+                                    const currentCount = badgeObj && badgeObj.messages ? badgeObj.messages : 0;
+                                    Badge.update(`${otherUserId}/${networkId}`, {
+                                        messages: currentCount + 1
+                                    });
+                                });
                         }).catch(reject);
                     }
                 }).catch(reject);
