@@ -6,6 +6,7 @@
     "start": "node node_modules/react-native/local-cli/cli.js start"
   },
   "dependencies": {
+    "apphub": "^0.5.1",
     "clamp": "^1.0.1",
     "firebase": "^3.6.0",
     "moment": "^2.16.0",

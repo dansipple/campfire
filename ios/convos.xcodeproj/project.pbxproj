@@ -28,6 +28,9 @@
 		374F76511DB1FDA2003798F6 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 374F764D1DB1FDA2003798F6 /* FBSDKShareKit.framework */; };
 		374F769D1DB20C75003798F6 /* libRCTFBSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3769904F1DB1D92100C20C1A /* libRCTFBSDK.a */; };
 		376722731D93932000521AF1 /* libReactNativeNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 376722721D9392EB00521AF1 /* libReactNativeNavigation.a */; };
+		379F99CC1DDE981800189299 /* libAppHub.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 379F99C91DDE97CA00189299 /* libAppHub.a */; };
+		379F99CE1DDE982300189299 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 379F99CD1DDE982300189299 /* SystemConfiguration.framework */; };
+		379F99D01DDE982F00189299 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 379F99CF1DDE982F00189299 /* libz.tbd */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 /* End PBXBuildFile section */
 
@@ -109,6 +112,20 @@
 			remoteGlobalIDString = 9350E0F11CE3B0920041D815;
 			remoteInfo = RCTFBSDK;
 		};
+		379F99C81DDE97CA00189299 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 379F99C11DDE97C900189299 /* AppHub.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 555FF3AF1B37AC8D0064F175;
+			remoteInfo = AppHub;
+		};
+		379F99CA1DDE97CA00189299 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 379F99C11DDE97C900189299 /* AppHub.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 555FF3BA1B37AC8D0064F175;
+			remoteInfo = AppHubTests;
+		};
 		78C398B81ACF4ADC00677621 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */;
@@ -151,6 +168,9 @@
 		374F764D1DB1FDA2003798F6 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = ../../../../Documents/FacebookSDK/FBSDKShareKit.framework; sourceTree = "<group>"; };
 		374F769E1DB2BC41003798F6 /* convos.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = convos.entitlements; path = convos/convos.entitlements; sourceTree = "<group>"; };
 		3767226D1D9392EB00521AF1 /* ReactNativeNavigation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeNavigation.xcodeproj; path = "../node_modules/react-native-navigation/ios/ReactNativeNavigation.xcodeproj"; sourceTree = "<group>"; };
+		379F99C11DDE97C900189299 /* AppHub.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AppHub.xcodeproj; path = ../node_modules/apphub/AppHub/AppHub.xcodeproj; sourceTree = "<group>"; };
+		379F99CD1DDE982300189299 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		379F99CF1DDE982F00189299 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		45CEAE97AFC04EF1BF9B9264 /* RCTFBSDK.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTFBSDK.xcodeproj; path = "../node_modules/react-native-fbsdk/ios/RCTFBSDK.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
@@ -169,6 +189,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				379F99D01DDE982F00189299 /* libz.tbd in Frameworks */,
+				379F99CE1DDE982300189299 /* SystemConfiguration.framework in Frameworks */,
+				379F99CC1DDE981800189299 /* libAppHub.a in Frameworks */,
 				374F769D1DB20C75003798F6 /* libRCTFBSDK.a in Frameworks */,
 				376722731D93932000521AF1 /* libReactNativeNavigation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
@@ -290,6 +313,8 @@
 		374F763C1DB1FD29003798F6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				379F99CF1DDE982F00189299 /* libz.tbd */,
+				379F99CD1DDE982300189299 /* SystemConfiguration.framework */,
 				374F764A1DB1FDA2003798F6 /* Bolts.framework */,
 				374F764B1DB1FDA2003798F6 /* FBSDKCoreKit.framework */,
 				374F764C1DB1FDA2003798F6 /* FBSDKLoginKit.framework */,
@@ -314,6 +339,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		379F99C21DDE97C900189299 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				379F99C91DDE97CA00189299 /* libAppHub.a */,
+				379F99CB1DDE97CA00189299 /* AppHub.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		78C398B11ACF4ADC00677621 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -325,6 +359,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				379F99C11DDE97C900189299 /* AppHub.xcodeproj */,
 				3767226D1D9392EB00521AF1 /* ReactNativeNavigation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -445,6 +480,10 @@
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
+				{
+					ProductGroup = 379F99C21DDE97C900189299 /* Products */;
+					ProjectRef = 379F99C11DDE97C900189299 /* AppHub.xcodeproj */;
+				},
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
@@ -571,6 +610,20 @@
 			fileType = archive.ar;
 			path = libRCTFBSDK.a;
 			remoteRef = 3769904E1DB1D92100C20C1A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		379F99C91DDE97CA00189299 /* libAppHub.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAppHub.a;
+			remoteRef = 379F99C81DDE97CA00189299 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		379F99CB1DDE97CA00189299 /* AppHub.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = AppHub.xctest;
+			remoteRef = 379F99CA1DDE97CA00189299 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		78C398B91ACF4ADC00677621 /* libRCTLinking.a */ = {
@@ -724,6 +777,7 @@
 					"$(SRCROOT)/../node_modules/react-native-navigation/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
+					"$(SRCROOT)/../node_modules/apphub/AppHub/**",
 				);
 				INFOPLIST_FILE = convos/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -756,6 +810,7 @@
 					"$(SRCROOT)/../node_modules/react-native-navigation/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
+					"$(SRCROOT)/../node_modules/apphub/AppHub/**",
 				);
 				INFOPLIST_FILE = convos/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;

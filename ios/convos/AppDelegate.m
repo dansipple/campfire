@@ -6,7 +6,7 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  */
-
+#import "AppHub.h"
 #import "AppDelegate.h"
 
 #import "RCCManager.h"
@@ -20,16 +20,16 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-
-  NSURL *jsCodeLocation;
+  [AppHub setApplicationID:@"dDE123GYoIqVLpfNjdUP"];
  
   [[FBSDKApplicationDelegate sharedInstance] application:application
                            didFinishLaunchingWithOptions:launchOptions];
-  
+  NSURL *jsCodeLocation;
 #ifdef DEBUG
   jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle?platform=ios&dev=true"];
 #else
-  jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+  AHBuild *build = [[AppHub buildManager] currentBuild];
+  jsCodeLocation = [build.bundle URLForResource:@"main" withExtension:@"jsbundle"];
 #endif
   
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
