@@ -55,17 +55,6 @@ class Login extends Component {
                             }
                         }
                         onLogoutFinished={() => {}}/>
-                    {/*
-                    <TouchableHighlight onPress={this.login.bind(this, '-KPzFJ697NbkNZoHVBR7')} style={styles.fbLogin}>
-                        <Text style={styles.fbLoginText}>Login with Colin</Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight onPress={this.login.bind(this, '-KPzFJ697NbkNZoHVBR8')} style={styles.fbLogin}>
-                        <Text style={styles.fbLoginText}>Login with Dan</Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight onPress={this.login.bind(this, '-KPzFJ697NbkNZoHVBR9')} style={styles.fbLogin}>
-                        <Text style={styles.fbLoginText}>Login with Red</Text>
-                    </TouchableHighlight>
-                    */}
                 </View>
         );
     }
