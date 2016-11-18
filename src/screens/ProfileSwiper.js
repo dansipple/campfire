@@ -11,6 +11,8 @@ import * as profileSwiperActions from '../reducers/profileSwiper/actions';
 
 import * as myConvosActions from '../reducers/myConvos/actions';
 
+var Analytics = require('react-native-firebase-analytics');
+
 class ProfileSwiper extends Component {
 
     constructor(props) {
@@ -43,19 +45,22 @@ class ProfileSwiper extends Component {
 
     componentWillMount() {
         this.loadProfiles();
+
+        Analytics.logEvent('MODAL_OPEN', {'id': 'profile_swiper'});
     }
 
     pass() {
         this.props.dispatch(profileSwiperActions.pass(this.props.state.profiles[this.props.state.activeProfile]._id, this.props.card._id));
+        Analytics.logEvent('PROFILE_SWIPE', {'direction': 'no'});
     }
 
     connect() {
         this.props.dispatch(profileSwiperActions.connect(this.props.state.profiles[this.props.state.activeProfile]._id, this.props.card._id));
+        Analytics.logEvent('PROFILE_SWIPE', {'direction': 'yes'});
     }
 
     _onMomentumScrollEnd(e, state) {
         if(state.index !== this.props.state.activeProfile) {
-            console.log('fired');
             this.props.dispatch(profileSwiperActions.updateActiveProfile(state.index));
         }
     }

@@ -9,11 +9,13 @@ import NetworksController from '../lib/controllers/networks';
 
 import {connect} from 'react-redux';
 
+var Analytics = require('react-native-firebase-analytics');
+
 class JoinNetwork extends Component {
     static navigatorButtons = {
          rightButtons: [{
-                title: 'Join',
-                id: 'join'
+            title: 'Join',
+            id: 'join'
          }]
     };
 
@@ -77,7 +79,8 @@ class JoinNetwork extends Component {
     joinNetwork() {
         NetworksController.joinNetwork(this.props.appState.currentUser._id, this.state.accessCode)
         .then(() => {
-            networksActions.loadNetworks();
+            Analytics.logEvent('NETWORK_JOIN');
+            this.props.dispatch(networksActions.loadNetworks());
             this.props.navigator.popToRoot();
         }).catch(() => {
             this.setState({

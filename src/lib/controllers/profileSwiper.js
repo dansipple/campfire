@@ -54,7 +54,7 @@ class ProfileSwiperController {
                 .then(() => {
                     Badge.getOne(`${currentUserId}/${networkId}`)
                         .then((badgeObj) => {
-                            const currentCount = badgeObj && badgeObj.myConvos ? badgeObj.myConvos : 0;
+                            const currentCount = badgeObj && badgeObj.myConvos ? badgeObj.myConvos : 1;
                             Badge.update(`${currentUserId}/${networkId}`, {
                                 myConvos: currentCount - 1
                             });

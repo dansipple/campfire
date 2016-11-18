@@ -19,7 +19,7 @@ const MessagesController = {
         if (isUnread) {
             Badge.getOne(`${userId}/${networkId}`)
                 .then((badgeObj) => {
-                    const currentCount = badgeObj && badgeObj.messages ? badgeObj.messages : 0;
+                    const currentCount = badgeObj && badgeObj.messages ? badgeObj.messages : 1;
                     Badge.update(`${userId}/${networkId}`, {
                         messages: currentCount - 1
                     });

@@ -75,6 +75,17 @@ class Inbox extends Component {
                 dataSource: this.state.dataSource.cloneWithRows(nextProps.state.conversations)
             });
         }
+
+        const nextBadges = nextProps.appState.badges[this.props.appState.currentNetwork._id] || {};
+        const badges = this.props.appState.badges[this.props.appState.currentNetwork._id] || {};
+
+        if(nextBadges) {
+            if (nextBadges.messages !== badges.messages) {
+                this.props.navigator.setTabBadge({
+                    badge: nextBadges.messages > 0 ? nextBadges.messages : null
+                });
+            }
+        }
     }
 
     componentDidMount() {
@@ -175,7 +186,8 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
     return {
-        state: state.inbox
+        state: state.inbox,
+        appState: state.app
     };
 }
 

@@ -36,7 +36,7 @@ export function pass(userId, cardId) {
     return (dispatch, getState) => {
         const {app} = getState();
         
-        ProfileSwiperController.deleteSwipe(app.currentNetwork._id, cardId, userId).then(() => {
+        ProfileSwiperController.deleteSwipe(app.currentNetwork._id, cardId, userId, app.currentUser._id).then(() => {
             dispatch(checkIfOutOfProfiles(cardId));
         });
     }

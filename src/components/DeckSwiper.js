@@ -159,7 +159,7 @@ export default class DeckSwiper extends Component {
 
 
         return(
-            <View style={{position: 'relative', flexDirection: 'column'}}>{(this.state.topCard)===undefined ? (<View />) :
+            <View style={{flex: 1, position: 'relative', flexDirection: 'column'}}>{(this.state.topCard)===undefined ? (<View />) :
                 (<View>
                         <Animated.View style={[this.getCardStyles()[1],{/*opacity: this.state.fadeAnim*/}]} {...this._panResponder.panHandlers}>
                             {this.props.renderItem(this.state.bottomCard)}

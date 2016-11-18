@@ -9,7 +9,9 @@ export function loadConvos() {
         dispatch(fetchConvos());
 
         SwiperController.getCards(app.currentUser._id, app.currentNetwork._id).then(
-            (cards) => {dispatch(receivedConvos(cards))}
+            (cards) => {
+                dispatch(receivedConvos(cards))
+            }
         ).catch(
             (err) => {dispatch(loadingError(err))}
         );

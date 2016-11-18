@@ -8,6 +8,8 @@ import firebase from '../../lib/firebase';
 
 import {LoginManager} from 'react-native-fbsdk';
 
+var Analytics = require('react-native-firebase-analytics');
+
 export function appInitialized() {
   return async function(dispatch, getState) {
     // since all business logic should be inside redux actions
@@ -20,7 +22,6 @@ export function appInitialized() {
                 dispatch(changeAppRoot('login'));
             }
       });
-
   };
 }
 
@@ -36,18 +37,32 @@ function setUser(user) {
   return {type: types.USER_CHANGED, user: user};
 }
 
+function updateBadges(badges) {
+    return {type: types.BADGES_CHANGED, badges: badges}
+}
 export function login(userData) {
   return async function(dispatch, getState) {
 
       UserController.getUser(userData.uid)
           .then((user) => {
              if(user) {
+                 Analytics.setUserId(user._id);
+                 Analytics.logEvent('LOGIN');
                  //AsyncStorage.setItem('@User', JSON.stringify(user));
+
+                 // subscribe to badge updates
+                 var badges = firebase.app.database().ref('badges/' + user._id);
+                 badges.on('value', function(snapshot) {
+                     dispatch(updateBadges(snapshot.val()));
+                 });
+
                  dispatch(setUser(user));
              }
              else {
                  UserController.createUser(userData)
                      .then((user) => {
+                         Analytics.setUserId(user._id);
+                         Analytics.logEvent('SIGN_UP');
                          //AsyncStorage.setItem('@User', JSON.stringify(user));
                          dispatch(setUser(user));
                      });

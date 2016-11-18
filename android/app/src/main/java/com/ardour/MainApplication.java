@@ -4,6 +4,8 @@ import android.app.Application;
 import android.util.Log;
 
 import com.facebook.react.ReactApplication;
+import com.evollu.react.fcm.FIRMessagingPackage;
+import com.evollu.react.fa.FIRAnalyticsPackage;
 import com.reactnativenavigation.NavigationReactPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.reactnativenavigation.NavigationReactPackage;
@@ -29,6 +31,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new FIRMessagingPackage(),
+            new FIRAnalyticsPackage(),
             new NavigationReactPackage(),
             new FBSDKPackage(),
             new NavigationReactPackage(),

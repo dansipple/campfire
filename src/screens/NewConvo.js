@@ -5,6 +5,8 @@ import * as myConvosActions from '../reducers/myConvos/actions';
 
 import {connect} from 'react-redux';
 
+var Analytics = require('react-native-firebase-analytics');
+
 class NewConvo extends Component {
     static navigatorButtons = {
         leftButtons: [{
@@ -45,6 +47,9 @@ class NewConvo extends Component {
                 content: this.props.card.content || '',
                 category: this.props.card.category || 'general'
             });
+            Analytics.logEvent('MODAL_OPEN', {'id': 'edit_convo'});
+        } else {
+            Analytics.logEvent('MODAL_OPEN', {'id': 'create_convo'});
         }
     }
 
@@ -69,8 +74,10 @@ class NewConvo extends Component {
     async saveConvo() {
         if(!this.props.card) {
             this.props.dispatch(myConvosActions.createConvo(this.state.content, this.state.category));
+            Analytics.logEvent('CONVO_CREATE', {'category': this.state.category});
         } else {
             this.props.dispatch(myConvosActions.updateConvo(this.props.card._id, this.state.content, this.state.category));
+            Analytics.logEvent('CONVO_EDIT', {'category': this.state.category});
         }
         this.props.navigator.dismissModal();
     }

@@ -9,6 +9,8 @@ import NetworksController from '../lib/controllers/networks';
 
 import {connect} from 'react-redux';
 
+var Analytics = require('react-native-firebase-analytics');
+
 class CreateNetwork extends Component {
 
     static navigatorStyle = {
@@ -48,6 +50,7 @@ class CreateNetwork extends Component {
                         network: network
                     }
                 });
+                Analytics.logEvent('NETWORK_CREATE');
                 networksActions.loadNetworks();
             })
     }
@@ -70,6 +73,8 @@ class CreateNetwork extends Component {
     componentWillMount () {
         this.keyboardDidShowListener = Keyboard.addListener('keyboardWillShow', this.keyboardWillShow.bind(this));
         this.keyboardDidHideListener = Keyboard.addListener('keyboardWillHide', this.keyboardWillHide.bind(this));
+
+        Analytics.logEvent('MODAL_OPEN', {'id': 'create_network'});
     }
 
     componentWillUnmount () {

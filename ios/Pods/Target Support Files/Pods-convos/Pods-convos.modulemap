@@ -1,0 +1,6 @@
+framework module Pods_convos {
+  umbrella header "Pods-convos-umbrella.h"
+
+  export *
+  module * { export * }
+}

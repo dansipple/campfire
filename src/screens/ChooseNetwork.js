@@ -7,6 +7,8 @@ import * as appActions from '../reducers/app/actions';
 
 import {connect} from 'react-redux';
 
+var Analytics = require('react-native-firebase-analytics');
+
 class ChooseNetwork extends Component {
     static navigatorButtons = {
         rightButtons: [{
@@ -78,6 +80,8 @@ class ChooseNetwork extends Component {
 
     selectNetwork(network) {
         this.props.dispatch(appActions.selectNetwork(network));
+
+        Analytics.logEvent('NETWORK_SELECT');
     }
 
     goToAdmin(network) {
@@ -93,6 +97,10 @@ class ChooseNetwork extends Component {
 
     componentWillMount() {
         this.loadNetworks();
+
+        Analytics.logEvent('VIEW_MODAL', {
+            'id': 'select_network'
+        });
     }
 
     componentWillReceiveProps(nextProps) {

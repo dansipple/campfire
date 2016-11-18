@@ -83,9 +83,17 @@ class MyConvos extends Component {
                 dataSource: this.state.dataSource.cloneWithRows(nextProps.state.convos)
             });
         }
-/*        if (nextProps.badges.myConvos !== this.badges.myConvos) {
 
-        }*/
+        const nextBadges = nextProps.appState.badges[this.props.appState.currentNetwork._id] || {};
+        const badges = this.props.appState.badges[this.props.appState.currentNetwork._id] || {};
+
+        if(nextBadges) {
+            if (nextBadges.myConvos !== badges.myConvos) {
+                this.props.navigator.setTabBadge({
+                    badge: nextBadges.myConvos !== 0 ? nextBadges.myConvos : null
+                });
+            }
+        }
     }
 
     editConvo(convoData) {
@@ -157,7 +165,7 @@ class MyConvos extends Component {
             </View>
         )
     }
-};
+}
 
 const styles = StyleSheet.create({
     header: {
@@ -198,7 +206,8 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
     return {
-        state: state.myConvos
+        state: state.myConvos,
+        appState: state.app
     };
 }
 

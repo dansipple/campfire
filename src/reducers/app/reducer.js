@@ -4,7 +4,8 @@ import Immutable from 'seamless-immutable';
 const initialState = Immutable({
     root: undefined, // 'login' / 'after-login',
     currentUser: {},
-    currentNetwork: {_id: '-KPzFYEKdj3yRQn3teTP', name: 'Convos Beta'}
+    currentNetwork: {_id: '-KPzFYEKdj3yRQn3teTP', name: 'Convos Beta'},
+    badges: {}
 });
 
 export default function app(state = initialState, action = {}) {
@@ -17,6 +18,10 @@ export default function app(state = initialState, action = {}) {
             return Object.assign({}, state, {
                 currentUser: action.user,
                 root: 'after-login'
+            });
+        case types.BADGES_CHANGED:
+            return Object.assign({}, state, {
+                badges: action.badges
             });
         case types.NETWORK_CHANGED:
             return Object.assign({}, state, {

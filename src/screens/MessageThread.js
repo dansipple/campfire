@@ -9,6 +9,8 @@ import * as messagesActions from '../reducers/messages/actions';
 
 import {connect} from 'react-redux';
 
+var Analytics = require('react-native-firebase-analytics');
+
 class MessageThread extends Component {
 
     static navigatorStyle = {
@@ -48,6 +50,8 @@ class MessageThread extends Component {
             animated: false
         });
 
+        Analytics.logEvent('THREAD_VIEWED');
+
         if(!this.props.messagesState.messages[this.props.conversationId])
             this.props.dispatch(messagesActions.loadMessages(this.props.conversationId, this.props.isUnread));
 
@@ -63,6 +67,7 @@ class MessageThread extends Component {
 
     onSend(message = []) {
         this.props.dispatch(messagesActions.sendMessage(this.props.conversationId, message[0].text));
+        Analytics.logEvent('MESSAGE_SEND');
     }
 
     renderFooter(props) {
@@ -107,7 +112,7 @@ class MessageThread extends Component {
         if (props.currentMessage.card) {
             let {width} = Dimensions.get('window');
             return (
-                <View style={{flexDirection: 'row', width: width - 35}}>
+                <View style={{flexDirection: 'row', width: width - 75}}>
                     <Card
                         inMessage={true}
                         cardData={props.currentMessage.card}
@@ -123,7 +128,7 @@ class MessageThread extends Component {
     }
     render() {
         return (
-            <View style={{ flex: 1 }}>
+            <View style={{height: Dimensions.get('window').height - 100}}>
                 <GiftedChat
                     messages={this.props.messagesState.messages[this.props.conversationId] || []}
                     onSend={this.onSend}
@@ -138,7 +143,7 @@ class MessageThread extends Component {
                     renderFooter={() => {return null}}
                     renderTime={() => {return null}}
                     renderAvatar={() => {return null}}
-                    bottomOffset={50}
+                    bottomOffset={20}
                 />
             </View>
         );

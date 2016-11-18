@@ -9,6 +9,8 @@ import * as convoSwiperActions from '../reducers/convoSwiper/actions';
 
 import {connect} from 'react-redux';
 
+var Analytics = require('react-native-firebase-analytics');
+
 class ConvoSwiper extends Component {
 
     constructor(props) {
@@ -74,6 +76,8 @@ class ConvoSwiper extends Component {
             this.props.state.cardDeck[this.props.state.activeCard + 1]._id : null;
         this.props.dispatch(convoSwiperActions.swipe(this.props.state.cardDeck[this.props.state.activeCard],
             nextCardKey, false));
+
+        Analytics.logEvent('CONVO_SWIPE', {'direction': 'no'});
     }
 
     swipeRight() {
@@ -81,6 +85,8 @@ class ConvoSwiper extends Component {
             this.props.state.cardDeck[this.props.state.activeCard + 1]._id : null;
         this.props.dispatch(convoSwiperActions.swipe(this.props.state.cardDeck[this.props.state.activeCard],
             nextCardKey, true));
+
+        Analytics.logEvent('CONVO_SWIPE', {'direction': 'yes'});
     }
 
     loadConvos() {
@@ -110,7 +116,7 @@ class ConvoSwiper extends Component {
     renderDeck() {
         const state = this.props.state;
 
-        if(state.activeCard < state.cardDeck.length -1) {
+        if(state.activeCard < state.cardDeck.length) {
             return (
                 <View style={{flex: 1}}>
                     <DeckSwiper

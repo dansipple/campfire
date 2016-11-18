@@ -69,7 +69,7 @@ export default class App {
                             navigatorStyle: {
                                 navBarBackgroundColor: '#fff',
                                 navBarTextColor: '#666',
-                                navBarButtonColor: '#666',
+                                navBarButtonColor: '#666'
                             }
                         },
                         {
