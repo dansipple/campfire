@@ -47,7 +47,7 @@ export function login(userData) {
           .then((user) => {
              if(user) {
                  Analytics.setUserId(user._id);
-                 Analytics.logEvent('LOGIN');
+                 //Analytics.logEvent('LOGIN');
                  //AsyncStorage.setItem('@User', JSON.stringify(user));
 
                  // subscribe to badge updates

@@ -14,9 +14,9 @@ var Analytics = require('react-native-firebase-analytics');
 class MessageThread extends Component {
 
     static navigatorStyle = {
-        navBarNoBorder: false
+        navBarNoBorder: false,
+        tabBarHidden: true
     };
-
 
     constructor(props) {
         super(props);
@@ -38,18 +38,10 @@ class MessageThread extends Component {
     componentWillUnmount() {
         this._isMounted = false;
         this.props.loadConversations();
-        this.props.navigator.toggleTabs({
-            to: 'shown'
-        });
     }
 
     componentDidMount() {
         this._isMounted = true;
-        this.props.navigator.toggleTabs({
-            to: 'hidden',
-            animated: false
-        });
-
         Analytics.logEvent('THREAD_VIEWED');
 
         if(!this.props.messagesState.messages[this.props.conversationId])
@@ -90,18 +82,18 @@ class MessageThread extends Component {
                     right: {
                         backgroundColor: props.currentMessage.card ? '#fff' : '#3498db',
                         padding: 6,
-                        marginLeft: props.currentMessage.card ? 5 : 60,
+                        marginLeft: props.currentMessage.card ? 10 : 60,
                         marginRight: 5,
-                        paddingBottom: props.currentMessage.card &&
-                        this.props.messagesState.messages[this.props.conversationId].length == 1 ? 60 : 6
+                        height: props.currentMessage.card && this.props.messagesState.messages[this.props.conversationId].length == 1 ? Dimensions.get('window').height - 155 : null,
+                        justifyContent: props.currentMessage.card && this.props.messagesState.messages[this.props.conversationId].length == 1 ? 'flex-start' : 'flex-end'
                     },
                     left: {
                         padding: 6,
                         backgroundColor: props.currentMessage.card ? '#fff' : '#f0f0f0',
                         marginRight: props.currentMessage.card ? 5 : 60,
-                        marginLeft: 5,
-                        paddingBottom: props.currentMessage.card &&
-                        this.props.messagesState.messages[this.props.conversationId].length == 1 ? 60 : 6
+                        marginLeft: 1,
+                        height: props.currentMessage.card && this.props.messagesState.messages[this.props.conversationId].length == 1 ? Dimensions.get('window').height - 155 : null,
+                        justifyContent: props.currentMessage.card && this.props.messagesState.messages[this.props.conversationId].length == 1 ? 'flex-start' : 'flex-end'
                     }
                 }}
             />
@@ -112,7 +104,7 @@ class MessageThread extends Component {
         if (props.currentMessage.card) {
             let {width} = Dimensions.get('window');
             return (
-                <View style={{flexDirection: 'row', width: width - 75}}>
+                <View style={{ width: width - 30}}>
                     <Card
                         inMessage={true}
                         cardData={props.currentMessage.card}
@@ -128,7 +120,7 @@ class MessageThread extends Component {
     }
     render() {
         return (
-            <View style={{height: Dimensions.get('window').height - 100}}>
+            <View style={{width: Dimensions.get('window').width, height: Dimensions.get('window').height - 64}}>
                 <GiftedChat
                     messages={this.props.messagesState.messages[this.props.conversationId] || []}
                     onSend={this.onSend}
@@ -143,7 +135,7 @@ class MessageThread extends Component {
                     renderFooter={() => {return null}}
                     renderTime={() => {return null}}
                     renderAvatar={() => {return null}}
-                    bottomOffset={20}
+                    bottomOffset={0}
                 />
             </View>
         );
