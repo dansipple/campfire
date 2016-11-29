@@ -6,6 +6,7 @@ import inbox from './inbox/reducer';
 import messages from './messages/reducer';
 import settings from './settings/reducer';
 import networks from './networks/reducer';
+import signup from './signup/reducer';
 
 export {
     app,
@@ -15,5 +16,6 @@ export {
     inbox,
     messages,
     settings,
-    networks
+    networks,
+    signup
 };

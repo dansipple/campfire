@@ -91,7 +91,7 @@ class MessageThread extends Component {
                         padding: 6,
                         backgroundColor: props.currentMessage.card ? '#fff' : '#f0f0f0',
                         marginRight: props.currentMessage.card ? 5 : 60,
-                        marginLeft: 1,
+                        marginLeft: props.currentMessage.card ? 1 : 5,
                         height: props.currentMessage.card && this.props.messagesState.messages[this.props.conversationId].length == 1 ? Dimensions.get('window').height - 155 : null,
                         justifyContent: props.currentMessage.card && this.props.messagesState.messages[this.props.conversationId].length == 1 ? 'flex-start' : 'flex-end'
                     }

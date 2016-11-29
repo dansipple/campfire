@@ -16,7 +16,13 @@ const MessagesController = {
     },
 
     getMessagesStream(networkId, userId, conversationId, isUnread, cb) {
-        if (isUnread) {
+        Message.subscribe(`${networkId}/${conversationId}`, cb)
+    },
+
+    markAsRead(networkId, userId, otherUserId) {
+        UserConversation.update(`${networkId}/${userId}/${otherUserId}`, {
+            isUnread: false
+        }, false);
             Badge.getOne(`${userId}/${networkId}`)
                 .then((badgeObj) => {
                     const currentCount = badgeObj && badgeObj.messages ? badgeObj.messages : 1;
@@ -24,8 +30,6 @@ const MessagesController = {
                         messages: currentCount - 1
                     });
                 });
-        }
-        Message.subscribe(`${networkId}/${conversationId}`, cb)
     },
 
     sendMessage(networkId, conversationId, senderUserId, text) {

@@ -22,6 +22,7 @@ class ConvoSwiper extends Component {
 
         this.renderLoader = this.renderLoader.bind(this);
         this.renderDeck = this.renderDeck.bind(this);
+        this.flagCard = this.flagCard.bind(this);
 
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
     }
@@ -93,6 +94,19 @@ class ConvoSwiper extends Component {
         this.props.dispatch(convoSwiperActions.loadConvos());
     }
 
+    flagCard() {
+        this.props.navigator.showLightBox({
+            screen: "Report", // unique ID registered with Navigation.registerScreen
+            passProps: {
+                report: this.swipeLeft
+            }, // simple serializable object that will pass as props to the lightbox (optional)
+            style: {
+                backgroundBlur: "none",
+                backgroundColor: "rgba(0,0,0,0.6)"
+            }
+        });
+    }
+
     componentDidMount() {
         this.loadConvos();
     }
@@ -101,11 +115,14 @@ class ConvoSwiper extends Component {
         return (
             <View style={{flex: 1}}>
                 <EmptyCard />
-                <View style={{flexDirection: 'row', justifyContent: 'center', padding: 15}}>
-                    <View style={{borderColor: '#ddd', borderWidth: 1, marginRight: 10, justifyContent: 'center', alignItems:'center', width: 70, height: 70, backgroundColor: 'transparent', borderRadius: 35}}>
+                <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 15}}>
+                    <View style={{borderColor: '#ddd', borderWidth: 1, marginRight: 10, justifyContent: 'center', alignItems:'center', width: 80, height: 80, backgroundColor: 'transparent', borderRadius: 40}}>
                         <Image source={require('../../img/close.png')} />
                     </View>
-                    <View style={{borderColor: '#ddd', borderWidth: 1, justifyContent: 'center', alignItems:'center', width: 70, height: 70, backgroundColor: 'transparent', borderRadius: 35}}>
+                    <View style={{borderColor: '#ddd', borderWidth: 1, marginRight: 10, justifyContent: 'center', alignItems:'center', width: 30, height: 30, backgroundColor: 'transparent', borderRadius: 15}}>
+                        <Image style={{tintColor: '#fff', width: 12, height: 12}} source={require('../../img/flag.png')} />
+                    </View>
+                    <View style={{borderColor: '#ddd', borderWidth: 1, justifyContent: 'center', alignItems:'center', width: 80, height: 80, backgroundColor: 'transparent', borderRadius: 40}}>
                         <Image source={require('../../img/check.png')} />
                     </View>
                 </View>
@@ -126,16 +143,19 @@ class ConvoSwiper extends Component {
                         bottomCard={state.cardDeck[state.activeCard + 1]}
                         renderItem={(card)=> {
                         return (
-                            <Card cardData={card}/>
+                            <Card onFlag={this.onFlagCard} cardData={card}/>
                         )
                     }}
                     >
                     </DeckSwiper>
-                    <View style={{flexDirection: 'row', justifyContent: 'center', padding: 15}}>
-                        <TouchableHighlight underlayColor="rgba(234, 48, 87, 0.3)" onPress={this.swipeLeft} style={{borderColor: '#ddd', borderWidth: 1, marginRight: 10, justifyContent: 'center', alignItems:'center', width: 70, height: 70, backgroundColor: 'transparent', borderRadius: 35}}>
+                    <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 15}}>
+                        <TouchableHighlight underlayColor="rgba(234, 48, 87, 0.3)" onPress={this.swipeLeft} style={{borderColor: '#ddd', borderWidth: 1, marginRight: 10, justifyContent: 'center', alignItems:'center', width: 80, height: 80, backgroundColor: 'transparent', borderRadius: 40}}>
                             <Image source={require('../../img/close.png')} />
                         </TouchableHighlight>
-                        <TouchableHighlight underlayColor="rgba(44, 202, 67, 0.3)" onPress={this.swipeRight} style={{borderColor: '#ddd', borderWidth: 1, justifyContent: 'center', alignItems:'center', width: 70, height: 70, backgroundColor: 'transparent', borderRadius: 35}}>
+                        <TouchableHighlight underlayColor="#666" onPress={this.flagCard} style={{marginRight: 10, justifyContent: 'center', alignItems:'center', width: 30, height: 30, backgroundColor: '#999', borderRadius: 15}}>
+                            <Image style={{tintColor: '#fff', width: 12, height: 12}} source={require('../../img/flag.png')} />
+                        </TouchableHighlight>
+                        <TouchableHighlight underlayColor="rgba(44, 202, 67, 0.3)" onPress={this.swipeRight} style={{borderColor: '#ddd', borderWidth: 1, justifyContent: 'center', alignItems:'center', width: 80, height: 80, backgroundColor: 'transparent', borderRadius: 40}}>
                             <Image source={require('../../img/check.png')} />
                         </TouchableHighlight>
                     </View>
@@ -203,7 +223,7 @@ const styles = StyleSheet.create({
     cardViewer: {
         backgroundColor: '#eee',
         padding: 20,
-        paddingBottom: 10,
+        paddingBottom: 0,
         flex: 1
     },
     interestedThumbnail: {

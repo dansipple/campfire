@@ -1,11 +1,15 @@
 
 import React, { Component } from 'react';
-import { Image, StyleSheet, Text, View, Dimensions } from 'react-native';
+import { Image, TouchableOpacity, StyleSheet, Text, View, Dimensions } from 'react-native';
 
 export default class Card extends Component {
 
     constructor(props) {
         super(props);
+    }
+
+    onPress() {
+        console.log('pressed');
     }
     
     render() {
@@ -49,6 +53,7 @@ export default class Card extends Component {
                     padding: 15
                 },
                 creatorNameContainer: {
+                    flex: 1,
                     flexDirection: 'column'
                 },
                 name: {
@@ -77,6 +82,7 @@ export default class Card extends Component {
             });
 
             return (
+                <TouchableOpacity onPress={() => this.onPress()}>
                     <View style={styles.cardContainer}>
                         <View style={ styles.cardBody }>
                             <Text style={styles.category}>#{cardData.category}</Text>
@@ -84,13 +90,14 @@ export default class Card extends Component {
                             <Text style={ styles.description }>{ cardData.content }</Text>
                         </View>
                         <View style={styles.creatorInformation}>
-                            <Image style={styles.thumbnail} source={{ uri: creator.avatar}} />
+                            <Image style={styles.thumbnail} source={ creator.avatar ? { uri: creator.avatar} : require('../../img/no-avatar.png')} />
                             <View style={styles.creatorNameContainer}>
                                 <Text style={styles.name}>{ creator.first } { creator.last }</Text>
                                 <Text style={styles.title}>{ creator.title }</Text>
                             </View>
                         </View>
                     </View>
+                </TouchableOpacity>
             );
         }
         else {

@@ -48,9 +48,9 @@ export default class Base {
         });
     }
 
-    update(path, data) {
+    update(path, data, timestamps) {
         return new Promise((resolve, reject) => {
-            data.updatedAt = firebase.getCurrentTime();
+            if(!timestamps || timestamps !== false) data.updatedAt = firebase.getCurrentTime();
             let ref = this.db(path ? path : '');
             ref.update(data).then(() => {resolve('success')})
                 .catch( (err) => {reject(new Error('Write failed: ' + err.code))});

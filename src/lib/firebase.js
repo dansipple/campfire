@@ -15,5 +15,6 @@ function getCurrentTime() {
 export default {
     app: firebase.initializeApp(firebaseConfig),
     auth: firebase.auth,
-    getCurrentTime: getCurrentTime
+    getCurrentTime: getCurrentTime,
+    storage: firebase.storage()
 }

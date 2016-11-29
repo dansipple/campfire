@@ -6,6 +6,8 @@ import Conversation from '../components/Conversation';
 
 import * as inboxActions from '../reducers/inbox/actions';
 
+import MessagesController from '../lib/controllers/messages';
+
 import {connect} from 'react-redux';
 
 class Inbox extends Component {
@@ -76,9 +78,14 @@ class Inbox extends Component {
             });
         }
 
-        const nextBadges = nextProps.appState.badges[this.props.appState.currentNetwork._id] || {};
-        const badges = this.props.appState.badges[this.props.appState.currentNetwork._id] || {};
-
+        let nextBadges = null;
+        if(nextProps.appState.badges) {
+            nextBadges = nextProps.appState.badges[this.props.appState.currentNetwork._id] || {};
+        }
+        let badges = {};
+        if(this.props.appState.badge) {
+            badges = this.props.appState.badges[this.props.appState.currentNetwork._id] || {};
+        }
         if(nextBadges) {
             if (nextBadges.messages !== badges.messages) {
                 this.props.navigator.setTabBadge({
@@ -104,6 +111,9 @@ class Inbox extends Component {
                 loadConversations: this.loadConversations
             }
         });
+        if(conversationData.isUnread) {
+            MessagesController.markAsRead(this.props.appState.currentNetwork._id, this.props.appState.currentUser._id, conversationData._id);
+        }
     }
 
     _renderRow(conversationData) {
@@ -148,10 +158,12 @@ class Inbox extends Component {
                           />
                         }
                     /> :
-                    <View style={{ flex: 1, backgroundColor: '#f5f7f9', alignItems: 'center', justifyContent: 'center' }}>
-                        <Image style={{tintColor: '#ddd', marginBottom: 15}} source={require('../../img/empty-chat.png')} />
-                        <Text style={styles.noMessages}>You have no messages</Text>
-                    </View>
+                    <TouchableOpacity onPress={() => this.loadConversations()}>
+                        <View style={{ flex: 1, backgroundColor: '#f5f7f9', alignItems: 'center', justifyContent: 'center' }}>
+                            <Image style={{tintColor: '#ddd', marginBottom: 15}} source={require('../../img/empty-chat.png')} />
+                            <Text style={styles.noMessages}>You have no messages</Text>
+                        </View>
+                    </TouchableOpacity>
                 }
             </View>
         )

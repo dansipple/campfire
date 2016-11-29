@@ -17,7 +17,7 @@ export default class Profile extends Component {
                 <View style={styles.profileContainer}>
                     <View style={styles.userInformation}>
                         <View style={styles.thumbnailContainer}>
-                            <Image style={styles.thumbnail} source={{ uri: profileData.avatar}} />
+                            <Image style={styles.thumbnail} source={ profileData.avatar ? { uri: profileData.avatar} : require('../../img/no-avatar.png')} />
                         </View>
                         <View style={styles.nameAndTitleContainer}>
                             <Text style={styles.name}>{ profileData.first } { profileData.last }</Text>

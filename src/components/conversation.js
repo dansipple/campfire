@@ -17,7 +17,8 @@ export default class Conversation extends Component {
             return (
                 <View style={styles.conversation}>
                     <View style={styles.thumbnail}>
-                        <Image style={styles.thumbnailImg} source={{ uri: user.avatar }}/>
+                        <Image style={styles.thumbnailImg} source={ user.avatar ? { uri: user.avatar } : require('../../img/no-avatar.png')}/>
+                        <View style={this.props.conversationData.isUnread && styles.unread} />
                     </View>
                     <View style={styles.content}>
                         <View style={styles.nameAndTime}>
@@ -47,6 +48,8 @@ const styles = StyleSheet.create({
     },
     thumbnail: {
         width: 70,
+        flexDirection: 'row',
+        alignItems: 'center'
         //padding: 3
     },
     thumbnailImg: {
@@ -81,6 +84,15 @@ const styles = StyleSheet.create({
         lineHeight: 15,
         height: 15,
         color: '#666'
+    },
+    unread: {
+        backgroundColor: 'red',
+        height: 12,
+        width: 12,
+        borderRadius: 6,
+        marginLeft: -6,
+        borderWidth: 1,
+        borderColor: '#fff'
     }
 });
 

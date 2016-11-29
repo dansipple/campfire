@@ -84,8 +84,14 @@ class MyConvos extends Component {
             });
         }
 
-        const nextBadges = nextProps.appState.badges[this.props.appState.currentNetwork._id] || {};
-        const badges = this.props.appState.badges[this.props.appState.currentNetwork._id] || {};
+        let nextBadges = null;
+        if(nextProps.appState.badges) {
+            nextBadges = nextProps.appState.badges[this.props.appState.currentNetwork._id] || {};
+        }
+        let badges = {};
+        if(this.props.appState.badge) {
+            badges = this.props.appState.badges[this.props.appState.currentNetwork._id] || {};
+        }
 
         if(nextBadges) {
             if (nextBadges.myConvos !== badges.myConvos) {

@@ -59,6 +59,7 @@ export function login(userData) {
                  dispatch(setUser(user));
              }
              else {
+                 /*
                  UserController.createUser(userData)
                      .then((user) => {
                          Analytics.setUserId(user._id);
@@ -66,6 +67,7 @@ export function login(userData) {
                          //AsyncStorage.setItem('@User', JSON.stringify(user));
                          dispatch(setUser(user));
                      });
+                     */
              }
           });
 

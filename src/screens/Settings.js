@@ -13,7 +13,7 @@ import * as settingsActions from '../../src/reducers/settings/actions';
 class Settings extends Component {
 
     static navigatorStyle = {
-        navBarButtonColor: '#666',
+        navBarButtonColor: '#666'
     };
 
     static navigatorButtons = {
@@ -27,6 +27,8 @@ class Settings extends Component {
         super(props);
 
         this.logOut = this.logOut.bind(this);
+        this.showTC = this.showTC.bind(this);
+        this.uploadAvatar = this.uploadAvatar.bind(this);
     }
 
     logOut() {
@@ -45,6 +47,25 @@ class Settings extends Component {
         this.props.dispatch(settingsActions.loadSettings());
     }
 
+    uploadAvatar() {
+        this.props.navigator.showLightBox({
+            screen: "UploadImage", // unique ID registered with Navigation.registerScreen
+            passProps: {
+            }, // simple serializable object that will pass as props to the lightbox (optional)
+            style: {
+                backgroundBlur: "none",
+                backgroundColor: "rgba(0,0,0,0.6)"
+            }
+        });
+    }
+
+    showTC() {
+        this.props.navigator.showModal({
+            screen: 'TermsAndConditions',
+            title: 'Terms and Conditions'
+        })
+    }
+
     render() {
         const currentUser = this.props.state.userData || {};
 
@@ -53,9 +74,9 @@ class Settings extends Component {
                 <View style={{backgroundColor: '#fff', marginTop: 50, height: 80}}>
                 </View>
                 <View style={{flexDirection: 'row', marginTop: -105}}>
-                    <View style={{ width: 110, height: 90, paddingTop: 10, paddingLeft: 15, paddingRight: 5}}>
-                        <Image style={{width: 90, height: 90, borderRadius: 45}} source={{uri: currentUser.avatar}} />
-                    </View>
+                    <TouchableOpacity onPress={this.uploadAvatar} style={{ width: 110, height: 90, paddingTop: 10, paddingLeft: 15, paddingRight: 5}}>
+                        <Image style={{width: 90, height: 90, borderRadius: 45}} source={ currentUser.avatar ? {uri: currentUser.avatar} : require('../../img/no-avatar.png')} />
+                    </TouchableOpacity>
                     <View style={{flex: 1, paddingRight: 10, backgroundColor: 'transparent'}}>
                         <View style={{height: 25, justifyContent: 'center'}}>
                             <Text style={styles.label}>Name</Text>
@@ -112,11 +133,23 @@ class Settings extends Component {
                             onChangeText={this.updateUserData.bind(this, 'email')}
                             onEndEditing={this.saveUser.bind(this, 'email')}
                             value={currentUser.email}
+                            keyboardType="email-address"
+                            autoCapitalize="none"
+                            autoCorrect={false}
                             placeholder={'Email Address'}
                         />
                     </View>
                 </View>
                 <View style={{marginTop: 50}}>
+                    <TouchableHighlight
+                        onPress={this.showTC}
+                        underlayColor={'#f9f9f9'}
+                        style={{justifyContent: 'center', height: 40, backgroundColor: '#fff'}}
+                    >
+                        <Text style={{color: '#666', textAlign: 'center', fontSize: 17}}>Terms And Conditions</Text>
+                    </TouchableHighlight>
+                </View>
+                <View style={{marginTop: 10}}>
                     <TouchableHighlight
                         onPress={this.logOut}
                         underlayColor={'#f9f9f9'}

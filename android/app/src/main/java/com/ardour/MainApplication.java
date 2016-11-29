@@ -4,6 +4,8 @@ import android.app.Application;
 import android.util.Log;
 
 import com.facebook.react.ReactApplication;
+import com.imagepicker.ImagePickerPackage;
+import com.RNFetchBlob.RNFetchBlobPackage;
 import com.evollu.react.fcm.FIRMessagingPackage;
 import com.evollu.react.fa.FIRAnalyticsPackage;
 import com.reactnativenavigation.NavigationReactPackage;
@@ -31,6 +33,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new ImagePickerPackage(),
+            new RNFetchBlobPackage(),
             new FIRMessagingPackage(),
             new FIRAnalyticsPackage(),
             new NavigationReactPackage(),

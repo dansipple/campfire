@@ -3,6 +3,8 @@ import User from '../models/user.js';
 
 import NetworksController from './networks';
 
+import firebase from '../firebase';
+
 const UserUtil = {
 
     createUserAndAddToOrganization(userData, cb) {
@@ -16,25 +18,42 @@ const UserUtil = {
         });
     },
 
+    create(userData) {
+        return new Promise((resolve, reject) => {
+            firebase.app.auth().createUserWithEmailAndPassword(userData.email, userData.password)
+                .then((user) => {
+                    let userObject = {
+                        _id: user.uid,
+                        email: userData.email,
+                        first: userData.first,
+                        last: userData.last,
+                        title: userData.title,
+                        college: userData.college
+                    };
+
+                    this.createUser(userObject);
+                })
+                .catch(function(error) {
+                    // Handle Errors here.
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    if (errorCode == 'auth/weak-password') {
+                        console.log('The password is too weak.');
+                    } else {
+                        console.log(errorMessage);
+                    }
+                    console.log(error);
+                });
+        })
+    },
+
     createUser(userObject) {
         return new Promise((resolve, reject) => {
-            const displayName = userObject.displayName.split(' '),
-                firstName = displayName[0],
-                lastName = displayName[displayName.length - 1];
-
-            const newUser = {
-                first: firstName,
-                last: lastName,
-                email: userObject.email,
-                avatar: userObject.photoURL
-            };
-            User.set(userObject.uid, newUser).then(() => {
-                newUser._id = userObject.uid;
-
+            User.set(userObject._id, userObject).then(() => {
                 // add user to convos beta network
-                NetworksController.addUserToNetwork(userObject.uid, '-KPzFYEKdj3yRQn3teTP');
+                NetworksController.addUserToNetwork(userObject._id, '-KPzFYEKdj3yRQn3teTP');
 
-                resolve(newUser);
+                resolve(userObject);
             });
         });
     },
@@ -43,7 +62,20 @@ const UserUtil = {
         return new Promise((resolve, reject) => {
             User.getOne(userId)
                 .then((user) => {
+                   /* firebase.storage.ref('avatars').child(userId)
+                        .then((url) => {
+
+                        });*/
                     if(user) user._id = userId;
+                    resolve(user);
+                });
+        });
+    },
+
+    getUserByEmail(email) {
+        return new Promise((resolve, reject) => {
+            User.getByEmail(email)
+                .then((user) => {
                     resolve(user);
                 });
         });
@@ -55,6 +87,15 @@ const UserUtil = {
                 .then(() => {
                     resolve();
                 });
+        });
+    },
+
+    updateAvatar(url, userId) {
+        return new Promise((resolve, reject) => {
+            this.updateUser(userId, {avatar: url})
+                .then(() => {
+                    resolve();
+                })
         });
     }
 };
