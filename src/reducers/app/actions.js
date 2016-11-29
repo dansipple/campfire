@@ -37,6 +37,10 @@ function setUser(user) {
   return {type: types.USER_CHANGED, user: user};
 }
 
+export function showOnboarding(toggle) {
+    return {type: types.SHOW_ONBOARDING, payload: toggle};
+}
+
 function updateBadges(badges) {
     return {type: types.BADGES_CHANGED, badges: badges}
 }

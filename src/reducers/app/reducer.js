@@ -5,7 +5,8 @@ const initialState = Immutable({
     root: undefined, // 'login' / 'after-login',
     currentUser: {},
     currentNetwork: {_id: '-KPzFYEKdj3yRQn3teTP', name: 'Convos Beta'},
-    badges: {}
+    badges: {},
+    showOnboarding: false
 });
 
 export default function app(state = initialState, action = {}) {
@@ -27,6 +28,10 @@ export default function app(state = initialState, action = {}) {
             return Object.assign({}, state, {
                 currentNetwork: action.network,
                 root: 'after-login'
+            });
+        case types.SHOW_ONBOARDING:
+            return Object.assign({}, state, {
+                showOnboarding: action.payload
             });
         default:
             return state;

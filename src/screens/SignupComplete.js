@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { TouchableHighlight, TouchableOpacity, Keyboard, TextInput, Image, StyleSheet, Dimensions, RefreshControl, ListView, Text, View } from 'react-native';
 
-import * as signupActions from '../reducers/signup/actions';
+import * as appActions from '../reducers/app/actions';
 
 import UserController from '../lib/controllers/user';
 
@@ -62,6 +62,7 @@ class SignupComplete extends Component {
                 college: state.college,
                 password: this.state.password
             });
+            this.props.dispatch(appActions.showOnboarding(true));
         }
     }
 

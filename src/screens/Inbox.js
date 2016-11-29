@@ -158,8 +158,8 @@ class Inbox extends Component {
                           />
                         }
                     /> :
-                    <TouchableOpacity onPress={() => this.loadConversations()}>
-                        <View style={{ flex: 1, backgroundColor: '#f5f7f9', alignItems: 'center', justifyContent: 'center' }}>
+                    <TouchableOpacity style={{ flex: 1, backgroundColor: '#f5f7f9'}} onPress={() => this.loadConversations()}>
+                        <View style={{flex:1 , alignItems: 'center', justifyContent: 'center' }}>
                             <Image style={{tintColor: '#ddd', marginBottom: 15}} source={require('../../img/empty-chat.png')} />
                             <Text style={styles.noMessages}>You have no messages</Text>
                         </View>
