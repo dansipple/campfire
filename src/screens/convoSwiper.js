@@ -121,7 +121,7 @@ class ConvoSwiper extends Component {
                     <View style={{borderColor: '#ddd', borderWidth: 1, marginRight: 10, justifyContent: 'center', alignItems:'center', width: 80, height: 80, backgroundColor: 'transparent', borderRadius: 40}}>
                         <Image source={require('../../img/close.png')} />
                     </View>
-                    <View style={{borderColor: '#ddd', borderWidth: 1, marginRight: 10, justifyContent: 'center', alignItems:'center', width: 30, height: 30, backgroundColor: 'transparent', borderRadius: 15}}>
+                    <View style={{borderColor: '#ddd', borderWidth: 1, marginRight: 10, justifyContent: 'center', alignItems:'center', width: 30, height: 30, backgroundColor: '#999', borderRadius: 15}}>
                         <Image style={{tintColor: '#fff', width: 12, height: 12}} source={require('../../img/flag.png')} />
                     </View>
                     <View style={{borderColor: '#ddd', borderWidth: 1, justifyContent: 'center', alignItems:'center', width: 80, height: 80, backgroundColor: 'transparent', borderRadius: 40}}>

@@ -99,7 +99,7 @@ class SignupDetails extends Component {
                         });
                     }}
                     value={this.state.role}
-                    placeholder="Developer at Convos"
+                    placeholder="Marketing at Convos"
                 />
                 <Text style={styles.helperText}>College</Text>
                 <TextInput
@@ -110,7 +110,7 @@ class SignupDetails extends Component {
                         });
                     }}
                     value={this.state.college}
-                    placeholder="Harvard University"
+                    placeholder="University of Massachusetts"
                 />
             </View>
         );

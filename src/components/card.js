@@ -8,10 +8,6 @@ export default class Card extends Component {
         super(props);
     }
 
-    onPress() {
-        console.log('pressed');
-    }
-    
     render() {
         let {height, width} = Dimensions.get('window');
 
@@ -29,11 +25,13 @@ export default class Card extends Component {
                     shadowColor: '#bbb',
                     shadowOpacity: this.props.inMessage ? 0 : 0.6,
                     shadowRadius: 8,
-                    flex: 1
+                    justifyContent: 'space-between',
+                    minHeight: this.props.inMessage ? 200 : height - 245
                 },
                 cardBody: {
                     padding: 30,
-                    minHeight: this.props.inMessage ? 200 : height - 310
+                    flex: 1
+                    //minHeight: this.props.inMessage ? 200 : height - 310
                 },
                 category: {
                     color: '#777',
@@ -48,7 +46,6 @@ export default class Card extends Component {
                     justifyContent: 'center'
                 },
                 creatorInformation: {
-                    flex: 1,
                     flexDirection: 'row',
                     padding: 15
                 },
@@ -82,22 +79,20 @@ export default class Card extends Component {
             });
 
             return (
-                <TouchableOpacity onPress={() => this.onPress()}>
-                    <View style={styles.cardContainer}>
-                        <View style={ styles.cardBody }>
-                            <Text style={styles.category}>#{cardData.category}</Text>
-                            <View style={styles.divider} />
-                            <Text style={ styles.description }>{ cardData.content }</Text>
-                        </View>
-                        <View style={styles.creatorInformation}>
-                            <Image style={styles.thumbnail} source={ creator.avatar ? { uri: creator.avatar} : require('../../img/no-avatar.png')} />
-                            <View style={styles.creatorNameContainer}>
-                                <Text style={styles.name}>{ creator.first } { creator.last }</Text>
-                                <Text style={styles.title}>{ creator.title }</Text>
-                            </View>
+                <View style={styles.cardContainer}>
+                    <View style={ styles.cardBody }>
+                        <Text style={styles.category}>#{cardData.category}</Text>
+                        <View style={styles.divider} />
+                        <Text style={ styles.description }>{ cardData.content }</Text>
+                    </View>
+                    <View style={styles.creatorInformation}>
+                        <Image style={styles.thumbnail} source={ creator.avatar ? { uri: creator.avatar} : require('../../img/no-avatar.png')} />
+                        <View style={styles.creatorNameContainer}>
+                            <Text style={styles.name}>{ creator.first } { creator.last }</Text>
+                            <Text style={styles.title}>{ creator.title }</Text>
                         </View>
                     </View>
-                </TouchableOpacity>
+                </View>
             );
         }
         else {

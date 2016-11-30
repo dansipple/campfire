@@ -17,11 +17,11 @@ export default class EmptyCard extends Component {
                 borderRadius: 4,
                 borderColor: '#ddd',
                 borderWidth: 1,
-                flex: 1
+                minHeight: this.props.inMessage ? 200 : height - 245
             },
             cardBody: {
                 padding: 30,
-                height: this.props.inMessage ? 200 : height - 310
+                //height: this.props.inMessage ? 200 : height - 310
             },
             category: {
                 color: '#777',
