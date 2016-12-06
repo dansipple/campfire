@@ -140,14 +140,14 @@ export default class Onboarding extends Component {
                     onSlideChange={this.onSlideChangeHandle}
                 >
                     <View style={[styles.slide,{ backgroundColor: '#fa931d' }]}>
-                        <View level={10}><Text style={styles.text}>Page 1</Text></View>
-                        <View level={15}><Text style={styles.text}>Page 1</Text></View>
-                        <View level={8}><Text style={styles.text}>Page 1</Text></View>
+                        <View level={10}><Text style={styles.text}>Welcome</Text></View>
+                        <View level={15}><Text style={styles.paragraphText}>Convos is a platform to find good conversations.</Text></View>
                     </View>
                     <View style={[styles.slide, { backgroundColor: '#a4b602' }]}>
-                        <View level={-10}><Text style={styles.text}>Page 2</Text></View>
-                        <View level={5}><Text style={styles.text}>Page 2</Text></View>
-                        <View level={20}><Text style={styles.text}>Page 2</Text></View>
+                        <View level={10}><Text style={styles.text}>It starts here</Text></View>
+                        <View level={15}><Text style={styles.paragraphText}>What do you really, really, want to talk about today?</Text></View>
+                        <View level={20}><Text style={styles.paragraphText}>Write it down.</Text></View>
+                        <View level={15}><Text style={styles.paragraphText}>We call these Convos</Text></View>
                     </View>
                     <View style={[styles.slide,{ backgroundColor: '#fa931d' }]}>
                         <View level={8}><Text style={styles.text}>Page 3</Text></View>
@@ -169,10 +169,11 @@ export default class Onboarding extends Component {
 
 const styles = StyleSheet.create({
     paragraphText: {
-        color: '#666',
-        fontSize: 15,
-        lineHeight: 20,
-        marginBottom: 5
+        color: '#fff',
+        fontSize: 25,
+        lineHeight: 35,
+        marginBottom: 5,
+        textAlign: 'center'
     },
     slide: {
         flex: 1,
