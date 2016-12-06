@@ -26,7 +26,8 @@ export default class Card extends Component {
                     shadowOpacity: this.props.inMessage ? 0 : 0.6,
                     shadowRadius: 8,
                     justifyContent: 'space-between',
-                    minHeight: this.props.inMessage ? 200 : height - 245
+                    minHeight: this.props.inMessage ? 265 : height - 245,
+                    maxHeight: this.props.inMessage ? null : height - 245
                 },
                 cardBody: {
                     padding: 30,

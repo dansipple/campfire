@@ -20,6 +20,7 @@ import Signup from './Signup';
 import SignupDetails from './SignupDetails';
 import SignupComplete from './SignupComplete';
 import UploadImage from './UploadImage';
+import Onboarding from './Onboarding';
 
 // register all screens of the app (including internal ones)
 export function registerScreens(store, Provider) {
@@ -35,6 +36,7 @@ export function registerScreens(store, Provider) {
     Navigation.registerComponent('MyConvos', () => MyConvos, store, Provider);
     Navigation.registerComponent('CreateNetwork', () => CreateNetwork, store, Provider);
     Navigation.registerComponent('JoinNetwork', () => JoinNetwork, store, Provider);
+    Navigation.registerComponent('Onboarding', () => Onboarding, store, Provider);
     Navigation.registerComponent('Invite', () => Invite, store, Provider);
     Navigation.registerComponent('InviteConfirmation', () => InviteConfirmation, store, Provider);
     Navigation.registerComponent('Report', () => Report, store, Provider);

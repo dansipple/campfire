@@ -4,7 +4,7 @@ import { Alert, TouchableOpacity, TouchableHighlight, StyleSheet, Image, View, T
 import Card from './../components/Card';
 import EmptyCard from './../components/EmptyCard';
 import DeckSwiper from './../components/DeckSwiper';
-import Onboarding from './../components/Onboarding';
+import Onboarding from './Onboarding';
 
 import * as convoSwiperActions from '../reducers/convoSwiper/actions';
 import * as appActions from '../reducers/app/actions';
@@ -110,6 +110,9 @@ class ConvoSwiper extends Component {
     }
 
     componentDidMount() {
+        this.props.navigator.showModal({
+           screen: 'Onboarding' 
+        });
         this.loadConvos();
     }
 
@@ -188,7 +191,6 @@ class ConvoSwiper extends Component {
         return (
             <View style={styles.cardViewer}>
                 {(this.props.state.isLoading) ? this.renderLoader() : this.renderDeck()}
-                { this.props.appState.showOnboarding ? <Onboarding onComplete={() => this.props.dispatch(appActions.showOnboarding(false))}/> : null }
             </View>
         )
     }

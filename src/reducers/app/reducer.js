@@ -6,7 +6,7 @@ const initialState = Immutable({
     currentUser: {},
     currentNetwork: {_id: '-KPzFYEKdj3yRQn3teTP', name: 'Convos Beta'},
     badges: {},
-    showOnboarding: false
+    showOnboarding: true
 });
 
 export default function app(state = initialState, action = {}) {

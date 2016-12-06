@@ -1,6 +1,8 @@
 
 import React, { Component } from 'react';
-import { TouchableOpacity, Image, StyleSheet, Dimensions, Text, View } from 'react-native';
+import { Alert, TouchableOpacity, Image, StyleSheet, Dimensions, Text, View } from 'react-native';
+
+import AppIntro from 'react-native-app-intro';
 
 export default class Onboarding extends Component {
 
@@ -16,6 +18,10 @@ export default class Onboarding extends Component {
 
     }
 
+    static navigatorStyle = {
+        navBarHidden: true
+    };
+
     nextStage() {
         this.setState({
             stage: this.state.stage + 1
@@ -28,10 +34,24 @@ export default class Onboarding extends Component {
         });
         this.props.onComplete();
     }
+    onSkipBtnHandle = (index) => {
+        Alert.alert('Skip');
+        console.log(index);
+    };
+    doneBtnHandle = () => {
+        Alert.alert('Done');
+    };
+    nextBtnHandle = (index) => {
+        Alert.alert('Next');
+        console.log(index);
+    };
+    onSlideChangeHandle = (index, total) => {
+        console.log(index, total);
+    };
 
     render() {
         if(this.state.show) {
-
+/*
             if(this.state.stage === 0) {
                 return(
                     <View style={{position: 'absolute', top:0, right:0, bottom:0, left:0, padding: 10, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(238,238,238,0.9)'}}>
@@ -91,6 +111,56 @@ export default class Onboarding extends Component {
                     </View>
                 )
             }
+
+
+             */
+            const pageArray = [{
+                title: 'Welcome',
+                description: 'Convos is a platform to find good conversations.',
+                img: 'https://goo.gl/Bnc3XP',
+                imgStyle: {
+                    height: 80 * 2.5,
+                    width: 109 * 2.5,
+                },
+                backgroundColor: '#fa931d',
+                fontColor: '#fff',
+                level: 10,
+            }, {
+                title: 'Page 2',
+                description: 'Description 2',
+                backgroundColor: '#a4b602',
+                fontColor: '#fff',
+                level: 10
+            }];
+            return (
+                <AppIntro
+                    onNextBtnClick={this.nextBtnHandle}
+                    onDoneBtnClick={this.doneBtnHandle}
+                    onSkipBtnClick={this.onSkipBtnHandle}
+                    onSlideChange={this.onSlideChangeHandle}
+                >
+                    <View style={[styles.slide,{ backgroundColor: '#fa931d' }]}>
+                        <View level={10}><Text style={styles.text}>Page 1</Text></View>
+                        <View level={15}><Text style={styles.text}>Page 1</Text></View>
+                        <View level={8}><Text style={styles.text}>Page 1</Text></View>
+                    </View>
+                    <View style={[styles.slide, { backgroundColor: '#a4b602' }]}>
+                        <View level={-10}><Text style={styles.text}>Page 2</Text></View>
+                        <View level={5}><Text style={styles.text}>Page 2</Text></View>
+                        <View level={20}><Text style={styles.text}>Page 2</Text></View>
+                    </View>
+                    <View style={[styles.slide,{ backgroundColor: '#fa931d' }]}>
+                        <View level={8}><Text style={styles.text}>Page 3</Text></View>
+                        <View level={0}><Text style={styles.text}>Page 3</Text></View>
+                        <View level={-10}><Text style={styles.text}>Page 3</Text></View>
+                    </View>
+                    <View style={[styles.slide, { backgroundColor: '#a4b602' }]}>
+                        <View level={5}><Text style={styles.text}>Page 4</Text></View>
+                        <View level={10}><Text style={styles.text}>Page 4</Text></View>
+                        <View level={15}><Text style={styles.text}>Page 4</Text></View>
+                    </View>
+                </AppIntro>
+            );
         } else {
             return null;
         }
@@ -103,6 +173,18 @@ const styles = StyleSheet.create({
         fontSize: 15,
         lineHeight: 20,
         marginBottom: 5
-    }
+    },
+    slide: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#9DD6EB',
+        padding: 15,
+    },
+    text: {
+        color: '#fff',
+        fontSize: 30,
+        fontWeight: 'bold',
+    },
 });
 
