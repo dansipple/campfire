@@ -51,21 +51,34 @@ export default class App {
                         {
                             screen: 'ConvoSwiper',
                             title: 'Convos',
-                            label: 'Find',
+                            label: 'Swipe',
                             titleImage: require('../img/logo-small.png'),
                             icon: require('../img/three_selected.png'),
                             navigatorStyle: {
                                 navBarBackgroundColor: '#eee',
                                 navBarTextColor: '#666',
                                 navBarButtonColor: '#666',
-                                navBarNoBorder: true
+                                navBarNoBorder: true,
+                                navBarHidden: true
                             }
                         },
                         {
-                            screen: 'MyConvos',
-                            title: 'My Convos',
-                            label: 'My Convos',
-                            icon: require('../img/three.png'),
+                            screen: 'Connect',
+                            title: 'Connect',
+                            label: 'Connect',
+                            icon: require('../img/bolt.png'),
+                            navigatorStyle: {
+                                navBarBackgroundColor: '#fff',
+                                navBarTextColor: '#666',
+                                navBarButtonColor: '#666',
+                                navBarHidden: true
+                            }
+                        },
+                        {
+                            screen: 'NewConvo',
+                            title: 'New',
+                            label: '',
+                            icon: require('../img/add_square.png'),
                             navigatorStyle: {
                                 navBarBackgroundColor: '#fff',
                                 navBarTextColor: '#666',
@@ -75,12 +88,13 @@ export default class App {
                         {
                             screen: 'Inbox',
                             title: 'Messages',
-                            label: 'Messages',
+                            label: 'Chat',
                             icon: require('../img/chat.png'),
                             navigatorStyle: {
                                 navBarBackgroundColor: '#fff',
                                 navBarTextColor: '#666',
-                                navBarButtonColor: '#666'
+                                navBarButtonColor: '#666',
+                                navBarHidden: true
                             }
                         },
                         {

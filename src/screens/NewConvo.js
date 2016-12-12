@@ -128,7 +128,6 @@ class NewConvo extends Component {
 
                 <TextInput
                     style={[styles.textareaStyle, this.state.showCategoryPicker && styles.hidden]}
-                    autoFocus={true}
                     onChange={(event) => {
                         this.setState({
                             content: event.nativeEvent.text

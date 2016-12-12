@@ -4,6 +4,7 @@ import { Alert, TouchableOpacity, TouchableHighlight, StyleSheet, Image, View, T
 import Card from './../components/Card';
 import EmptyCard from './../components/EmptyCard';
 import DeckSwiper from './../components/DeckSwiper';
+import Nav from './../components/Nav';
 import Onboarding from './Onboarding';
 
 import * as convoSwiperActions from '../reducers/convoSwiper/actions';
@@ -25,54 +26,7 @@ class ConvoSwiper extends Component {
         this.renderLoader = this.renderLoader.bind(this);
         this.renderDeck = this.renderDeck.bind(this);
         this.flagCard = this.flagCard.bind(this);
-
-        this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
     }
-
-    static navigatorButtons = {
-        leftButtons: [
-            {
-                icon: require('../../img/grid.png'),
-                title: 'Networks',
-                id: 'networks'
-            }
-        ],
-        rightButtons: [
-            {
-                icon: require('../../img/compose.png'),
-                title: 'Add',
-                id: 'add'
-            }
-        ]
-    };
-
-
-    onNavigatorEvent(event) {
-        if (event.type == 'DeepLink') {
-            this.handleDeepLink(event);
-        } else {
-            switch (event.id) {
-                case 'networks':
-                    this.props.navigator.showModal({
-                        title: 'Networks',
-                        screen: 'ChooseNetwork'
-                    });
-                    break;
-
-                case 'add':
-                    this.props.navigator.showModal({
-                        title: 'New Convo',
-                        screen: 'NewConvo'
-                    });
-                    break;
-
-                default:
-                    console.log('Unhandled event ' + event.id);
-                    break;
-            }
-        }
-    }
-
 
     swipeLeft() {
         const nextCardKey = this.props.state.cardDeck[this.props.state.activeCard + 1]?
@@ -109,10 +63,12 @@ class ConvoSwiper extends Component {
         });
     }
 
+
     componentDidMount() {
-        this.props.navigator.showModal({
+        /*this.props.navigator.showModal({
            screen: 'Onboarding' 
         });
+        */
         this.loadConvos();
     }
 
@@ -189,8 +145,11 @@ class ConvoSwiper extends Component {
 
     render() {
         return (
-            <View style={styles.cardViewer}>
-                {(this.props.state.isLoading) ? this.renderLoader() : this.renderDeck()}
+            <View>
+                <Nav currentNetwork={this.props.appState.currentNetwork} navigator={this.props.navigator} />
+                <View style={styles.cardViewer}>
+                    {(this.props.state.isLoading) ? this.renderLoader() : this.renderDeck()}
+                </View>
             </View>
         )
     }

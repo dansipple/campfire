@@ -7,6 +7,7 @@ import messages from './messages/reducer';
 import settings from './settings/reducer';
 import networks from './networks/reducer';
 import signup from './signup/reducer';
+import connect from './connect/reducer';
 
 export {
     app,
@@ -17,5 +18,6 @@ export {
     messages,
     settings,
     networks,
-    signup
+    signup,
+    connect
 };

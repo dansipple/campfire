@@ -2,6 +2,7 @@ import { Navigation } from 'react-native-navigation';
 
 import Root from './Root';
 import ConvoSwiper from './ConvoSwiper';
+import Connect from './Connect';
 import MessageThread from './MessageThread';
 import Inbox from './Inbox';
 import Settings from './Settings';
@@ -26,6 +27,7 @@ import Onboarding from './Onboarding';
 export function registerScreens(store, Provider) {
     Navigation.registerComponent('Root', () => Root, store, Provider);
     Navigation.registerComponent('ConvoSwiper', () => ConvoSwiper, store, Provider);
+    Navigation.registerComponent('Connect', () => Connect, store, Provider);
     Navigation.registerComponent('Inbox', () => Inbox, store, Provider);
     Navigation.registerComponent('MessageThread', () => MessageThread, store, Provider);
     Navigation.registerComponent('Settings', () => Settings, store, Provider);

@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { TouchableHighlight, TouchableOpacity, Image, StyleSheet, Dimensions, ListView, Text, View, RefreshControl } from 'react-native';
 
 import Conversation from '../components/Conversation';
+import Nav from './../components/Nav';
 
 import * as inboxActions from '../reducers/inbox/actions';
 
@@ -145,26 +146,29 @@ class Inbox extends Component {
     render() {
         return (
             <View style={{ flex: 1 }}>
-                {this.props.state.conversations.length ?
-                    <ListView
-                        dataSource={this.state.dataSource}
-                        renderRow={this._renderRow}
-                        style={{ flex: 1 }}
-                        refreshControl={
-                          <RefreshControl
-                            refreshing={this.props.state.isLoading}
-                            onRefresh={this.loadConversations}
-                            style={{ backgroundColor: 'transparent' }}
-                          />
-                        }
-                    /> :
-                    <TouchableOpacity style={{ flex: 1, backgroundColor: '#eee'}} onPress={() => this.loadConversations()}>
-                        <View style={{flex:1 , alignItems: 'center', justifyContent: 'center' }}>
-                            <Image style={{tintColor: '#ccc', marginBottom: 15}} source={require('../../img/empty-chat.png')} />
-                            <Text style={styles.noMessages}>You have no messages</Text>
-                        </View>
-                    </TouchableOpacity>
-                }
+                <Nav currentNetwork={this.props.appState.currentNetwork} navigator={this.props.navigator} />
+                <View style={{ flex: 1 }}>
+                    {this.props.state.conversations.length ?
+                        <ListView
+                            dataSource={this.state.dataSource}
+                            renderRow={this._renderRow}
+                            style={{ flex: 1 }}
+                            refreshControl={
+                              <RefreshControl
+                                refreshing={this.props.state.isLoading}
+                                onRefresh={this.loadConversations}
+                                style={{ backgroundColor: 'transparent' }}
+                              />
+                            }
+                        /> :
+                        <TouchableOpacity style={{ flex: 1, backgroundColor: '#eee'}} onPress={() => this.loadConversations()}>
+                            <View style={{flex:1 , alignItems: 'center', justifyContent: 'center' }}>
+                                <Image style={{tintColor: '#ccc', marginBottom: 15}} source={require('../../img/empty-chat.png')} />
+                                <Text style={styles.noMessages}>You have no messages</Text>
+                            </View>
+                        </TouchableOpacity>
+                    }
+                </View>
             </View>
         )
     }
