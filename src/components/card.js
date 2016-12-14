@@ -51,8 +51,7 @@ export default class Card extends Component {
                     padding: 15
                 },
                 creatorNameContainer: {
-                    flex: 1,
-                    flexDirection: 'column'
+                    justifyContent: 'center'
                 },
                 name: {
                     fontSize: 16,
@@ -90,7 +89,7 @@ export default class Card extends Component {
                         <Image style={styles.thumbnail} source={ creator.avatar ? { uri: creator.avatar} : require('../../img/no-avatar.png')} />
                         <View style={styles.creatorNameContainer}>
                             <Text style={styles.name}>{ creator.first } { creator.last }</Text>
-                            <Text style={styles.title}>{ creator.title }</Text>
+                            {creator.title ? (<Text style={styles.title}>{ creator.title }</Text>) : <View /> }
                         </View>
                     </View>
                 </View>

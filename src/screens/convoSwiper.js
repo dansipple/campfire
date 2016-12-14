@@ -14,6 +14,8 @@ import {connect} from 'react-redux';
 
 var Analytics = require('react-native-firebase-analytics');
 
+import FCM from 'react-native-fcm';
+
 class ConvoSwiper extends Component {
 
     constructor(props) {

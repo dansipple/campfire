@@ -100,8 +100,43 @@ class Connect extends Component {
         return (
             <View style={{flex: 1}}>
                 <Nav currentNetwork={this.props.appState.currentNetwork} navigator={this.props.navigator} />
-                <View style={{flex: 1, backgroundColor: '#eee', padding: 10}}>
+                <View style={{flex: 1, backgroundColor: '#eee'}}>
                     <ScrollView>
+                        <View style={{flexDirection: 'row', backgroundColor: '#fff', borderBottomColor: '#ddd', borderBottomWidth: 1, padding: 10}}>
+                            <View style={{flexDirection: 'row', flex: 1, overflow: 'hidden'}}>
+                                <Image style={styles.thumbnail} source={require('../../img/no-avatar.png')} />
+                                <View style={{justifyContent: 'center', padding: 10}}>
+                                    <Text style={{color: '#666', fontSize: 16}}>Dan Sipple</Text>
+                                    <Text style={{color: '#777', fontSize: 14}}>Cofounder of Convos and a bunch of other stuff</Text>
+                                </View>
+                            </View>
+                            <View style={{justifyContent: 'center', alignItems: 'center', width: 55}}>
+                                <TouchableHighlight onPress={() => console.log('yes')} underlayColor="rgba(52, 152, 219, 0.4)" style={[styles.actionButton, styles.connectButton]}>
+                                    <Image style={{height: 15, width: 15, tintColor: '#3498db'}} source={require('../../img/check.png')} />
+                                </TouchableHighlight>
+                            </View>
+                        </View>
+                        {/*
+                        <View style={styles.profileContainer}>
+                            <View style={styles.userInformation}>
+                                <View style={styles.thumbnailContainer}>
+                                    <Image style={styles.thumbnail} source={require('../../img/no-avatar.png')} />
+                                </View>
+                                <View style={styles.nameAndTitleContainer}>
+                                    <Text style={styles.name}>Dan Sipple</Text>
+                                    <Text style={styles.title}>Cofounder of Convos</Text>
+                                </View>
+                            </View>
+                            <View style={styles.actionButtons}>
+                                <TouchableHighlight onPress={() => console.log('no')} underlayColor="#eee" style={[styles.actionButton, styles.passButton]}>
+                                    <Image source={require('../../img/close.png')} />
+                                </TouchableHighlight>
+                                <TouchableHighlight onPress={() => console.log('yes')} underlayColor="#eee" style={[styles.actionButton, styles.connectButton]}>
+                                    <Image source={require('../../img/check.png')} />
+                                </TouchableHighlight>
+                            </View>
+                        </View>*/}
+                        {/*
                         <View style={styles.profileContainer}>
                             <View style={styles.userInformation}>
                                 <View style={styles.thumbnailContainer}>
@@ -159,6 +194,7 @@ class Connect extends Component {
                                 </TouchableHighlight>
                             </View>
                         </View>
+                        */}
                     </ScrollView>
                     {/*{this.props.state.convos.length ?
                         (<ListView
@@ -204,8 +240,6 @@ const styles = StyleSheet.create({
     },
     userInformation: {
         padding: 20,
-        borderBottomColor: '#eee',
-        borderBottomWidth: 1
     },
     thumbnailContainer: {
         flex: 1,
@@ -213,9 +247,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     thumbnail: {
-        borderRadius: 40,
-        height: 80,
-        width: 80,
+        borderRadius: 30,
+        height: 60,
+        width: 60,
         resizeMode: 'contain'
     },
     nameAndTitleContainer: {
@@ -272,27 +306,22 @@ const styles = StyleSheet.create({
     actionButtons: {
         flexDirection: 'row',
         backgroundColor: 'transparent',
-        borderTopColor: '#fff',
-        borderTopWidth: 1
+        justifyContent: 'center',
+        padding: 20
     },
     actionButton: {
-        flex: 0.5,
-        paddingTop: 25,
-        paddingBottom: 25
+        borderColor: '#3498db',
+        borderWidth: 1,
+        justifyContent: 'center',
+        alignItems:'center',
+        width: 40,
+        height: 40,
+        backgroundColor: 'transparent',
+        borderRadius: 20
     },
     actionButtonText: {
         color: '#fff',
         textAlign: 'center'
-    },
-    passButton: {
-        backgroundColor: '#bbb',
-        borderBottomLeftRadius: 8,
-        borderRightWidth: 1,
-        borderRightColor: '#fff'
-    },
-    connectButton: {
-        backgroundColor: '#3498db',
-        borderBottomRightRadius: 8
     }
 });
 

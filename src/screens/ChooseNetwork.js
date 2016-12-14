@@ -114,7 +114,7 @@ class ChooseNetwork extends Component {
     _renderRow(data) {
         if(data.isAdmin) {
             return (
-                <View style={{ flexDirection: 'row', backgroundColor: '#fff', borderTopWidth: 0.5, borderColor: '#ccc'}}>
+                <View style={{ flexDirection: 'row', backgroundColor: '#fff', borderTopWidth: 1, borderColor: '#ddd'}}>
                     <TouchableHighlight style={{flex: 1, padding: 20}} onPress={() => {this.selectNetwork(data)}} underlayColor="#f9f9f9">
                         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                             <Text style={{color: '#555', fontSize: 18}}>{data.name}</Text>
@@ -131,7 +131,7 @@ class ChooseNetwork extends Component {
             return (
 
                     <TouchableHighlight onPress={() => {this.selectNetwork(data)}} underlayColor="#f9f9f9">
-                        <View style={{backgroundColor: '#fff', padding: 20, borderTopWidth: 0.5, borderColor: '#ccc'}}>
+                        <View style={{backgroundColor: '#fff', padding: 20, borderTopWidth: 1, borderColor: '#ddd'}}>
                             <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                                 <Text style={{color: '#555', fontSize: 18}}>{data.name}</Text>
                                 { data._id === this.props.appState.currentNetwork._id ? <Image style={{tintColor: '#3498db'}} source={require('../../img/check.png')} /> : null }
@@ -159,12 +159,12 @@ class ChooseNetwork extends Component {
                         }
                     /> : <View style={{ flex: 1, paddingTop: 30, paddingBottom: 30 }} />}
                 <TouchableHighlight onPress={this.joinNetwork} underlayColor="#f9f9f9">
-                    <View style={{backgroundColor: '#fff', padding: 20, borderTopWidth: 0.5, borderColor: '#ccc'}}>
+                    <View style={{backgroundColor: '#fff', padding: 20, borderTopWidth: 1, borderColor: '#ddd'}}>
                         <Text style={{color: '#555', fontSize: 18}}>Join a Network</Text>
                     </View>
                 </TouchableHighlight>
                 <TouchableHighlight onPress={this.createNetwork} underlayColor="#f9f9f9">
-                    <View style={{backgroundColor: '#fff', padding: 20, borderTopWidth: 0.5, borderColor: '#ccc'}}>
+                    <View style={{backgroundColor: '#fff', padding: 20, borderTopWidth: 1, borderColor: '#ddd'}}>
                         <Text style={{color: '#555', fontSize: 18}}>Create a Network</Text>
                     </View>
                 </TouchableHighlight>
