@@ -4,10 +4,12 @@ import UserCardDeckPointer from '../models/userCardDeckPointer';
 import UserCard from '../models/userCard';
 import Badge from '../models/badge';
 import Swipe from '../models/swipe';
+import Potential from '../models/potential';
+import User from '../models/user';
 
 import Helpers from './../utils/helpers';
 
-class SwiperController {
+const SwiperController = {
 
     getCards(userId, networkId) {
         return new Promise((resolve, reject) => {
@@ -25,17 +27,17 @@ class SwiperController {
                         }).catch(reject);
                 }).catch(reject);
         });
-    }
+    },
 
     updateUserCardDeckPointer(userId, networkId, newPointer) {
         return UserCardDeckPointer.update(`${networkId}/${userId}`, {
             pointer: newPointer
         });
-    }
+    },
 
     getUserPointer(userId, networkId) {
         return UserCardDeckPointer.getOne(`${networkId}/${userId}`);
-    }
+    },
 
     swipe(userId, networkId, card, nextCardKey, decision) {
         return new Promise((resolve, reject) => {
@@ -43,17 +45,19 @@ class SwiperController {
                 interested: decision
             }).then(() => {
                 if(decision) {
-                    UserCard.update(`${networkId}/${card.creator._id}/${card._id}`, {
-                        hasInterested: true
+                    User.getOne(userId).then((creatorUserObj) => {
+                        Potential.update(`${networkId}/${card.creator._id}/${userId}`, {
+                            user: {
+                                first: creatorUserObj.first,
+                                last: creatorUserObj.last,
+                                title: creatorUserObj.title,
+                                avatar: creatorUserObj.avatar || null
+                            },
+                            cards: {
+                                [card._id]: card
+                            }
+                        });
                     });
-                    Badge.getOne(`${card.creator._id}/${networkId}`)
-                        .then((badgeObj) => {
-                            const currentCount = badgeObj && badgeObj.myConvos ? badgeObj.myConvos : 0;
-                            Badge.update(`${card.creator._id}/${networkId}`, {
-                                myConvos: currentCount + 1
-                            });
-                    });
-
                 }
                 const checkedNextCardKey = nextCardKey ? nextCardKey : (card._id.slice(0,-1) + 'z');
                 this.updateUserCardDeckPointer(userId, networkId, checkedNextCardKey).catch(reject);
@@ -62,6 +66,6 @@ class SwiperController {
         });
     }
 
-}
+};
 
-export default new SwiperController();
+export default SwiperController;

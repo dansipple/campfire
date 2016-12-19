@@ -14,7 +14,9 @@ import {connect} from 'react-redux';
 
 var Analytics = require('react-native-firebase-analytics');
 
-import FCM from 'react-native-fcm';
+import FCM from './../lib/fcm/component';
+
+import FCMClient from  './../lib/fcm/client';
 
 class ConvoSwiper extends Component {
 
@@ -36,7 +38,7 @@ class ConvoSwiper extends Component {
         this.props.dispatch(convoSwiperActions.swipe(this.props.state.cardDeck[this.props.state.activeCard],
             nextCardKey, false));
 
-        Analytics.logEvent('CONVO_SWIPE', {'direction': 'no'});
+        Analytics.logEvent('SWIPE_LEFT');
     }
 
     swipeRight() {
@@ -45,7 +47,7 @@ class ConvoSwiper extends Component {
         this.props.dispatch(convoSwiperActions.swipe(this.props.state.cardDeck[this.props.state.activeCard],
             nextCardKey, true));
 
-        Analytics.logEvent('CONVO_SWIPE', {'direction': 'yes'});
+        Analytics.logEvent('SWIPE_RIGHT');
     }
 
     loadConvos() {
@@ -72,6 +74,9 @@ class ConvoSwiper extends Component {
         });
         */
         this.loadConvos();
+
+        //FCMClient.sendNotification('ePBkzXHOoH4:APA91bHbQwEJ8pliYJQf5Ral2b-5qn8MuvsReg_Ph9tHnms7wpu8KLNfW4V8rbUEQMDX_mywjIbOn8-N005G4uoO1mrgJDN48ZdlW44yXhTj_yPa7skt7sr71scPJa7YRL1TEW5GkFoD');
+
     }
 
     renderLoader() {
@@ -147,7 +152,8 @@ class ConvoSwiper extends Component {
 
     render() {
         return (
-            <View>
+            <View style={{flex: 1}}>
+                <FCM userId={this.props.appState.currentUser._id} />
                 <Nav currentNetwork={this.props.appState.currentNetwork} navigator={this.props.navigator} />
                 <View style={styles.cardViewer}>
                     {(this.props.state.isLoading) ? this.renderLoader() : this.renderDeck()}

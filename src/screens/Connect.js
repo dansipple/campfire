@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { TouchableOpacity, TouchableHighlight, StyleSheet, ListView, ScrollView, RefreshControl, Image, View, Text} from 'react-native';
-import moment from 'moment';
 
-import MyConvoCard from './../components/MyConvoCard';
 import Nav from './../components/Nav';
 
-import * as myConvosActions from '../reducers/myConvos/actions';
+import ConnectController from '../lib/controllers/connect';
+
+import * as connectActions from '../reducers/connect/actions';
 
 import {connect} from 'react-redux';
 
@@ -21,23 +21,21 @@ class Connect extends Component {
         this._isMounted = false;
         this._renderRow = this._renderRow.bind(this);
 
-        this.loadConvos = this.loadConvos.bind(this);
-        this.editConvo = this.editConvo.bind(this);
-        this.viewInterested = this.viewInterested.bind(this);
+        this.loadPotentials = this.loadPotentials.bind(this);
     }
 
-    loadConvos() {
-        this.props.dispatch(myConvosActions.loadConvos());
+    loadPotentials() {
+        this.props.dispatch(connectActions.loadPotentials());
     }
 
     componentWillMount() {
-        this.loadConvos();
+        this.loadPotentials();
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.state.convos !== this.props.state.convos) {
+        if (nextProps.state.potentials !== this.props.state.potentials) {
             this.setState({
-                dataSource: this.state.dataSource.cloneWithRows(nextProps.state.convos)
+                dataSource: this.state.dataSource.cloneWithRows(nextProps.state.potentials)
             });
         }
 
@@ -59,39 +57,39 @@ class Connect extends Component {
         }
     }
 
-    editConvo(convoData) {
-        this.props.navigator.showModal({
-            title: 'Edit Convo',
-            screen: 'NewConvo',
-            passProps: {
-                card: convoData
-            }
-        });
+    connect(data) {
+        ConnectController.connect(this.props.appState.currentUser._id, this.props.appState.currentNetwork._id, data)
+            .then(() => {
+                this.loadPotentials();
+            });
     }
 
-    viewInterested(convoData) {
-        this.props.navigator.showLightBox({
-            screen: "ProfileSwiper",
-            passProps: {
-                card: convoData
-            },
-            style: {
-                backgroundBlur: "dark"
-            }
-        });
+    pass(data) {
+        ConnectController.pass(this.props.appState.currentUser._id, this.props.appState.currentNetwork._id, data)
+            .then(() => {
+                this.loadPotentials();
+            });
+
     }
 
-    _renderRow(convoData) {
-        const updatedTime = moment(convoData.createdAt).format('MMM D');
+    _renderRow(data) {
         return (
-            <View>
-                <Text style={styles.timestamp}>{updatedTime}</Text>
-                <MyConvoCard
-                    cardData={convoData} 
-                    router={this.props.router}
-                    viewInterested={() => {this.viewInterested(convoData)}}
-                    editCard={() => {this.editConvo(convoData)}}
-                />
+            <View style={{flexDirection: 'row', backgroundColor: '#fff', borderBottomColor: '#ddd', borderBottomWidth: 1, padding: 6, paddingRight: 2}}>
+                <View style={{flexDirection: 'row', flex: 1, alignItems: 'center', overflow: 'hidden'}}>
+                    <Image style={styles.thumbnail} source={require('../../img/no-avatar.png')} />
+                    <View style={{justifyContent: 'center', padding: 10}}>
+                        <Text style={{color: '#666', fontSize: 15}}>Dan Sipple</Text>
+                        <Text style={{color: '#777', fontSize: 12}}>Cofounder of Convos and a bunch of other stuff</Text>
+                    </View>
+                </View>
+                <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: 110}}>
+                    <TouchableHighlight onPress={() => this.pass(data)} underlayColor="rgba(52, 152, 219, 0.4)" style={[styles.actionButton, styles.passButton]}>
+                        <Image style={{height: 15, width: 15, tintColor: '#3498db'}} source={require('../../img/close.png')} />
+                    </TouchableHighlight>
+                    <TouchableHighlight onPress={() => this.connect(data)} underlayColor="rgba(52, 152, 219, 0.4)" style={[styles.actionButton, styles.connectButton]}>
+                        <Image style={{height: 15, width: 15, tintColor: '#3498db'}} source={require('../../img/check.png')} />
+                    </TouchableHighlight>
+                </View>
             </View>
         );
     }
@@ -101,127 +99,32 @@ class Connect extends Component {
             <View style={{flex: 1}}>
                 <Nav currentNetwork={this.props.appState.currentNetwork} navigator={this.props.navigator} />
                 <View style={{flex: 1, backgroundColor: '#eee'}}>
-                    <ScrollView>
-                        <View style={{flexDirection: 'row', backgroundColor: '#fff', borderBottomColor: '#ddd', borderBottomWidth: 1, padding: 10}}>
-                            <View style={{flexDirection: 'row', flex: 1, overflow: 'hidden'}}>
-                                <Image style={styles.thumbnail} source={require('../../img/no-avatar.png')} />
-                                <View style={{justifyContent: 'center', padding: 10}}>
-                                    <Text style={{color: '#666', fontSize: 16}}>Dan Sipple</Text>
-                                    <Text style={{color: '#777', fontSize: 14}}>Cofounder of Convos and a bunch of other stuff</Text>
-                                </View>
-                            </View>
-                            <View style={{justifyContent: 'center', alignItems: 'center', width: 55}}>
-                                <TouchableHighlight onPress={() => console.log('yes')} underlayColor="rgba(52, 152, 219, 0.4)" style={[styles.actionButton, styles.connectButton]}>
-                                    <Image style={{height: 15, width: 15, tintColor: '#3498db'}} source={require('../../img/check.png')} />
-                                </TouchableHighlight>
-                            </View>
-                        </View>
-                        {/*
-                        <View style={styles.profileContainer}>
-                            <View style={styles.userInformation}>
-                                <View style={styles.thumbnailContainer}>
-                                    <Image style={styles.thumbnail} source={require('../../img/no-avatar.png')} />
-                                </View>
-                                <View style={styles.nameAndTitleContainer}>
-                                    <Text style={styles.name}>Dan Sipple</Text>
-                                    <Text style={styles.title}>Cofounder of Convos</Text>
-                                </View>
-                            </View>
-                            <View style={styles.actionButtons}>
-                                <TouchableHighlight onPress={() => console.log('no')} underlayColor="#eee" style={[styles.actionButton, styles.passButton]}>
-                                    <Image source={require('../../img/close.png')} />
-                                </TouchableHighlight>
-                                <TouchableHighlight onPress={() => console.log('yes')} underlayColor="#eee" style={[styles.actionButton, styles.connectButton]}>
-                                    <Image source={require('../../img/check.png')} />
-                                </TouchableHighlight>
-                            </View>
-                        </View>*/}
-                        {/*
-                        <View style={styles.profileContainer}>
-                            <View style={styles.userInformation}>
-                                <View style={styles.thumbnailContainer}>
-                                    <Image style={styles.thumbnail} source={require('../../img/no-avatar.png')} />
-                                </View>
-                                <View style={styles.nameAndTitleContainer}>
-                                    <Text style={styles.name}>Dan Sipple</Text>
-                                    <Text style={styles.title}>Cofounder of Convos</Text>
-                                </View>
-                            </View>
-                            <View style={styles.actionButtons}>
-                                <TouchableHighlight onPress={this.props.pass} underlayColor="#999" style={[styles.actionButton, styles.passButton]}>
-                                    <Text style={styles.actionButtonText}>Pass</Text>
-                                </TouchableHighlight>
-                                <TouchableHighlight onPress={this.props.connect} underlayColor="#145683" style={[styles.actionButton, styles.connectButton]}>
-                                    <Text style={styles.actionButtonText}>Connect</Text>
-                                </TouchableHighlight>
-                            </View>
-                        </View>
-                        <View style={styles.profileContainer}>
-                            <View style={styles.userInformation}>
-                                <View style={styles.thumbnailContainer}>
-                                    <Image style={styles.thumbnail} source={require('../../img/no-avatar.png')} />
-                                </View>
-                                <View style={styles.nameAndTitleContainer}>
-                                    <Text style={styles.name}>Dan Sipple</Text>
-                                    <Text style={styles.title}>Cofounder of Convos</Text>
-                                </View>
-                            </View>
-                            <View style={styles.actionButtons}>
-                                <TouchableHighlight onPress={this.props.pass} underlayColor="#999" style={[styles.actionButton, styles.passButton]}>
-                                    <Text style={styles.actionButtonText}>Pass</Text>
-                                </TouchableHighlight>
-                                <TouchableHighlight onPress={this.props.connect} underlayColor="#145683" style={[styles.actionButton, styles.connectButton]}>
-                                    <Text style={styles.actionButtonText}>Connect</Text>
-                                </TouchableHighlight>
-                            </View>
-                        </View>
-                        <View style={styles.profileContainer}>
-                            <View style={styles.userInformation}>
-                                <View style={styles.thumbnailContainer}>
-                                    <Image style={styles.thumbnail} source={require('../../img/no-avatar.png')} />
-                                </View>
-                                <View style={styles.nameAndTitleContainer}>
-                                    <Text style={styles.name}>Dan Sipple</Text>
-                                    <Text style={styles.title}>Cofounder of Convos</Text>
-                                </View>
-                            </View>
-                            <View style={styles.actionButtons}>
-                                <TouchableHighlight onPress={this.props.pass} underlayColor="#999" style={[styles.actionButton, styles.passButton]}>
-                                    <Text style={styles.actionButtonText}>Pass</Text>
-                                </TouchableHighlight>
-                                <TouchableHighlight onPress={this.props.connect} underlayColor="#145683" style={[styles.actionButton, styles.connectButton]}>
-                                    <Text style={styles.actionButtonText}>Connect</Text>
-                                </TouchableHighlight>
-                            </View>
-                        </View>
-                        */}
-                    </ScrollView>
-                    {/*{this.props.state.convos.length ?
+                    {this.props.state.potentials.length ?
                         (<ListView
                             dataSource={this.state.dataSource}
                             renderRow={this._renderRow}
-                            style={{ flex: 1, padding: 20 }}
+                            style={{ flex: 1 }}
                             refreshControl={
                               <RefreshControl
                                 refreshing={this.props.state.isLoading}
-                                onRefresh={this.loadConvos}
+                                onRefresh={this.loadPotentials}
                                 style={{ backgroundColor: 'transparent' }}
                               />
                             }
                         />) : (
-                        <View style={{flex: 1, justifyContent: 'center'}}>
-                            <TouchableOpacity onPress={this.loadConvos}>
+                        <View style={{flex: 1, justifyContent: 'center', padding: 50}}>
+                            <TouchableOpacity onPress={this.loadPotentials}>
                                 <View style={{alignItems: 'center'}}>
                                     <View style={{borderRadius: 4, borderColor: '#ddd', borderWidth: 4, backgroundColor: '#fff', height: 200, width: 200}}>
                                         <View style={{flex: 0.8, borderTopLeftRadius: 4, borderTopRightRadius: 4, backgroundColor: '#f9f9f9'}} />
                                         <View style={{backgroundColor: '#eee', height: 20, margin: 10, marginBottom: 0}}/>
                                         <View style={{backgroundColor: '#eee', height: 20, margin: 10}}/>
                                     </View>
-                                    <Text style={{color: '#666', fontSize: 16, textAlign: 'center', marginTop: 15}}>You haven't created any convos</Text>
+                                    <Text style={{color: '#666', fontSize: 16, textAlign: 'center', marginTop: 15}}>When people swipe right on your convos they will show up here</Text>
                                 </View>
                             </TouchableOpacity>
                         </View>
-                    )}*/}
+                    )}
 
                 </View>
             </View>
@@ -244,12 +147,13 @@ const styles = StyleSheet.create({
     thumbnailContainer: {
         flex: 1,
         flexDirection: 'row',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     thumbnail: {
-        borderRadius: 30,
-        height: 60,
-        width: 60,
+        borderRadius: 20,
+        height: 40,
+        width: 40,
         resizeMode: 'contain'
     },
     nameAndTitleContainer: {
@@ -322,12 +226,15 @@ const styles = StyleSheet.create({
     actionButtonText: {
         color: '#fff',
         textAlign: 'center'
+    },
+    passButton: {
+        marginRight: 5
     }
 });
 
 function mapStateToProps(state) {
     return {
-        state: state.myConvos,
+        state: state.connect,
         appState: state.app
     };
 }

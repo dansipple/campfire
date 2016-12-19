@@ -1,3 +1,3 @@
-export const FETCH_CONVOS = 'myConvos.FETCH_CONVOS';
-export const RECEIVE_CONVOS = 'myConvos.RECEIVE_CONVOS';
-export const LOADING_ERROR = 'myConvos.LOADING_ERROR';
+export const FETCH_POTENTIALS = 'connect.FETCH_POTENTIALS';
+export const RECEIVE_POTENTIALS = 'connect.RECEIVE_POTENTIALS';
+export const LOADING_ERROR = 'connect.LOADING_ERROR';

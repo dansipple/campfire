@@ -1,18 +1,17 @@
 import * as types from './actionTypes';
 
-import MyConvosController from '../../lib/controllers/myConvos';
-import CardController from '../../lib/controllers/card';
+import ConnectController from '../../lib/controllers/connect';
 
-export function loadConvos() {
+export function loadPotentials() {
     return (dispatch, getState) => {
         const {app} = getState();
 
-        dispatch(fetchConvos());
+        dispatch(fetchPotentials());
 
-        MyConvosController.getCards(app.currentUser._id, app.currentNetwork._id).then(
-            (cards) => {
-                cards.reverse();
-                dispatch(receivedConvos(cards));
+        ConnectController.getPotentials(app.currentUser._id, app.currentNetwork._id).then(
+            (potentials) => {
+                potentials.reverse();
+                dispatch(receivedPotentials(potentials));
             }
         ).catch(
             (err) => {dispatch(loadingError(err))}
@@ -20,50 +19,14 @@ export function loadConvos() {
     };
 }
 
-function fetchConvos() {
-    return {type: types.FETCH_CONVOS};
+function fetchPotentials() {
+    return {type: types.FETCH_POTENTIALS};
 }
 
-function receivedConvos(convos) {
-    return {type: types.RECEIVE_CONVOS, convos: convos};
+function receivedPotentials(potentials) {
+    return {type: types.RECEIVE_POTENTIALS, potentials: potentials};
 }
 
 function loadingError(err) {
     return {type: types.LOADING_ERROR, error: err};
-}
-
-export function createConvo(content, category) {
-    return (dispatch, getState) => {
-        const {app} = getState();
-
-        CardController.create(app.currentUser._id, app.currentNetwork._id, content, category)
-            .then(() => {
-                dispatch(loadConvos());
-            }).catch((err) => {dispatch(loadingError(err))}
-        );
-    }
-}
-
-export function updateConvo(cardId, content, category) {
-    return (dispatch, getState) => {
-        const {app} = getState();
-
-        CardController.update(app.currentUser._id, app.currentNetwork._id, cardId, content, category)
-            .then(() => {
-                dispatch(loadConvos());
-            }).catch((err) => {dispatch(loadingError(err))}
-        );
-    }
-}
-
-export function deleteConvo(cardId) {
-    return (dispatch, getState) => {
-        const {app} = getState();
-
-        CardController.remove(app.currentUser._id, app.currentNetwork._id, cardId)
-            .then(() => {
-                dispatch(loadConvos());
-            }).catch((err) => {dispatch(loadingError(err))}
-        );
-    }
 }
