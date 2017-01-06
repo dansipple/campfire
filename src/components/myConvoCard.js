@@ -20,16 +20,8 @@ export default class MyConvoCard extends Component {
                         <Text style={ styles.description }>{ cardData.content }</Text>
                     </View>
                     <View style={styles.actionButtons}>
-                        <TouchableHighlight
-                            onPress={cardData.hasInterested ? this.props.viewInterested : null}
-                            underlayColor="#145683"
-                            style={[styles.actionButton, styles.interestedButton, {borderBottomLeftRadius: 4, backgroundColor: '#3498db'},
-                            !cardData.hasInterested && styles.inactiveButton ]}
-                        >
-                            <Text style={[styles.actionButtonText, cardData.hasInterested && {color: '#fff'}]}>View Interested</Text>
-                        </TouchableHighlight>
-                        <TouchableHighlight onPress={this.props.editCard} underlayColor="#f1f1f1" style={[styles.actionButton, {borderBottomRightRadius: 4}]}>
-                            <Text style={styles.actionButtonText}>Edit</Text>
+                        <TouchableHighlight onPress={this.props.deleteConvo} underlayColor="#f1f1f1" style={[styles.actionButton, {borderBottomLeftRadius: 4, borderBottomRightRadius: 4}]}>
+                            <Text style={styles.actionButtonText}>Delete</Text>
                         </TouchableHighlight>
                     </View>
                 </View>

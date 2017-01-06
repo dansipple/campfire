@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {Alert, Picker, Image, TouchableOpacity, TouchableHighlight, Text, TextInput, View, StyleSheet, Dimensions, Keyboard } from 'react-native';
+import {Alert, Picker, Image, TouchableOpacity, TouchableHighlight, Text, TextInput, ListView, RefreshControl, View, StyleSheet, Dimensions, Keyboard } from 'react-native';
+import moment from 'moment';
 
+import MyConvoCard from './../components/MyConvoCard';
 import * as myConvosActions from '../reducers/myConvos/actions';
-
-import Nav from './../components/Nav';
 
 import {connect} from 'react-redux';
 
@@ -27,17 +27,25 @@ class NewConvo extends Component {
 
     constructor(props) {
         super(props);
+        var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
         this.state = {
+            tab: 0,
             content: '',
             category: 'general',
             showCategoryPicker: false,
             isFocused: false,
-            windowHeight: Dimensions.get('window').height
+            windowHeight: Dimensions.get('window').height,
+            dataSource: ds
         };
+        this._renderRow = this._renderRow.bind(this);
         this.saveConvo = this.saveConvo.bind(this);
         this.deleteConvo = this.deleteConvo.bind(this);
+
         this.unfocusTextbox = this.unfocusTextbox.bind(this);
+
+        this.loadConvos = this.loadConvos.bind(this);
+        this.changeTab = this.changeTab.bind(this);
 
         this.toggleCategoryPicker = this.toggleCategoryPicker.bind(this);
     }
@@ -55,6 +63,8 @@ class NewConvo extends Component {
         } else {
             Analytics.logEvent('create_convo');
         }
+
+        this.loadConvos();
     }
 
     componentWillUnmount () {
@@ -76,32 +86,31 @@ class NewConvo extends Component {
     }
 
     async saveConvo() {
-        if(!this.props.card) {
-            this.props.dispatch(myConvosActions.createConvo(this.state.content, this.state.category));
-            Analytics.logEvent('CONVO_CREATE', {'category': this.state.category});
-        } else {
-            this.props.dispatch(myConvosActions.updateConvo(this.props.card._id, this.state.content, this.state.category));
-            Analytics.logEvent('CONVO_EDIT', {'category': this.state.category});
-        }
-        this.props.navigator.dismissModal();
+        this.props.dispatch(myConvosActions.createConvo(this.state.content, this.state.category));
+        Analytics.logEvent('CONVO_CREATE', {'category': this.state.category});
+
+        this.loadConvos();
+        this.changeTab(1);
+        this.setState({
+            content: '',
+            category: 'general'
+        })
     }
 
-    async deleteConvo() {
-        if(this.props.card) {
+    deleteConvo(convoData) {
+        if(convoData) {
             Alert.alert(
                 'Are you sure?',
                 'If you delete this convo you won\'t be able to go back!',
                 [
                     {text: 'Cancel', style: 'cancel'},
                     {text: 'Delete', onPress: () => {
-                        this.props.dispatch(myConvosActions.deleteConvo(this.props.card._id));
-                        this.props.navigator.dismissModal();
+                        this.props.dispatch(myConvosActions.deleteConvo(convoData._id));
+                        this.loadConvos();
                     }}
                 ]
             );
 
-        } else {
-            this.props.navigator.dismissModal();
         }
     }
 
@@ -118,11 +127,50 @@ class NewConvo extends Component {
         });
         this.refs.input.blur();
     }
+
+    loadConvos() {
+        this.props.dispatch(myConvosActions.loadConvos());
+    }
+
+    _renderRow(convoData) {
+        const updatedTime = moment(convoData.createdAt).format('MMM D');
+        return (
+            <View>
+                <Text style={styles.timestamp}>{updatedTime}</Text>
+                <MyConvoCard
+                    cardData={convoData}
+                    deleteConvo={() => this.deleteConvo(convoData)}
+                />
+            </View>
+        );
+    }
+    
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.state.convos !== this.props.state.convos) {
+            this.setState({
+                dataSource: this.state.dataSource.cloneWithRows(nextProps.state.convos)
+            });
+        }
+    }
+    changeTab(tabIdx) {
+        this.setState({
+            tab: tabIdx
+        })
+    }
     render() {
         return (
             <View style={{flex: 1}}>
-                <Nav currentNetwork={this.props.appState.currentNetwork} navigator={this.props.navigator} />
-                <View style={[{height: this.state.windowHeight - 65}, this.state.showCategoryPicker && {backgroundColor: '#f9f9f9'}]}>
+                <View style={[{flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: '#ddd', padding: 13, paddingTop: 32}, this.state.showCategoryPicker && styles.hidden]}>
+                    <TouchableOpacity onPress={() => {this.changeTab(0)}} style={{flex: 0.5, alignItems: 'center'}}>
+                        <Text style={[{ fontSize: 16, color: '#666'}, this.state.tab === 0 && {color: '#3498db'}]}>New Convo</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => {this.changeTab(1)}} style={{flex: 0.5, alignItems: 'center'}}>
+                        <Text style={[{fontSize: 16, color: '#666'}, this.state.tab === 1 && {color: '#3498db'}]}>Your Convos</Text>
+                    </TouchableOpacity>
+                </View>
+
+                {this.state.tab === 0 ? (
+                <View style={[{height: this.state.windowHeight - 65}, this.state.showCategoryPicker && {height: this.state.windowHeight, backgroundColor: '#f9f9f9'}]}>
                     <View style={[styles.header, this.state.showCategoryPicker && styles.hidden]}>
                         <TouchableOpacity
                             onPress={this.toggleCategoryPicker}
@@ -204,6 +252,36 @@ class NewConvo extends Component {
                         </TouchableHighlight>
                     </View>
                 </View>
+                ) : (
+                <View style={{flex: 1, backgroundColor: '#eee'}}>
+                    {this.props.state.convos.length ?
+                        (<ListView
+                            dataSource={this.state.dataSource}
+                            renderRow={this._renderRow}
+                            style={{ flex: 1, padding: 20 }}
+                            refreshControl={
+                          <RefreshControl
+                            refreshing={this.props.state.isLoading}
+                            onRefresh={this.loadConvos}
+                            style={{ backgroundColor: 'transparent' }}
+                          />
+                        }
+                        />) : (
+                        <View style={{flex: 1, justifyContent: 'center'}}>
+                            <TouchableOpacity onPress={this.loadConvos}>
+                                <View style={{alignItems: 'center'}}>
+                                    <View style={{borderRadius: 4, borderColor: '#ddd', borderWidth: 4, backgroundColor: '#fff', height: 200, width: 200}}>
+                                        <View style={{flex: 0.8, borderTopLeftRadius: 4, borderTopRightRadius: 4, backgroundColor: '#f9f9f9'}} />
+                                        <View style={{backgroundColor: '#eee', height: 20, margin: 10, marginBottom: 0}}/>
+                                        <View style={{backgroundColor: '#eee', height: 20, margin: 10}}/>
+                                    </View>
+                                    <Text style={{color: '#666', fontSize: 16, textAlign: 'center', marginTop: 15}}>You haven't created any convos</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                    )}
+                </View>
+                )}
             </View>
         );
     }
@@ -262,6 +340,7 @@ const styles = StyleSheet.create({
         height: 0,
         width: 0,
         padding: 0,
+        paddingTop: 0,
         opacity: 0
     },
     doneButton: {
@@ -275,6 +354,12 @@ const styles = StyleSheet.create({
     doneButtonText: {
         color: '#fff',
         textAlign: 'center'
+    },
+    timestamp: {
+        fontSize: 13,
+        textAlign: 'center',
+        paddingBottom: 10,
+        color: '#888'
     }
 });
 
@@ -319,6 +404,7 @@ const categories = [
 
 function mapStateToProps(state) {
     return {
+        state: state.myConvos,
         appState: state.app
     };
 }

@@ -1,8 +1,9 @@
 
 import Message from '../models/message';
-import Badge from '../models/badge';
 import Conversation from '../models/conversation';
 import UserConversation from '../models/userConversation';
+
+import FCMController from  '../../lib/controllers/fcm';
 
 import Helpers from './../utils/helpers';
 
@@ -23,43 +24,32 @@ const MessagesController = {
         UserConversation.update(`${networkId}/${userId}/${otherUserId}`, {
             isUnread: false
         }, false);
-            Badge.getOne(`${userId}/${networkId}`)
-                .then((badgeObj) => {
-                    const currentCount = badgeObj && badgeObj.messages ? badgeObj.messages : 1;
-                    Badge.update(`${userId}/${networkId}`, {
-                        messages: currentCount - 1
-                    });
-                });
     },
 
-    sendMessage(networkId, conversationId, senderUserId, text) {
+    sendMessage(networkId, conversationId, senderUser, text) {
         return new Promise((resolve, reject) => {
             Message.create(`${networkId}/${conversationId}`, {
-                user: {_id: senderUserId},
+                user: {_id: senderUser._id},
                 text: text
             })
             .then(() => {
                 Conversation.getOne(`${networkId}/${conversationId}`)
                 .then((conversation) => {
                     if(conversation) {
-                        delete conversation.participants[senderUserId];
+                        delete conversation.participants[senderUser._id];
                         const otherUserId = Object.keys(conversation.participants)[0];
 
-                        UserConversation.update(`${networkId}/${senderUserId}/${otherUserId}`, {
+                        UserConversation.update(`${networkId}/${senderUser._id}/${otherUserId}`, {
                             lastMessage: text
                         })
                         .then(() => {
-                            UserConversation.update(`${networkId}/${otherUserId}/${senderUserId}`, {
+                            UserConversation.update(`${networkId}/${otherUserId}/${senderUser._id}`, {
                                 lastMessage: text,
                                 isUnread: true
                             });
-                            Badge.getOne(`${otherUserId}/${networkId}`)
-                                .then((badgeObj) => {
-                                    const currentCount = badgeObj && badgeObj.messages ? badgeObj.messages : 0;
-                                    Badge.update(`${otherUserId}/${networkId}`, {
-                                        messages: currentCount + 1
-                                    });
-                                });
+                            
+                            FCMController.sendMessageNotification(text, senderUser, networkId);
+
                         }).catch(reject);
                     }
                 }).catch(reject);

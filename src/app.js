@@ -46,91 +46,91 @@ export default class App {
                 });
                 return;
             case 'after-login':
-                Navigation.startTabBasedApp({
-                    tabs: [
-                        {
-                            screen: 'ConvoSwiper',
-                            title: 'Convos',
-                            label: 'Swipe',
-                            titleImage: require('../img/logo-small.png'),
-                            icon: require('../img/three_selected.png'),
-                            navigatorStyle: {
-                                navBarBackgroundColor: '#eee',
-                                navBarTextColor: '#666',
-                                navBarButtonColor: '#666',
-                                navBarNoBorder: true,
-                                navBarHidden: true
-                            }
+                if(typeof this.currentNetwork.name == 'undefined') {
+                    Navigation.startSingleScreenApp({
+                        screen: {
+                            title: 'Networks',
+                            screen: 'ChooseNetwork'
                         },
-                        {
-                            screen: 'Connect',
-                            title: 'Connect',
-                            label: 'Connect',
-                            icon: require('../img/bolt.png'),
-                            navigatorStyle: {
-                                navBarBackgroundColor: '#fff',
-                                navBarTextColor: '#666',
-                                navBarButtonColor: '#666',
-                                navBarHidden: true
-                            }
-                        },
-                        {
-                            screen: 'NewConvo',
-                            title: 'New',
-                            label: '',
-                            icon: require('../img/add_square.png'),
-                            navigatorStyle: {
-                                navBarBackgroundColor: '#fff',
-                                navBarTextColor: '#666',
-                                navBarButtonColor: '#666'
-                            }
-                        },
-                        {
-                            screen: 'Inbox',
-                            title: 'Messages',
-                            label: 'Chat',
-                            icon: require('../img/chat.png'),
-                            navigatorStyle: {
-                                navBarBackgroundColor: '#fff',
-                                navBarTextColor: '#666',
-                                navBarButtonColor: '#666',
-                                navBarHidden: true
-                            }
-                        },
-                        {
-                            screen: 'Settings',
-                            title: 'Settings',
-                            label: 'Settings',
-                            icon: require('../img/settings.png'),
-                            navigatorStyle: {
-                                navBarBackgroundColor: '#fff',
-                                navBarTextColor: '#666',
-                                navBarButtonColor: '#666'
-                            }
+                        passProps: {
+                            isRoot: true
                         }
-                    ],
-                    tabsStyle: { // optional, add this if you want to style the tab bar beyond the defaults
-                        //tabBarButtonColor: null,
-                        tabBarSelectedButtonColor: '#3498db',
-                        tabBarBackgroundColor: '#fff'
+                    });
+                    return;
+                }
+                else {
+                    Navigation.startTabBasedApp({
+                        tabs: [
+                            {
+                                screen: 'ConvoSwiper',
+                                title: 'Convos',
+                                label: 'Swipe',
+                                titleImage: require('../img/logo-small.png'),
+                                icon: require('../img/three_selected.png'),
+                                navigatorStyle: {
+                                    navBarBackgroundColor: '#eee',
+                                    navBarTextColor: '#666',
+                                    navBarButtonColor: '#666',
+                                    navBarNoBorder: true,
+                                    navBarHidden: true
+                                }
+                            },
+                            {
+                                screen: 'Connect',
+                                title: 'Connect',
+                                label: 'Connect',
+                                icon: require('../img/bolt.png'),
+                                navigatorStyle: {
+                                    navBarBackgroundColor: '#fff',
+                                    navBarTextColor: '#666',
+                                    navBarButtonColor: '#666',
+                                    navBarHidden: true
+                                }
+                            },
+                            {
+                                screen: 'NewConvo',
+                                title: 'New',
+                                label: '',
+                                icon: require('../img/add_square.png'),
+                                navigatorStyle: {
+                                    navBarBackgroundColor: '#fff',
+                                    navBarTextColor: '#666',
+                                    navBarButtonColor: '#666'
+                                }
+                            },
+                            {
+                                screen: 'Inbox',
+                                title: 'Messages',
+                                label: 'Chat',
+                                icon: require('../img/chat.png'),
+                                navigatorStyle: {
+                                    navBarBackgroundColor: '#fff',
+                                    navBarTextColor: '#666',
+                                    navBarButtonColor: '#666',
+                                    navBarHidden: true
+                                }
+                            },
+                            {
+                                screen: 'Settings',
+                                title: 'Settings',
+                                label: 'Settings',
+                                icon: require('../img/settings.png'),
+                                navigatorStyle: {
+                                    navBarBackgroundColor: '#fff',
+                                    navBarTextColor: '#666',
+                                    navBarButtonColor: '#666'
+                                }
+                            }
+                        ],
+                        tabsStyle: { // optional, add this if you want to style the tab bar beyond the defaults
+                            //tabBarButtonColor: null,
+                            tabBarSelectedButtonColor: '#3498db',
+                            tabBarBackgroundColor: '#fff'
 
-                    }
-                });
-                /*
-                Navigation.startTabBasedApp({
-                    screen: {
-                        screen: 'Root',
-                        title: 'Convos',
-                        navigatorStyle: {
-                            navBarBackgroundColor: '#fff',
-                            navBarTextColor: '#666',
-                            navBarHidden: true
                         }
-
-                    }
-                });
-                */
-                return;
+                    });
+                    return;
+                }
             default:
                 console.error('Unknown app root');
         }

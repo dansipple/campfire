@@ -49,7 +49,7 @@ export function swipe(card, nextCardKey, decision) {
     return (dispatch, getState) => {
         const {app} = getState();
 
-        SwiperController.swipe(app.currentUser._id, app.currentNetwork._id, card, nextCardKey, decision)
+        SwiperController.swipe(app.currentUser, app.currentNetwork._id, card, nextCardKey, decision)
         .catch(
             (err) => {dispatch(loadingError(err))}
         );

@@ -101,6 +101,14 @@ class ChooseNetwork extends Component {
         Analytics.logEvent('VIEW_MODAL', {
             'id': 'select_network'
         });
+
+        // hackish way to remove x button. Look for better way to do this. The recommended method wasn't working
+        if(this.props.isRoot) {
+            this.props.navigator.setButtons({
+                rightButtons: [{}]
+            })
+        }
+
     }
 
     componentWillReceiveProps(nextProps) {

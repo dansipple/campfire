@@ -7,6 +7,7 @@ import Swipe from '../models/swipe';
 import Potential from '../models/potential';
 import User from '../models/user';
 
+import FCMController from  '../../lib/controllers/fcm';
 import Helpers from './../utils/helpers';
 
 const SwiperController = {
@@ -39,28 +40,28 @@ const SwiperController = {
         return UserCardDeckPointer.getOne(`${networkId}/${userId}`);
     },
 
-    swipe(userId, networkId, card, nextCardKey, decision) {
+    swipe(user, networkId, card, nextCardKey, decision) {
         return new Promise((resolve, reject) => {
-            Swipe.set(`${networkId}/${card._id}/${userId}`, {
+            Swipe.set(`${networkId}/${card._id}/${user._id}`, {
                 interested: decision
             }).then(() => {
                 if(decision) {
-                    User.getOne(userId).then((creatorUserObj) => {
-                        Potential.update(`${networkId}/${card.creator._id}/${userId}`, {
-                            user: {
-                                first: creatorUserObj.first,
-                                last: creatorUserObj.last,
-                                title: creatorUserObj.title,
-                                avatar: creatorUserObj.avatar || null
-                            },
-                            cards: {
-                                [card._id]: card
-                            }
-                        });
+                    Potential.update(`${networkId}/${card.creator._id}/${user._id}`, {
+                        user: {
+                            first: user.first,
+                            last: user.last,
+                            title: user.title,
+                            avatar: user.avatar || null
+                        },
+                        cards: {
+                            [card._id]: card
+                        }
+                    }).then(() => {
+                        FCMController.sendPotentialNotification(user, card.creator._id, networkId);
                     });
                 }
                 const checkedNextCardKey = nextCardKey ? nextCardKey : (card._id.slice(0,-1) + 'z');
-                this.updateUserCardDeckPointer(userId, networkId, checkedNextCardKey).catch(reject);
+                this.updateUserCardDeckPointer(user._id, networkId, checkedNextCardKey).catch(reject);
                 resolve();
             }).catch(reject);
         });

@@ -13,7 +13,14 @@ export default class Nav extends Component {
     switchNetwork() {
         this.props.navigator.showModal({
             title: 'Networks',
-            screen: 'ChooseNetwork'
+            screen: 'ChooseNetwork',
+            navigatorButton: {
+                rightButtons: [{
+                    title: 'Cancel',
+                    id: 'close',
+                    icon: require('../../img/close.png')
+                }]
+            }
         });
     }
 

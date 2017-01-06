@@ -3,6 +3,8 @@ import FCM from '../models/fcm';
 
 import firebase from '../firebase';
 
+import FCMClient from  '../../lib/fcm/client';
+
 const FCMController = {
 
     getUserToken(userId) {
@@ -16,6 +18,26 @@ const FCMController = {
             FCM.set(userId, {
                 token: token
             }).then(resolve).catch(reject);
+        });
+    },
+
+    sendMessageNotification(messageText, senderUser, recipientUserId, networkId) {
+        return new Promise((resolve, reject) => {
+            this.getUserToken(recipientUserId).then((token) => {
+                FCMClient.sendMessageNotification(token,
+                    messageText, senderUser.first + ' ' + senderUser.last, networkId);
+                resolve();
+            });
+        });
+    },
+
+    sendPotentialNotification(senderUser, recipientUserId, networkId) {
+        return new Promise((resolve, reject) => {
+            this.getUserToken(recipientUserId).then((token) => {
+                FCMClient.sendPotentialNotification(token,
+                    senderUser.first + ' ' + senderUser.last, networkId);
+                resolve();
+            });
         });
     }
 };

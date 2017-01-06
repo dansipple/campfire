@@ -30,7 +30,7 @@ function receivedMessage(conversationId, message) {
 export function sendMessage(conversationId, text) {
     return async (dispatch, getState) => {
         const {app} = getState();
-        MessagesController.sendMessage(app.currentNetwork._id, conversationId, app.currentUser._id, text)
+        MessagesController.sendMessage(app.currentNetwork._id, conversationId, app.currentUser, text)
         .catch((err) => {
             return dispatch(loadingError(err));
         });

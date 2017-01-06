@@ -4,7 +4,7 @@ import Immutable from 'seamless-immutable';
 const initialState = Immutable({
     root: undefined, // 'login' / 'after-login',
     currentUser: {},
-    currentNetwork: {_id: '-KPzFYEKdj3yRQn3teTP', name: 'Convos Beta'},
+    currentNetwork: {},
     badges: {},
     showOnboarding: true
 });
