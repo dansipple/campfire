@@ -9,11 +9,6 @@ export default class Onboarding extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            stage: 0,
-            show: true
-        };
-        this.nextStage = this.nextStage.bind(this);
         this.endOnboarding = this.endOnboarding.bind(this);
 
     }
@@ -22,170 +17,90 @@ export default class Onboarding extends Component {
         navBarHidden: true
     };
 
-    nextStage() {
-        this.setState({
-            stage: this.state.stage + 1
-        })
-    }
 
     endOnboarding() {
-        this.setState({
-            show: false
-        });
-        this.props.onComplete();
+        this.props.navigator.dismissModal();
     }
     onSkipBtnHandle = (index) => {
-        Alert.alert('Skip');
-        console.log(index);
+        this.endOnboarding();
     };
     doneBtnHandle = () => {
-        Alert.alert('Done');
-    };
-    nextBtnHandle = (index) => {
-        Alert.alert('Next');
-        console.log(index);
-    };
-    onSlideChangeHandle = (index, total) => {
-        console.log(index, total);
+        this.endOnboarding();
     };
 
     render() {
-        if(this.state.show) {
-/*
-            if(this.state.stage === 0) {
-                return(
-                    <View style={{position: 'absolute', top:0, right:0, bottom:0, left:0, padding: 10, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(238,238,238,0.9)'}}>
-                        <View
-                            style={{backgroundColor: '#fff', padding: 20, paddingTop: 30, paddingBottom: 20, borderRadius: 8, borderWidth:1, borderColor: '#ddd'}}>
-                            <Text style={{textAlign: 'center', color: '#3498db', fontSize: 22, marginBottom: 10}}>Welcome
-                                to Convos!</Text>
-                            <Text style={styles.paragraphText}>Finding good conversations around you is easy with
-                                Convos, all you need to do is:</Text>
-                            <Text style={styles.paragraphText}>1. Post convos that geniunly interest you</Text>
-                            <Text style={styles.paragraphText}>2. Explore the convos of people around you</Text>
-                            <Text style={styles.paragraphText}>3. Meet up and converse</Text>
-                            <TouchableOpacity onPress={this.nextStage}>
-                                <Text style={{marginTop: 20, textAlign: 'center', color: '#666', fontSize: 22}}>Got
-                                    it!</Text>
-                            </TouchableOpacity>
-                        </View>
+        return (
+            <AppIntro
+                onNextBtnClick={this.nextBtnHandle}
+                onDoneBtnClick={this.doneBtnHandle}
+                onSkipBtnClick={this.onSkipBtnHandle}
+                onSlideChange={this.onSlideChangeHandle}
+                dotColor={'#666'}
+                activeDotColor={'#3498db'}
+                leftTextColor={'#666'}
+                rightTextColor={'#666'}
+            >
+                <View style={[styles.slide,{ backgroundColor: '#fff' }]}>
+                    <View level={10}><Text style={styles.headline}>Welcome to Convos</Text></View>
+                    <View level={15}><Text style={styles.paragraphText}>Convos is a platform for finding good
+                        conversations.</Text></View>
+                    <View level={15}><Text style={[styles.paragraphText, {marginTop: 25}]}>Let's find out how it
+                        works!</Text></View>
+                </View>
+                <View style={[styles.slide, { backgroundColor: '#fff' }]}>
+                    <Image source={require('../../img/onboarding/new-convo.png')}/>
+                    <View level={10}><Text style={styles.headline}>Create a Convo</Text></View>
+                    <View level={15}><Text style={styles.paragraphText}>What do you want to talk about? Write it
+                        down.</Text></View>
+                    <View level={15}><Text style={styles.paragraphText}>We call these Convos</Text></View>
+                </View>
+                <View style={[styles.slide, { backgroundColor: '#fff', padding: 0 }]}>
+                    <View style={{flexDirection: 'row'}}>
+                        <Image style={{flex: 1}} source={require('../../img/onboarding/swipe.png')}/>
                     </View>
-                )
-            } else if(this.state.stage === 1 ) {
-                return (
-                    <View style={{position: 'absolute', top:0, right:0, bottom:0, left:0, padding: 10, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(238,238,238,0.9)'}}>
-                        <View
-                            style={{backgroundColor: '#fff', padding: 20, paddingTop: 30, paddingBottom: 20, borderRadius: 8, borderWidth:1, borderColor: '#ddd'}}>
-                            <Text style={{textAlign: 'center', color: '#3498db', fontSize: 22, marginBottom: 10}}>Creating
-                                Convos</Text>
-                            <Text style={styles.paragraphText}>You can create your own convo by clicking on the pencil
-                                icon in the top right corner of the screen.</Text>
-                            <Text style={styles.paragraphText}>You should either:</Text>
-                            <Text style={styles.paragraphText}>1. Share what you're interested in discussing.</Text>
-                            <Text style={styles.paragraphText}>2. Share what you can be most helpful with.</Text>
-                            <TouchableOpacity onPress={this.nextStage}>
-                                <Text style={{marginTop: 20, textAlign: 'center', color: '#666', fontSize: 22}}>Got
-                                    it!</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                )
-            }
-            else if(this.state.stage === 2) {
-                return (
-                    <View style={{position: 'absolute', top:0, right:0, bottom:0, left:0, padding: 10, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(238,238,238,0.1)'}}>
-                        <View
-                            style={{backgroundColor: '#fff', padding: 20, paddingTop: 30, paddingBottom: 20, borderRadius: 8, borderWidth:1, borderColor: '#ddd'}}>
-                            <Text style={{textAlign: 'center', color: '#3498db', fontSize: 22, marginBottom: 10}}>Swiping
-                                through convos</Text>
-                            <Text style={styles.paragraphText}>This is a stack of what others are interested in
-                                discussing.</Text>
-                            <Text style={styles.paragraphText}>Swiping LEFT means you DON'T want to have the
-                                convo</Text>
-                            <Text style={styles.paragraphText}>Swiping RIGHT means you DO want to have the convo</Text>
-                            <TouchableOpacity onPress={this.endOnboarding}>
-                                <Text style={{marginTop: 20, textAlign: 'center', color: '#666', fontSize: 22}}>Got
-                                    it!</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                )
-            }
-
-
-             */
-            const pageArray = [{
-                title: 'Welcome',
-                description: 'Convos is a platform to find good conversations.',
-                img: 'https://goo.gl/Bnc3XP',
-                imgStyle: {
-                    height: 80 * 2.5,
-                    width: 109 * 2.5,
-                },
-                backgroundColor: '#fa931d',
-                fontColor: '#fff',
-                level: 10,
-            }, {
-                title: 'Page 2',
-                description: 'Description 2',
-                backgroundColor: '#a4b602',
-                fontColor: '#fff',
-                level: 10
-            }];
-            return (
-                <AppIntro
-                    onNextBtnClick={this.nextBtnHandle}
-                    onDoneBtnClick={this.doneBtnHandle}
-                    onSkipBtnClick={this.onSkipBtnHandle}
-                    onSlideChange={this.onSlideChangeHandle}
-                >
-                    <View style={[styles.slide,{ backgroundColor: '#fa931d' }]}>
-                        <View level={10}><Text style={styles.text}>Welcome</Text></View>
-                        <View level={15}><Text style={styles.paragraphText}>Convos is a platform to find good conversations.</Text></View>
-                    </View>
-                    <View style={[styles.slide, { backgroundColor: '#a4b602' }]}>
-                        <View level={10}><Text style={styles.text}>It starts here</Text></View>
-                        <View level={15}><Text style={styles.paragraphText}>What do you really, really, want to talk about today?</Text></View>
-                        <View level={20}><Text style={styles.paragraphText}>Write it down.</Text></View>
-                        <View level={15}><Text style={styles.paragraphText}>We call these Convos</Text></View>
-                    </View>
-                    <View style={[styles.slide,{ backgroundColor: '#fa931d' }]}>
-                        <View level={8}><Text style={styles.text}>Page 3</Text></View>
-                        <View level={0}><Text style={styles.text}>Page 3</Text></View>
-                        <View level={-10}><Text style={styles.text}>Page 3</Text></View>
-                    </View>
-                    <View style={[styles.slide, { backgroundColor: '#a4b602' }]}>
-                        <View level={5}><Text style={styles.text}>Page 4</Text></View>
-                        <View level={10}><Text style={styles.text}>Page 4</Text></View>
-                        <View level={15}><Text style={styles.text}>Page 4</Text></View>
-                    </View>
-                </AppIntro>
-            );
-        } else {
-            return null;
-        }
+                    <View level={15}><Text style={styles.paragraphText}>Swipe through other Convos to see what interests
+                        you</Text></View>
+                </View>
+                <View style={[styles.slide, { backgroundColor: '#fff'}]}>
+                    <Image source={require('../../img/onboarding/connect.png')}/>
+                    <View level={10}><Text style={styles.headline}>Connect</Text></View>
+                    <View level={15}><Text style={styles.paragraphText}>When other folks swipe right on your Convos
+                        they'll show up under your connect tab</Text></View>
+                </View>
+                <View style={[styles.slide, { backgroundColor: '#fff'}]}>
+                    <Image source={require('../../img/onboarding/topics.png')}/>
+                    <View level={10}><Text style={styles.headline}>Chat and Meetup</Text></View>
+                    <View level={15}><Text style={styles.paragraphText}>In person conversations are the best way to
+                        talk, learn, and grow!</Text></View>
+                </View>
+            </AppIntro>
+        );
     }
 }
 
 const styles = StyleSheet.create({
     paragraphText: {
-        color: '#fff',
+        color: '#666',
         fontSize: 25,
         lineHeight: 35,
         marginBottom: 5,
         textAlign: 'center'
+    },
+    headline: {
+        color: '#3498db',
+        fontSize: 32
     },
     slide: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#9DD6EB',
-        padding: 15,
+        padding: 15
     },
     text: {
         color: '#fff',
         fontSize: 30,
-        fontWeight: 'bold',
-    },
+        fontWeight: 'bold'
+    }
 });
 

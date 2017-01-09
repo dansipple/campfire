@@ -25,8 +25,33 @@ export function appInitialized() {
   };
 }
 
-export function selectNetwork(network) {
+
+export function changeNetwork(network) {
     return {type: types.NETWORK_CHANGED, network: network};
+}
+
+export function getNetwork() {
+    return async function(dispatch, getState) {
+        try {
+            const value = await AsyncStorage.getItem('@AppStore:current_network');
+            if (value !== null){
+                dispatch(changeNetwork(JSON.parse(value)));
+            }
+        } catch (error) {
+            // Error retrieving data
+        }
+    }
+}
+
+export function selectNetwork(network) {
+    return async function(dispatch, getState) {
+        try {
+            const value = await AsyncStorage.setItem('@AppStore:current_network', JSON.stringify(network));
+            dispatch(changeNetwork(network));
+        } catch (error) {
+            // Error saving data
+        }
+    }
 }
 
 export function changeAppRoot(root) {
@@ -41,9 +66,6 @@ export function showOnboarding(toggle) {
     return {type: types.SHOW_ONBOARDING, payload: toggle};
 }
 
-function updateBadges(badges) {
-    return {type: types.BADGES_CHANGED, badges: badges}
-}
 export function login(userData) {
   return async function(dispatch, getState) {
 
@@ -53,29 +75,11 @@ export function login(userData) {
                  Analytics.setUserId(user._id);
                  //Analytics.logEvent('LOGIN');
                  //AsyncStorage.setItem('@User', JSON.stringify(user));
-
-                 // subscribe to badge updates
-                 var badges = firebase.app.database().ref('badges/' + user._id);
-                 badges.on('value', function(snapshot) {
-                     dispatch(updateBadges(snapshot.val()));
-                 });
-
                  dispatch(setUser(user));
-             }
-             else {
-                 /*
-                 UserController.createUser(userData)
-                     .then((user) => {
-                         Analytics.setUserId(user._id);
-                         Analytics.logEvent('SIGN_UP');
-                         //AsyncStorage.setItem('@User', JSON.stringify(user));
-                         dispatch(setUser(user));
-                     });
-                     */
+                 dispatch(getNetwork());
              }
           });
 
-    //dispatch(changeAppRoot('after-login'));
   };
 }
 
@@ -83,7 +87,6 @@ export function logOut() {
     return async function(dispatch, getState) {
         firebase.auth().signOut().then(() => {
             LoginManager.logOut();
-            //dispatch(changeAppRoot('login'));
         });
     }
 }

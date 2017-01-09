@@ -43,7 +43,7 @@ export default class Nav extends Component {
             },
             navTitle: {
                 color: '#3498db',
-                fontSize: 16
+                fontSize: 15
             },
             switchBtn: {
                 borderWidth: 1,

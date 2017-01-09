@@ -43,7 +43,7 @@ class Settings extends Component {
         this.props.dispatch(settingsActions.saveSettings(key, event.nativeEvent.text));
     }
 
-    componentDidMount() {
+    componentWillMount() {
         this.props.dispatch(settingsActions.loadSettings());
     }
 
@@ -109,7 +109,7 @@ class Settings extends Component {
                             onChangeText={this.updateUserData.bind(this, 'title')}
                             onEndEditing={this.saveUser.bind(this, 'title')}
                             value={currentUser.title}
-                            placeholder={'Ex. Marketing Manager at Convos'}
+                            placeholder={'Ex. Marketing Associate'}
                         />
                     </View>
                 </View>

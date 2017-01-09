@@ -30,6 +30,14 @@ class ConvoSwiper extends Component {
         this.renderLoader = this.renderLoader.bind(this);
         this.renderDeck = this.renderDeck.bind(this);
         this.flagCard = this.flagCard.bind(this);
+
+        this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+    }
+
+    onNavigatorEvent(event) {
+        if (event.id == 'tabSelected') {
+            alert('tab clicked!');
+        }
     }
 
     swipeLeft() {
@@ -69,10 +77,6 @@ class ConvoSwiper extends Component {
 
 
     componentDidMount() {
-        /*this.props.navigator.showModal({
-           screen: 'Onboarding' 
-        });
-        */
         this.loadConvos();
 
         //FCMClient.sendNotificationWithData('c3vbLxgf74U:APA91bGEj50AXpgtpyuHVcZEo7nvCw6Z_u6rYzNoY8J7CgDavK3SfIR8nK33gj4dVfY_rxRlx0rhOzT5edy1f4hF7swjvSD8bQIRSmMY16fJIvK70sn2RUFyzlDD0irCaejZtFeYcelE');
@@ -111,7 +115,7 @@ class ConvoSwiper extends Component {
                         bottomCard={state.cardDeck[state.activeCard + 1]}
                         renderItem={(card)=> {
                         return (
-                            <Card onFlag={this.onFlagCard} cardData={card}/>
+                            <Card cardData={card}/>
                         )
                     }}
                     >

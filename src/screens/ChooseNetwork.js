@@ -98,9 +98,12 @@ class ChooseNetwork extends Component {
     componentWillMount() {
         this.loadNetworks();
 
-        Analytics.logEvent('VIEW_MODAL', {
-            'id': 'select_network'
-        });
+
+        if(this.props.appState.showOnboarding) {
+            this.props.navigator.showModal({
+                screen: 'Onboarding'
+            });
+        }
 
         // hackish way to remove x button. Look for better way to do this. The recommended method wasn't working
         if(this.props.isRoot) {
@@ -125,7 +128,7 @@ class ChooseNetwork extends Component {
                 <View style={{ flexDirection: 'row', backgroundColor: '#fff', borderTopWidth: 1, borderColor: '#ddd'}}>
                     <TouchableHighlight style={{flex: 1, padding: 20}} onPress={() => {this.selectNetwork(data)}} underlayColor="#f9f9f9">
                         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                            <Text style={{color: '#555', fontSize: 18}}>{data.name}</Text>
+                            <Text style={{color: '#555', fontSize: 16}}>{data.name}</Text>
                             { data._id === this.props.appState.currentNetwork._id ? <Image style={{tintColor: '#3498db'}} source={require('../../img/check.png')} /> : null }
                         </View>
                     </TouchableHighlight>
@@ -141,7 +144,7 @@ class ChooseNetwork extends Component {
                     <TouchableHighlight onPress={() => {this.selectNetwork(data)}} underlayColor="#f9f9f9">
                         <View style={{backgroundColor: '#fff', padding: 20, borderTopWidth: 1, borderColor: '#ddd'}}>
                             <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                <Text style={{color: '#555', fontSize: 18}}>{data.name}</Text>
+                                <Text style={{color: '#555', fontSize: 16}}>{data.name}</Text>
                                 { data._id === this.props.appState.currentNetwork._id ? <Image style={{tintColor: '#3498db'}} source={require('../../img/check.png')} /> : null }
                             </View>
                         </View>
