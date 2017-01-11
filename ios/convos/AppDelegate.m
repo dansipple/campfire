@@ -14,8 +14,6 @@
 #import "RCTBundleURLProvider.h"
 #import "RCTRootView.h"
 
-#import <FBSDKCoreKit/FBSDKCoreKit.h>
-
 #import "Firebase.h"
 #import "RNFIRMessaging.h"
 
@@ -25,11 +23,9 @@
 {
   [AppHub setApplicationID:@"dDE123GYoIqVLpfNjdUP"];
  
-  [[FBSDKApplicationDelegate sharedInstance] application:application
-                           didFinishLaunchingWithOptions:launchOptions];
   NSURL *jsCodeLocation;
 #ifdef DEBUG
-  jsCodeLocation = [NSURL URLWithString:@"http://192.168.1.2:8081/index.ios.bundle?platform=ios&dev=true"];
+  jsCodeLocation = [NSURL URLWithString:@"http://192.168.1.7:8081/index.ios.bundle?platform=ios&dev=true"];
 #else
   AHBuild *build = [[AppHub buildManager] currentBuild];
   jsCodeLocation = [build.bundle URLForResource:@"main" withExtension:@"jsbundle"];
@@ -43,26 +39,9 @@
   #if defined(__IPHONE_10_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
   [[UNUserNotificationCenter currentNotificationCenter] setDelegate:self];
   #endif
-  
   return YES;
 }
 
-- (BOOL)application:(UIApplication *)application
-            openURL:(NSURL *)url
-            options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
-  
-  BOOL handled = [[FBSDKApplicationDelegate sharedInstance] application:application
-                                                                openURL:url
-                                                      sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
-                                                             annotation:options[UIApplicationOpenURLOptionsAnnotationKey]
-                  ];
-  // Add any custom logic here.
-  return handled;
-}
-
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-  [FBSDKAppEvents activateApp];
-}
 
 #if defined(__IPHONE_10_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler

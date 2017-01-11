@@ -82,7 +82,26 @@ class FirebaseClient {
             "priority": "high"
         };
 
-        this._send(JSON.stringify(body), "notification-message");
+        this._send(JSON.stringify(body), "notification-potential");
+    }
+
+    sendConnectionNotification(token, networkId) {
+        let body = {
+            "to": token,
+            "notification":{
+                "body": "You have a new connection!",
+                "sound": "default",
+                "click_action": "fcm.ACTION.Connection"
+            },
+            "data":{
+                "body": "You have a new connection!",
+                "click_action": "fcm.ACTION.Connection",
+                "remote": true
+            },
+            "priority": "high"
+        };
+
+        this._send(JSON.stringify(body), "notification-connection");
     }
 
     sendNotificationWithData(token) {

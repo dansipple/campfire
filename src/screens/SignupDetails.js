@@ -99,7 +99,7 @@ class SignupDetails extends Component {
                         });
                     }}
                     value={this.state.role}
-                    placeholder="Marketing at Convos"
+                    placeholder="Marketing Associate"
                 />
                 <Text style={styles.helperText}>College</Text>
                 <TextInput

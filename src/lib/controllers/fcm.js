@@ -9,7 +9,7 @@ const FCMController = {
 
     getUserToken(userId) {
         return new Promise((resolve, reject) => {
-            FCM.getOne(userId).then(resolve).catch(reject);
+            FCM.getOne(userId+'/token').then(resolve).catch(reject);
         });
     },
 
@@ -36,6 +36,14 @@ const FCMController = {
             this.getUserToken(recipientUserId).then((token) => {
                 FCMClient.sendPotentialNotification(token,
                     senderUser.first + ' ' + senderUser.last, networkId);
+                resolve();
+            });
+        });
+    },
+    sendConnectionNotification(recipientUserId, networkId) {
+        return new Promise((resolve, reject) => {
+            this.getUserToken(recipientUserId).then((token) => {
+                FCMClient.sendConnectionNotification(token, networkId);
                 resolve();
             });
         });

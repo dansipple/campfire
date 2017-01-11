@@ -48,7 +48,7 @@ const MessagesController = {
                                 isUnread: true
                             });
                             
-                            FCMController.sendMessageNotification(text, senderUser, networkId);
+                            FCMController.sendMessageNotification(text, senderUser, otherUserId, networkId);
 
                         }).catch(reject);
                     }

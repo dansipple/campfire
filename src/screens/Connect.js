@@ -74,12 +74,12 @@ class Connect extends Component {
 
     _renderRow(data) {
         return (
-            <View style={{flexDirection: 'row', backgroundColor: '#fff', borderBottomColor: '#ddd', borderBottomWidth: 1, padding: 6, paddingRight: 2}}>
+            <View style={{flexDirection: 'row', backgroundColor: '#fff', borderBottomColor: '#ddd', borderBottomWidth: 1, padding: 10, paddingRight: 2}}>
                 <View style={{flexDirection: 'row', flex: 1, alignItems: 'center', overflow: 'hidden'}}>
-                    <Image style={styles.thumbnail} source={require('../../img/no-avatar.png')} />
+                    <Image style={styles.thumbnail} source={ data.user.avatar ? { uri: data.user.avatar } : require('../../img/no-avatar.png')} />
                     <View style={{justifyContent: 'center', padding: 10}}>
-                        <Text style={{color: '#666', fontSize: 15}}>Dan Sipple</Text>
-                        <Text style={{color: '#777', fontSize: 12}}>Cofounder of Convos and a bunch of other stuff</Text>
+                        <Text style={{color: '#666', fontSize: 15}}>{data.user.first} {data.user.last}</Text>
+                        <Text style={{color: '#777', fontSize: 12}}>{data.user.title}</Text>
                     </View>
                 </View>
                 <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: 110}}>

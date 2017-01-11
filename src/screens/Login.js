@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import {TouchableHighlight, TouchableOpacity, TextInput, Image, Text, StyleSheet, Dimensions, View } from 'react-native';
 
-import {LoginButton, AccessToken} from 'react-native-fbsdk';
-
 import firebase from '../lib/firebase';
 import {connect} from 'react-redux';
 

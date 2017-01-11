@@ -48,26 +48,31 @@ export default class Card extends Component {
                 },
                 creatorInformation: {
                     flexDirection: 'row',
-                    padding: 15
+                    padding: 15,
+                    backgroundColor: '#3498db',
+                    borderBottomLeftRadius: 4,
+                    borderBottomRightRadius: 4
                 },
                 creatorNameContainer: {
                     justifyContent: 'center'
                 },
                 name: {
-                    fontSize: 16,
-                    color: '#555',
-                    lineHeight: 18
+                    fontSize: 17,
+                    color: '#fff',
+                    lineHeight: 20
                 },
                 title: {
                     fontSize: 13,
-                    color: '#666'
+                    color: '#fff'
                 },
                 thumbnail: {
-                    borderRadius: 18,
-                    height: 36,
-                    width: 36,
+                    borderRadius: 23,
+                    height: 46,
+                    width: 46,
                     marginRight: 10,
-                    resizeMode: 'contain'
+                    resizeMode: 'contain',
+                    borderWidth: 3,
+                    borderColor: '#fff'
                 },
                 divider: {
                     width: 50,
@@ -82,7 +87,6 @@ export default class Card extends Component {
                 <View style={styles.cardContainer}>
                     <View style={ styles.cardBody }>
                         <Text style={styles.category}>#{cardData.category}</Text>
-                        <View style={styles.divider} />
                         <Text style={ styles.description }>{ cardData.content }</Text>
                     </View>
                     <View style={styles.creatorInformation}>
@@ -91,6 +95,9 @@ export default class Card extends Component {
                             <Text style={styles.name}>{ creator.first } { creator.last }</Text>
                             {creator.title ? (<Text style={styles.title}>{ creator.title }</Text>) : <View /> }
                         </View>
+                    </View>
+                    <View>
+
                     </View>
                 </View>
             );

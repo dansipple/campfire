@@ -6,8 +6,6 @@ import UserController from '../../lib/controllers/user';
 
 import firebase from '../../lib/firebase';
 
-import {LoginManager} from 'react-native-fbsdk';
-
 var Analytics = require('react-native-firebase-analytics');
 
 export function appInitialized() {

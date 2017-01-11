@@ -79,7 +79,7 @@ class ConvoSwiper extends Component {
     componentDidMount() {
         this.loadConvos();
 
-        //FCMClient.sendNotificationWithData('c3vbLxgf74U:APA91bGEj50AXpgtpyuHVcZEo7nvCw6Z_u6rYzNoY8J7CgDavK3SfIR8nK33gj4dVfY_rxRlx0rhOzT5edy1f4hF7swjvSD8bQIRSmMY16fJIvK70sn2RUFyzlDD0irCaejZtFeYcelE');
+        //FCMClient.sendNotificationWithData("euC0iPlm6CE:APA91bF8LsziVAAqhSI_Qao7VqF71VphF_I2mW8tWmlxlMID-5r3cZCg0sRB451HoSlqW3zcJZnkkvoyuR_ELgxHSQVeH4Rr6mhAFQA26DwlPJ56ySL-NpxTJxzphD-xED-VJgn1496H");
 
     }
 

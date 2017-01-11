@@ -4,8 +4,6 @@ import FCM from "react-native-fcm";
 
 import FCMController from '../controllers/fcm';
 
-import firebaseClient from  "./client";
-
 export default class PushController extends Component {
     constructor(props) {
         super(props);
@@ -32,7 +30,7 @@ export default class PushController extends Component {
             if(notif.opened_from_tray){
                 //app is open/resumed because user clicked banner
             }
-            //this.sendRemote(notif);
+            this.sendRemote(notif);
         });
 
         this.refreshUnsubscribe = FCM.on("refreshToken", token => {
@@ -46,7 +44,7 @@ export default class PushController extends Component {
             body: notif.body,
             priority: "high",
             click_action: notif.click_action,
-            show_in_foreground: false,
+            show_in_foreground: true,
             local: true
         });
     }

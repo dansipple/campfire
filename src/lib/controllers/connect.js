@@ -1,10 +1,11 @@
 
 import Potential from '../models/potential';
-import Card from '../models/card';
 import Message from '../models/message';
 import Conversation from '../models/conversation';
 import User from '../models/user';
 import UserConversation from '../models/userConversation';
+
+import FCMController from  '../../lib/controllers/fcm';
 
 import Helpers from './../utils/helpers';
 
@@ -29,7 +30,7 @@ const ConnectController = {
 
     pass(userId, networkId, potentialData) {
         return new Promise((resolve, reject) => {
-            _deletePotential(userId, networkId, potentialData).then(resolve).catch(reject);
+            _deletePotential(userId, networkId, potentialData._id).then(resolve).catch(reject);
         });
     }
 };
@@ -64,14 +65,37 @@ function _createConversation(networkId, cards, userId, otherUserId) {
                         resolve(refKey);
                     }
                 }).then((refKey) => {
+                    Helpers.objectToArray(cards)
+                        .then((cards) => {
+                            cards.forEach((card) => {
+                                Message.create(`${networkId}/${refKey}`, {
+                                    card: card,
+                                    user: {_id: userId}, // syntax for format for gifted chat library
+                                    text: null
+                                }).catch(reject);
+                            });
+                            Conversation.getOne(`${networkId}/${refKey}`)
+                                .then((conversation) => {
+                                    if(conversation) {
+                                        delete conversation.participants[userId];
+                                        const otherUserId = Object.keys(conversation.participants)[0];
 
-                    cards.forEach((card) => {
-                        Message.create(`${networkId}/${refKey}`, {
-                            card: card,
-                            user: {_id: userId}, // syntax for format for gifted chat library
-                            text: null
-                        }).catch(reject);
-                    });
+                                        UserConversation.update(`${networkId}/${userId}/${otherUserId}`, {
+                                                lastMessage: 'You connected on a Convo!'
+                                            })
+                                            .then(() => {
+                                                UserConversation.update(`${networkId}/${otherUserId}/${userId}`, {
+                                                    lastMessage: 'You connected on a Convo!',
+                                                    isUnread: true
+                                                });
+
+                                                FCMController.sendConnectionNotification(otherUserId, networkId);
+
+                                            }).catch(reject);
+                                    }
+                                }).catch(reject);
+                            resolve();
+                        });
 /*
                     Card.getOne(`${networkId}/${cardId}`)
                         .then((card) => {
