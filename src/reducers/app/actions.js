@@ -83,8 +83,6 @@ export function login(userData) {
 
 export function logOut() {
     return async function(dispatch, getState) {
-        firebase.auth().signOut().then(() => {
-            LoginManager.logOut();
-        });
+        firebase.auth().signOut();
     }
 }

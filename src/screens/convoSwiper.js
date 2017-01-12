@@ -8,15 +8,12 @@ import Nav from './../components/Nav';
 import Onboarding from './Onboarding';
 
 import * as convoSwiperActions from '../reducers/convoSwiper/actions';
-import * as appActions from '../reducers/app/actions';
 
 import {connect} from 'react-redux';
 
 var Analytics = require('react-native-firebase-analytics');
 
 import FCM from './../lib/fcm/component';
-
-import FCMClient from  './../lib/fcm/client';
 
 class ConvoSwiper extends Component {
 
@@ -35,7 +32,7 @@ class ConvoSwiper extends Component {
     }
 
     onNavigatorEvent(event) {
-        if (event.id == 'tabSelected') {
+        if (event.id == 'bottomTabSelected') {
             alert('tab clicked!');
         }
     }
@@ -78,9 +75,6 @@ class ConvoSwiper extends Component {
 
     componentDidMount() {
         this.loadConvos();
-
-        //FCMClient.sendNotificationWithData("euC0iPlm6CE:APA91bF8LsziVAAqhSI_Qao7VqF71VphF_I2mW8tWmlxlMID-5r3cZCg0sRB451HoSlqW3zcJZnkkvoyuR_ELgxHSQVeH4Rr6mhAFQA26DwlPJ56ySL-NpxTJxzphD-xED-VJgn1496H");
-
     }
 
     renderLoader() {
@@ -88,14 +82,14 @@ class ConvoSwiper extends Component {
             <View style={{flex: 1}}>
                 <EmptyCard />
                 <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 15}}>
-                    <View style={{borderColor: '#ddd', borderWidth: 1, marginRight: 10, justifyContent: 'center', alignItems:'center', width: 80, height: 80, backgroundColor: 'transparent', borderRadius: 40}}>
-                        <Image source={require('../../img/close.png')} />
+                    <View style={{borderColor: '#ddd', borderWidth: 1, marginRight: 10, justifyContent: 'center', alignItems:'center', width: 70, height: 70, backgroundColor: '#fff', borderRadius: 35}}>
+                        <Image style={{tintColor: 'rgba(234, 48, 87, 1)'}} source={require('../../img/close.png')} />
                     </View>
                     <View style={{borderColor: '#ddd', borderWidth: 1, marginRight: 10, justifyContent: 'center', alignItems:'center', width: 30, height: 30, backgroundColor: '#999', borderRadius: 15}}>
                         <Image style={{tintColor: '#fff', width: 12, height: 12}} source={require('../../img/flag.png')} />
                     </View>
-                    <View style={{borderColor: '#ddd', borderWidth: 1, justifyContent: 'center', alignItems:'center', width: 80, height: 80, backgroundColor: 'transparent', borderRadius: 40}}>
-                        <Image source={require('../../img/check.png')} />
+                    <View style={{borderColor: '#ddd', borderWidth: 1, justifyContent: 'center', alignItems:'center', width: 70, height: 70, backgroundColor: '#fff', borderRadius: 35}}>
+                        <Image style={{tintColor: '#3498db'}} source={require('../../img/check.png')} />
                     </View>
                 </View>
             </View>
@@ -121,14 +115,14 @@ class ConvoSwiper extends Component {
                     >
                     </DeckSwiper>
                     <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 15}}>
-                        <TouchableHighlight underlayColor="rgba(234, 48, 87, 0.3)" onPress={this.swipeLeft} style={{borderColor: '#ddd', borderWidth: 1, marginRight: 10, justifyContent: 'center', alignItems:'center', width: 80, height: 80, backgroundColor: 'transparent', borderRadius: 40}}>
-                            <Image source={require('../../img/close.png')} />
+                        <TouchableHighlight underlayColor="#f9f9f9" onPress={this.swipeLeft} style={{borderWidth: 1, borderColor: '#ddd', marginRight: 10, justifyContent: 'center', alignItems:'center', width: 70, height: 70, backgroundColor: '#fff', borderRadius: 35}}>
+                            <Image style={{tintColor: 'rgba(234, 48, 87, 1)'}}  source={require('../../img/close.png')} />
                         </TouchableHighlight>
                         <TouchableHighlight underlayColor="#666" onPress={this.flagCard} style={{marginRight: 10, justifyContent: 'center', alignItems:'center', width: 30, height: 30, backgroundColor: '#999', borderRadius: 15}}>
                             <Image style={{tintColor: '#fff', width: 12, height: 12}} source={require('../../img/flag.png')} />
                         </TouchableHighlight>
-                        <TouchableHighlight underlayColor="rgba(44, 202, 67, 0.3)" onPress={this.swipeRight} style={{borderColor: '#ddd', borderWidth: 1, justifyContent: 'center', alignItems:'center', width: 80, height: 80, backgroundColor: 'transparent', borderRadius: 40}}>
-                            <Image source={require('../../img/check.png')} />
+                        <TouchableHighlight underlayColor="#f9f9f9" onPress={this.swipeRight} style={{borderWidth: 1, borderColor: '#ddd', justifyContent: 'center', alignItems:'center', width: 70, height: 70, backgroundColor: '#fff', borderRadius: 35}}>
+                            <Image style={{tintColor: '#3498db'}} source={require('../../img/check.png')} />
                         </TouchableHighlight>
                     </View>
                 </View>
@@ -197,7 +191,7 @@ const styles = StyleSheet.create({
         marginTop: 5
     },
     cardViewer: {
-        backgroundColor: '#eee',
+        backgroundColor: '#efefef',
         padding: 20,
         paddingBottom: 0,
         flex: 1

@@ -145,7 +145,7 @@ export default class DeckSwiper extends Component {
 
         if(type === 'yes') {
             let opacity = pan.x.interpolate({inputRange: [-320, 0, 320], outputRange: [0, 0, 0.4]});
-            cardOverlay = {opacity, backgroundColor: 'rgb(44, 202, 67)', position: 'absolute', top: 0, left: 0, bottom: 0, right: 0};
+            cardOverlay = {opacity, backgroundColor: '#3498db', position: 'absolute', top: 0, left: 0, bottom: 0, right: 0};
         }
         else {
             let opacity = pan.x.interpolate({inputRange: [-320, 0, 320], outputRange: [0.4, 0, 0]});

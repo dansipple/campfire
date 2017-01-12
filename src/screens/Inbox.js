@@ -13,9 +13,6 @@ import {connect} from 'react-redux';
 
 class Inbox extends Component {
 
-    static navigatorStyle = {
-        navBarButtonColor: '#666'
-    };
 
     constructor(props) {
         super(props);
@@ -29,43 +26,6 @@ class Inbox extends Component {
 
         this.loadConversations = this.loadConversations.bind(this);
 
-        this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
-    }
-
-    static navigatorButtons = {
-        leftButtons: [
-            {
-                icon: require('../../img/grid.png'),
-                title: 'Networks',
-                id: 'networks'
-            }
-        ]
-    };
-
-    onNavigatorEvent(event) {
-        if (event.type == 'DeepLink') {
-            this.handleDeepLink(event);
-        } else {
-            switch (event.id) {
-                case 'add':
-                    this.props.navigator.showModal({
-                        title: 'New Convo',
-                        screen: 'NewConvo'
-                    });
-                    break;
-
-                case 'networks':
-                    this.props.navigator.showModal({
-                        title: 'Networks',
-                        screen: 'ChooseNetwork'
-                    });
-                    break;
-
-                default:
-                    console.log('Unhandled event ' + event.id);
-                    break;
-            }
-        }
     }
 
     loadConversations() {
@@ -77,23 +37,15 @@ class Inbox extends Component {
             this.setState({
                 dataSource: this.state.dataSource.cloneWithRows(nextProps.state.conversations)
             });
+            const unread = nextProps.state.conversations.filter((conversation) => {
+                return conversation.isUnread === true;
+            });
+
+            this.props.navigator.setTabBadge({
+                badge: unread.length ? unread.length : null
+            });
         }
 
-        let nextBadges = null;
-        if(nextProps.appState.badges) {
-            nextBadges = nextProps.appState.badges[this.props.appState.currentNetwork._id] || {};
-        }
-        let badges = {};
-        if(this.props.appState.badge) {
-            badges = this.props.appState.badges[this.props.appState.currentNetwork._id] || {};
-        }
-        if(nextBadges) {
-            if (nextBadges.messages !== badges.messages) {
-                this.props.navigator.setTabBadge({
-                    badge: nextBadges.messages > 0 ? nextBadges.messages : null
-                });
-            }
-        }
     }
 
     componentDidMount() {
@@ -124,22 +76,6 @@ class Inbox extends Component {
                     <Conversation conversationData={conversationData} />
                 </View>
             </TouchableHighlight>
-        );
-    }
-    renderHeader() {
-        return (
-            <View>
-                <View style={styles.newMatchContainer}>
-                    <Text style={{fontSize: 11, textAlign: 'center', color: '#888', padding: 10}}>New Connections</Text>
-                    <View style={styles.newMatchRow}>
-                        <TouchableOpacity onPress={() => {}}>
-                            <Image style={styles.newMatchThumbnail} source={{uri: 'https://media.licdn.com/media/p/4/005/097/089/0bebe5a.jpg'}} />
-                            <Text style={{textAlign: 'center'}}>Red</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-                <Text style={{fontSize: 11, textAlign: 'center', color: '#888', padding: 10}}>Messages</Text>
-            </View>
         );
     }
 

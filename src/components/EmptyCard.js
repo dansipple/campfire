@@ -17,11 +17,12 @@ export default class EmptyCard extends Component {
                 borderRadius: 4,
                 borderColor: '#ddd',
                 borderWidth: 1,
-                minHeight: this.props.inMessage ? 200 : height - 245
+                minHeight: this.props.inMessage ? 265 : height - 235,
+                maxHeight: this.props.inMessage ? null : height - 235
             },
             cardBody: {
                 padding: 30,
-                //height: this.props.inMessage ? 200 : height - 310
+                flex: 1
             },
             category: {
                 color: '#777',
@@ -70,7 +71,6 @@ export default class EmptyCard extends Component {
             <View style={styles.cardContainer}>
                 <View style={ styles.cardBody }>
                     <View style={[styles.grayBlock, {width: 150, marginBottom: 25}]} />
-                    <View style={styles.divider} />
                     <View style={[styles.grayBlock]} />
                     <View style={[styles.grayBlock]} />
                     <View style={[styles.grayBlock]} />

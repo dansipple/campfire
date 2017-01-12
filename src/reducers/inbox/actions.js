@@ -17,11 +17,22 @@ export function loadConversations() {
                 dispatch(loadingError(err))
             }
         );
+/*
+        InboxController.getInboxStream(app.currentUser._id, app.currentNetwork._id,
+            (conversation, key) => {
+                conversation._id = key;
+                dispatch(receivedConversation(conversation));
+            });
+            */
     };
 }
 
 function fetchConversations() {
     return {type: types.FETCH_CONVERSATIONS};
+}
+
+function receivedConversation(conversation) {
+    return {type: types.RECEIVED_CONVERSATION, conversation: conversation};
 }
 
 function receivedConversations(conversations) {

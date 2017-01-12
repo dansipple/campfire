@@ -120,7 +120,7 @@ function _createUserConversations(networkId, userId, otherUserId, refKey) {
                         lastMessage: 'You matched on a convo!',
                         participant: user,
                         conversationId: refKey,
-                        hasUnread: true
+                        isUnread: true
                     })
                     .catch(reject);
             })
@@ -132,7 +132,7 @@ function _createUserConversations(networkId, userId, otherUserId, refKey) {
                         lastMessage: null,
                         participant: user,
                         conversationId: refKey,
-                        hasUnread: true
+                        isUnread: true
                     })
                     .catch(reject);
             })

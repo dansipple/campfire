@@ -9,6 +9,8 @@ import * as connectActions from '../reducers/connect/actions';
 
 import {connect} from 'react-redux';
 
+var Analytics = require('react-native-firebase-analytics');
+
 class Connect extends Component {
 
     constructor(props) {
@@ -37,27 +39,15 @@ class Connect extends Component {
             this.setState({
                 dataSource: this.state.dataSource.cloneWithRows(nextProps.state.potentials)
             });
-        }
-
-        let nextBadges = null;
-        if(nextProps.appState.badges) {
-            nextBadges = nextProps.appState.badges[this.props.appState.currentNetwork._id] || {};
-        }
-        let badges = {};
-        if(this.props.appState.badge) {
-            badges = this.props.appState.badges[this.props.appState.currentNetwork._id] || {};
-        }
-
-        if(nextBadges) {
-            if (nextBadges.myConvos !== badges.myConvos) {
-                this.props.navigator.setTabBadge({
-                    badge: nextBadges.myConvos !== 0 ? nextBadges.myConvos : null
-                });
-            }
+            this.props.navigator.setTabBadge({
+                badge: nextProps.state.potentials.length === 0 ? null : nextProps.state.potentials.length
+            });
         }
     }
 
     connect(data) {
+        Analytics.logEvent('CONNECT');
+
         ConnectController.connect(this.props.appState.currentUser._id, this.props.appState.currentNetwork._id, data)
             .then(() => {
                 this.loadPotentials();
@@ -65,6 +55,8 @@ class Connect extends Component {
     }
 
     pass(data) {
+        Analytics.logEvent('PASS');
+
         ConnectController.pass(this.props.appState.currentUser._id, this.props.appState.currentNetwork._id, data)
             .then(() => {
                 this.loadPotentials();

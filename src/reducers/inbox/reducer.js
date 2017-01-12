@@ -13,6 +13,11 @@ export default function inbox(state = initialState, action = {}) {
             return Object.assign({}, state, {
                 isLoading: true
             });
+        case types.RECEIVED_CONVERSATION:
+            return Object.assign({}, state, {
+                conversations: [action.conversation].concat(state.conversations || []),
+                isLoading: false
+            });
         case types.RECEIVED_CONVERSATIONS:
             return Object.assign({}, state, {
                 conversations: action.conversations,

@@ -123,7 +123,7 @@ class ProfileSwiperController {
                             lastMessage: null,
                             participant: user,
                             conversationId: refKey,
-                            hasUnread: true
+                            isUnread: true
                         })
                         .catch(reject);
                 })
@@ -135,7 +135,7 @@ class ProfileSwiperController {
                             lastMessage: null,
                             participant: user,
                             conversationId: refKey,
-                            hasUnread: true
+                            isUnread: true
                         })
                         .catch(reject);
                 })

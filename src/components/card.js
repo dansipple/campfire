@@ -23,16 +23,15 @@ export default class Card extends Component {
                     borderColor: '#ddd',
                     borderWidth: this.props.inMessage ? 1 : 0,
                     shadowColor: '#bbb',
-                    shadowOpacity: this.props.inMessage ? 0 : 0.6,
-                    shadowRadius: 8,
+                    shadowOpacity: this.props.inMessage ? 0 : 0.3,
+                    shadowRadius: 6,
                     justifyContent: 'space-between',
-                    minHeight: this.props.inMessage ? 265 : height - 245,
-                    maxHeight: this.props.inMessage ? null : height - 245
+                    minHeight: this.props.inMessage ? 265 : height - 235,
+                    maxHeight: this.props.inMessage ? null : height - 235
                 },
                 cardBody: {
                     padding: 30,
                     flex: 1
-                    //minHeight: this.props.inMessage ? 200 : height - 310
                 },
                 category: {
                     color: '#777',
@@ -48,31 +47,25 @@ export default class Card extends Component {
                 },
                 creatorInformation: {
                     flexDirection: 'row',
-                    padding: 15,
-                    backgroundColor: '#3498db',
-                    borderBottomLeftRadius: 4,
-                    borderBottomRightRadius: 4
+                    padding: 15
                 },
                 creatorNameContainer: {
                     justifyContent: 'center'
                 },
                 name: {
                     fontSize: 17,
-                    color: '#fff',
+                    color: '#555',
                     lineHeight: 20
                 },
                 title: {
                     fontSize: 13,
-                    color: '#fff'
+                    color: '#666'
                 },
                 thumbnail: {
-                    borderRadius: 23,
-                    height: 46,
-                    width: 46,
-                    marginRight: 10,
-                    resizeMode: 'contain',
-                    borderWidth: 3,
-                    borderColor: '#fff'
+                    borderRadius: 21,
+                    height: 42,
+                    width: 42,
+                    marginRight: 10
                 },
                 divider: {
                     width: 50,

@@ -10,6 +10,10 @@ const InboxController = {
             UserConversation.get(`${networkId}/${userId}`, 'updatedAt', 50)
                 .then(resolve).catch(reject);
         });
+    },
+
+    getInboxStream(userId, networkId, cb) {
+        UserConversation.subscribe(`${networkId}/${userId}`, cb)
     }
 };
 
