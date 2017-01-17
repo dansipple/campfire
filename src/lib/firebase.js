@@ -2,6 +2,7 @@ import * as firebase from 'firebase';
 
 // Initialize Firebase
 
+/*
 // Prod
 const firebaseConfig = {
     apiKey: "AIzaSyBWllgaX60d8zejpjPrbopsLAVnpTFcKeM",
@@ -10,8 +11,8 @@ const firebaseConfig = {
     storageBucket: "convos-17643.appspot.com",
     messagingSenderId: "974457750012"
 };
+ */
 
-/*
 // Dev
 const firebaseConfig = {
     apiKey: "AIzaSyA8MtwDjPe6G7J6PTRcQ_dQyIFxM8Uv1qE",
@@ -20,7 +21,6 @@ const firebaseConfig = {
     storageBucket: "convos-dev.appspot.com",
     messagingSenderId: "368343281439"
 };
- */
 
 
 function getCurrentTime() {

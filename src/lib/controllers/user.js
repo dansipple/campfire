@@ -62,10 +62,6 @@ const UserUtil = {
         return new Promise((resolve, reject) => {
             User.getOne(userId)
                 .then((user) => {
-                   /* firebase.storage.ref('avatars').child(userId)
-                        .then((url) => {
-
-                        });*/
                     if(user) user._id = userId;
                     resolve(user);
                 });

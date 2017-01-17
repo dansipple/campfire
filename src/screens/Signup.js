@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { TouchableHighlight, TouchableOpacity, Keyboard, TextInput, Image, StyleSheet, Dimensions, RefreshControl, ListView, Text, View } from 'react-native';
+import { TouchableHighlight, TouchableOpacity, Keyboard, TextInput, StyleSheet, Dimensions, Text, View } from 'react-native';
 
 import * as signupActions from '../reducers/signup/actions';
 
