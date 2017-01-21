@@ -25,7 +25,7 @@
  
   NSURL *jsCodeLocation;
 #ifdef DEBUG
-  jsCodeLocation = [NSURL URLWithString:@"http://192.168.1.7:8081/index.ios.bundle?platform=ios&dev=true"];
+  jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle?platform=ios&dev=true"];
 #else
   AHBuild *build = [[AppHub buildManager] currentBuild];
   jsCodeLocation = [build.bundle URLForResource:@"main" withExtension:@"jsbundle"];

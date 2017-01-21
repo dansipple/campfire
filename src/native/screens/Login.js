@@ -33,7 +33,7 @@ class Login extends Component {
     }
 
     tryLogin() {
-        firebase.app.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
+        firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
             .catch((error) => {
                 this.setState({
                     error: 'Incorrect email/password please try again!'
@@ -59,70 +59,43 @@ class Login extends Component {
 
         return (
                 <KeyboardAwareScrollView style={[styles.container]}>
-                        <Image style={styles.logo} source={require('../../../img/logo-big.png')} />
-                        <View>
-                            <Text style={styles.error}>{this.state.error}</Text>
-                            <TextInput
-                                style={styles.input}
-                                multiline={false}
-                                placeholder={'Email'}
-                                autoCorrect={false}
-                                autoCapitalize="none"
-                                placeholderTextColor="#666"
-                                keyboardType="email-address"
-                                onChangeText={(text) => {
-                                    this.setState({email: text});
-                                }}
-                            />
-                            <TextInput
-                                style={styles.input}
-                                multiline={false}
-                                placeholder={'Password'}
-                                autoCapitalize="none"
-                                autoCorrect={false}
-                                placeholderTextColor="#666"
-                                secureTextEntry={true}
-                                onChangeText={(text) => {
-                                    this.setState({password: text});
-                                }}
-                            />
-                            <TouchableHighlight onPress={this.tryLogin} style={styles.loginButton}>
-                                <Text style={styles.loginButtonText}>Login</Text>
-                            </TouchableHighlight>
-                            <TouchableOpacity onPress={this.signup} style={styles.signupButton}>
-                                <Text style={styles.signupButtonText}>Sign up</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={this.showTC}>
-                                <Text style={styles.tc}>Continuing means you agree to our terms and conditions</Text>
-                            </TouchableOpacity>
-                        </View>
-
-
-                    {/*<LoginButton
-                        style={{height: 50, width: 250}}
-                        readPermissions={['public_profile', 'email', 'user_friends']}
-                        loginBehaviorIOS={'native'}
-                        onLoginFinished={
-                            (error, result) => {
-                                if (error) {
-                                    console.log("login has error: ", error);
-                                } else if (result.isCancelled) {
-                                    console.log("login is cancelled.", result);
-                                } else {
-                                    AccessToken.getCurrentAccessToken().then(
-                                        (data) => {
-                                            var credential = firebase.auth.FacebookAuthProvider.credential(data.accessToken.toString());
-                                            firebase.app.auth().signInWithCredential(credential)
-                                            .then((user) => {
-                                                console.log("Sign In Success", user);
-                                            }, (error) => {
-                                                console.log("Sign In Error", error);
-                                            });
-                                        })
-                                 }
-                            }
-                        }
-                        onLogoutFinished={() => {}}/>*/}
+                    <Image style={styles.logo} source={require('../../../img/logo-big.png')} />
+                    <View>
+                        <Text style={styles.error}>{this.state.error}</Text>
+                        <TextInput
+                            style={styles.input}
+                            multiline={false}
+                            placeholder={'Email'}
+                            autoCorrect={false}
+                            autoCapitalize="none"
+                            placeholderTextColor="#666"
+                            keyboardType="email-address"
+                            onChangeText={(text) => {
+                                this.setState({email: text});
+                            }}
+                        />
+                        <TextInput
+                            style={styles.input}
+                            multiline={false}
+                            placeholder={'Password'}
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                            placeholderTextColor="#666"
+                            secureTextEntry={true}
+                            onChangeText={(text) => {
+                                this.setState({password: text});
+                            }}
+                        />
+                        <TouchableHighlight onPress={this.tryLogin} style={styles.loginButton}>
+                            <Text style={styles.loginButtonText}>Login</Text>
+                        </TouchableHighlight>
+                        <TouchableOpacity onPress={this.signup} style={styles.signupButton}>
+                            <Text style={styles.signupButtonText}>Sign up</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={this.showTC}>
+                            <Text style={styles.tc}>Continuing means you agree to our terms and conditions</Text>
+                        </TouchableOpacity>
+                    </View>
                 </KeyboardAwareScrollView>
         );
     }

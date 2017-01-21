@@ -20,7 +20,7 @@ const UserUtil = {
 
     create(userData) {
         return new Promise((resolve, reject) => {
-            firebase.app.auth().createUserWithEmailAndPassword(userData.email, userData.password)
+            firebase.auth().createUserWithEmailAndPassword(userData.email, userData.password)
                 .then((user) => {
                     let userObject = {
                         _id: user.uid,

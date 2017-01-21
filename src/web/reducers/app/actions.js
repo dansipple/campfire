@@ -20,9 +20,9 @@ export function appInitialized() {
     };
 }
 
- export function changeAppRoot(root) {
+export function changeAppRoot(root) {
     return {type: types.ROOT_CHANGED, root: root};
- }
+}
 
 export function setUser(user) {
     return {type: types.USER_CHANGED, user: user};
@@ -40,10 +40,9 @@ export function login(userData) {
     };
  }
 
-/*
- export function logOut() {
- return async function(dispatch, getState) {
- firebase.auth().signOut();
- }
- }
-*/
+
+export function logOut() {
+    return async function(dispatch, getState) {
+        firebase.auth().signOut();
+    }
+}

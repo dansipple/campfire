@@ -65,7 +65,7 @@ class Signup extends Component {
             hasError = true;
         }
         if(!hasError) {
-            firebase.app.auth().fetchProvidersForEmail(this.state.email)
+            firebase.auth().fetchProvidersForEmail(this.state.email)
                 .then((data) => {
                     if(data.length) {
                         this.setState({
