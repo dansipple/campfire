@@ -7,7 +7,7 @@ import Swipe from '../models/swipe';
 import Potential from '../models/potential';
 import User from '../models/user';
 
-import FCMController from  '../../lib/controllers/fcm';
+import FCMController from  './fcm';
 import Helpers from './../utils/helpers';
 
 const SwiperController = {

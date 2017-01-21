@@ -3,7 +3,7 @@ import FCM from '../models/fcm';
 
 import firebase from '../firebase';
 
-import FCMClient from  '../../lib/fcm/client';
+import FCMClient from  '../fcm/client';
 
 const FCMController = {
 

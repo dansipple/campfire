@@ -5,7 +5,7 @@ import Conversation from '../models/conversation';
 import User from '../models/user';
 import UserConversation from '../models/userConversation';
 
-import FCMController from  '../../lib/controllers/fcm';
+import FCMController from  './fcm';
 
 import Helpers from './../utils/helpers';
 
