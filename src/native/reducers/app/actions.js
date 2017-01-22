@@ -30,10 +30,13 @@ export function changeNetwork(network) {
 
 export function getNetwork() {
     return async function(dispatch, getState) {
+        const {app} = getState();
         try {
-            const value = await AsyncStorage.getItem('@AppStore:current_network');
-            if (value !== null){
-                dispatch(changeNetwork(JSON.parse(value)));
+            if(!app.showOnboarding) {
+                const value = await AsyncStorage.getItem('@AppStore:current_network');
+                if (value !== null){
+                    dispatch(changeNetwork(JSON.parse(value)));
+                }
             }
         } catch (error) {
             // Error retrieving data
