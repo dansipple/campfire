@@ -8,6 +8,7 @@ target 'convos' do
   # Pods for convos
   pod 'Firebase/Core'
   pod 'Firebase/Messaging'
+  pod 'Firebase/Crash'
 
   target 'convosTests' do
     inherit! :search_paths

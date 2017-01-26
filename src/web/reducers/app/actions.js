@@ -6,7 +6,7 @@ import firebase from '../../../lib/firebase';
 
 
 export function appInitialized() {
-    return async function(dispatch, getState) {
+    return function(dispatch, getState) {
         // since all business logic should be inside redux actions
         // this is a good place to put your app initialization code
 
@@ -17,6 +17,7 @@ export function appInitialized() {
                 //dispatch(changeAppRoot('login'));
              }
          });
+
     };
 }
 
@@ -29,7 +30,7 @@ export function setUser(user) {
 }
 
 export function login(userData) {
-    return async function(dispatch, getState) {
+    return function(dispatch, getState) {
 
          UserController.getUser(userData.uid)
          .then((user) => {
@@ -42,7 +43,7 @@ export function login(userData) {
 
 
 export function logOut() {
-    return async function(dispatch, getState) {
-        firebase.auth().signOut();
+    return function(dispatch, getState) {
+        //firebase.auth().signOut();
     }
 }

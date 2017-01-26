@@ -34,6 +34,7 @@
 		8A02EC01F48348D094C9565A /* Andale Mono.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D2B5E80DB53248268C485A7F /* Andale Mono.ttf */; };
 		8A6C122FEF3541C4949BB5A4 /* Roboto_medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 907F00185EA94E2CB835E7D2 /* Roboto_medium.ttf */; };
 		946CF481C0FA4570B030D013 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E0C91FB91194B06B594A5E5 /* libRNImagePicker.a */; };
+		982B37159E4042CA9823BF20 /* libRNFirebaseCrashReport.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C66CCAF285E9449F84D19A17 /* libRNFirebaseCrashReport.a */; };
 		9A7A5A39A72749D9B0E1C2C9 /* Georgia.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 42570223790B4F3CAA14B376 /* Georgia.ttf */; };
 		A6D3E3DC0DC1433DBC0AFFD4 /* Roboto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 580EAE6F593D4C65960840CF /* Roboto.ttf */; };
 		AD506459B01D4AC0AC23B498 /* libRNFIRMessaging.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BE2567A5A65C4AD48267C4BC /* libRNFIRMessaging.a */; };
@@ -125,6 +126,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = D8AFADBD1BEE6F3F00A4592D;
 			remoteInfo = ReactNativeNavigation;
+		};
+		376CB9861E36099900553734 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 86F656F79A984DD6939C3549 /* RNFirebaseCrashReport.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2397DA481D2CB80E00FE376F;
+			remoteInfo = RNFirebaseCrashReport;
 		};
 		379F99C81DDE97CA00189299 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -220,12 +228,14 @@
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		8440528A39A281ABCA4363E4 /* Pods-convos.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-convos.debug.xcconfig"; path = "Pods/Target Support Files/Pods-convos/Pods-convos.debug.xcconfig"; sourceTree = "<group>"; };
 		856098B64DE54490840CB4AE /* Skia.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Skia.ttf; path = "../node_modules/native-base/Fonts/Skia.ttf"; sourceTree = "<group>"; };
+		86F656F79A984DD6939C3549 /* RNFirebaseCrashReport.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFirebaseCrashReport.xcodeproj; path = "../node_modules/react-native-firebase-crash-report/ios/RNFirebaseCrashReport.xcodeproj"; sourceTree = "<group>"; };
 		907F00185EA94E2CB835E7D2 /* Roboto_medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto_medium.ttf; path = "../node_modules/native-base/Fonts/Roboto_medium.ttf"; sourceTree = "<group>"; };
 		95BAE1D6E5CFAD807F5D89BC /* Pods_convos.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_convos.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9601A7191B10E4C83808D5D7 /* Pods_convosTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_convosTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0634D501D1347C791690852 /* SF-UI-Text-Regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SF-UI-Text-Regular.otf"; path = "../node_modules/native-base/Fonts/SF-UI-Text-Regular.otf"; sourceTree = "<group>"; };
 		B1FBDA64561842068BF97D47 /* Times New Roman.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Times New Roman.ttf"; path = "../node_modules/native-base/Fonts/Times New Roman.ttf"; sourceTree = "<group>"; };
 		BE2567A5A65C4AD48267C4BC /* libRNFIRMessaging.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFIRMessaging.a; sourceTree = "<group>"; };
+		C66CCAF285E9449F84D19A17 /* libRNFirebaseCrashReport.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFirebaseCrashReport.a; sourceTree = "<group>"; };
 		C9A43B5DFDB3867844B6FF8B /* Pods-convosTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-convosTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-convosTests/Pods-convosTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D2B5E80DB53248268C485A7F /* Andale Mono.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Andale Mono.ttf"; path = "../node_modules/native-base/Fonts/Andale Mono.ttf"; sourceTree = "<group>"; };
 		D651AFABABF145D3B6797F22 /* Courier New.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Courier New.ttf"; path = "../node_modules/native-base/Fonts/Courier New.ttf"; sourceTree = "<group>"; };
@@ -266,6 +276,7 @@
 				AD506459B01D4AC0AC23B498 /* libRNFIRMessaging.a in Frameworks */,
 				FC299626D44641C48499A385 /* libRNFetchBlob.a in Frameworks */,
 				946CF481C0FA4570B030D013 /* libRNImagePicker.a in Frameworks */,
+				982B37159E4042CA9823BF20 /* libRNFirebaseCrashReport.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -396,6 +407,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		376CB9731E36099800553734 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				376CB9871E36099900553734 /* libRNFirebaseCrashReport.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		379F99C21DDE97C900189299 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -456,6 +475,7 @@
 				5F9402E004C047C89AF97528 /* RNFIRMessaging.xcodeproj */,
 				66C4CCCCD8FC45379130284A /* RNFetchBlob.xcodeproj */,
 				FCC6F97922B441CBAFC36E7B /* RNImagePicker.xcodeproj */,
+				86F656F79A984DD6939C3549 /* RNFirebaseCrashReport.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -665,6 +685,10 @@
 					ProjectRef = 8002475025674E4F922ADCF8 /* RNFIRAnalytics.xcodeproj */;
 				},
 				{
+					ProductGroup = 376CB9731E36099800553734 /* Products */;
+					ProjectRef = 86F656F79A984DD6939C3549 /* RNFirebaseCrashReport.xcodeproj */;
+				},
+				{
 					ProductGroup = 37BE39511DDEDA5D00F078F3 /* Products */;
 					ProjectRef = 5F9402E004C047C89AF97528 /* RNFIRMessaging.xcodeproj */;
 				},
@@ -750,6 +774,13 @@
 			fileType = archive.ar;
 			path = libReactNativeNavigation.a;
 			remoteRef = 376722711D9392EB00521AF1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		376CB9871E36099900553734 /* libRNFirebaseCrashReport.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNFirebaseCrashReport.a;
+			remoteRef = 376CB9861E36099900553734 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		379F99C91DDE97CA00189299 /* libAppHub.a */ = {
@@ -1003,6 +1034,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1021,6 +1053,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1059,6 +1092,7 @@
 					"$(SRCROOT)/../node_modules/react-native-fcm/ios",
 					"$(SRCROOT)/../node_modules/react-native-fetch-blob/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
+					"$(SRCROOT)/../node_modules/react-native-firebase-crash-report/ios/RNFirebaseCrashReport",
 				);
 				INFOPLIST_FILE = convos/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -1099,6 +1133,7 @@
 					"$(SRCROOT)/../node_modules/react-native-fcm/ios",
 					"$(SRCROOT)/../node_modules/react-native-fetch-blob/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
+					"$(SRCROOT)/../node_modules/react-native-firebase-crash-report/ios/RNFirebaseCrashReport",
 				);
 				INFOPLIST_FILE = convos/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -1163,6 +1198,7 @@
 					"$(SRCROOT)/../node_modules/react-native-fcm/ios",
 					"$(SRCROOT)/../node_modules/react-native-fetch-blob/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
+					"$(SRCROOT)/../node_modules/react-native-firebase-crash-report/ios/RNFirebaseCrashReport",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -1212,6 +1248,7 @@
 					"$(SRCROOT)/../node_modules/react-native-fcm/ios",
 					"$(SRCROOT)/../node_modules/react-native-fetch-blob/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
+					"$(SRCROOT)/../node_modules/react-native-firebase-crash-report/ios/RNFirebaseCrashReport",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;

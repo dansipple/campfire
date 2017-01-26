@@ -126,6 +126,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-firebase-crash-report')
     compile project(':react-native-image-picker')
     compile project(':react-native-fetch-blob')
     compile project(':react-native-fcm')

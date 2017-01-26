@@ -2,26 +2,24 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 // dumb components
 import Header     from '../components/Header';
-import HelloWorld from '../components/HelloWorld';
+import SelectNetwork from '../components/SelectNetwork';
 
 /** The app entry point */
-class ReactNativeWebHelloWorld extends Component {
+class DashboardApp extends Component {
     render() {
         // injected by connect call
-        const { dispatch, color, data } = this.props;
+        const { dispatch, data } = this.props;
 
         return (
-            <div className="react-native-web">
+            <div className="dashboard-app">
                 <Header />
-                <HelloWorld
-                    color={color}
-                />
+                <SelectNetwork {...this.props} />
             </div>
         );
     }
 }
 
-ReactNativeWebHelloWorld.propTypes = {
+DashboardApp.propTypes = {
     dispatch: PropTypes.func.isRequired,
 };
 
@@ -32,4 +30,4 @@ function mapStateToProps(state) {
 }
 
 // Wrap the component to inject dispatch and state into it
-export default connect(mapStateToProps)(ReactNativeWebHelloWorld);
+export default connect(mapStateToProps)(DashboardApp);

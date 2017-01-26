@@ -20,6 +20,7 @@ firebaseConfig = {
     messagingSenderId: "974457750012"
 };
 */
+
 function getCurrentTime() {
     return firebase.database.ServerValue.TIMESTAMP;
 }

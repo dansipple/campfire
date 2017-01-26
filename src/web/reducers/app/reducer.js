@@ -3,7 +3,8 @@ import Immutable from 'seamless-immutable';
 
 const initialState = Immutable({
     root: undefined, // 'login' / 'after-login',
-    currentUser: {}
+    currentUser: {},
+    showCreateNetworkModal: true
 });
 
 export default function app(state = initialState, action = {}) {

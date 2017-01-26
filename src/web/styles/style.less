@@ -1,6 +1,6 @@
 // get the page ready
 * { outline: none; box-sizing: border-box; }
-body { padding: 0; margin: 0; }
+body { padding: 0; margin: 0; background: #f5f7f9 }
 html, body, .react-native-web { height: 100%; width: 100%; position: absolute; top: 0; right: 0; overflow: hidden;}
 body, button, input {
   font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
@@ -17,6 +17,85 @@ body, button, input {
     text-align: center;
     margin-left: auto;
     margin-right: auto;
-    padding: 50%;
+    padding: 20%;
   }
+}
+.header {
+  padding: 15px;
+
+  img {
+    max-width: 150px;
+  }
+
+  a {
+    line-height: 47px;
+    font-size: 13px;
+    font-weight: 300;
+    text-transform: uppercase;
+    color: #777;
+  }
+}
+.dashboard-app {
+  .container {
+    max-width: 600px;
+
+    .container-header {
+      border-bottom: 1px solid #eee;
+
+      h1 {
+        font-size: 18px;
+        padding-bottom: 10px;
+      }
+    }
+  }
+
+
+  .select-network {
+    max-width: 450px;
+    background: #fff;
+    border-radius: 5px;
+    border: 1px solid #eaecee;
+    overflow: hidden;
+  }
+  .network-header {
+    h2 {
+      color: #666;
+      font-size: 14px;
+      font-weight: 300;
+      padding-bottom: 15px;
+      text-transform: uppercase;
+    }
+  }
+  #network-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    .network {
+      border-bottom: 1px solid #efefef;
+      padding: 25px 10px;
+
+      &:hover {
+        background: #f9f9f9;
+        border-left: 2px solid #3498db;
+      }
+
+      h3 {
+        font-size: 17px;
+        margin: 0;
+        padding-left: 20px;
+        color: #666;
+      }
+    }
+  }
+}
+.create-network {
+  background: #3498db;
+  color: #fff;
+  display: block;
+  padding: 15px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 300;
+  text-transform: uppercase;
 }
