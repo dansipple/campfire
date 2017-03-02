@@ -15,6 +15,7 @@ export default class Card extends Component {
             let cardData = this.props.cardData || {};
             let creator = cardData.creator || {};
 
+            // for now have stylesheet here because cardContainer relies on props. Find a better way though
             const styles = StyleSheet.create({
                 cardContainer: {
                     elevation: 3,

@@ -26,8 +26,6 @@ export default class App {
     onStoreUpdate() {
         const {root, currentNetwork} = store.getState().app;
         // handle a root change
-        // if your app doesn't change roots in runtime, you can remove onStoreUpdate() altogether
-
         if(this.currentRoot != root || (this.currentNetwork != currentNetwork && this.currentRoot !== undefined)) {
             this.currentNetwork = currentNetwork;
             this.currentRoot = root;
@@ -123,7 +121,6 @@ export default class App {
                             }
                         ],
                         tabsStyle: { // optional, add this if you want to style the tab bar beyond the defaults
-                            //tabBarButtonColor: null,
                             tabBarSelectedButtonColor: '#3498db',
                             tabBarBackgroundColor: '#fff'
 

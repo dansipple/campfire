@@ -3,12 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start",
-    "web-bundle": "webpack --config web/webpack/web.prod.config.js --progress --colors",
-    "web-dev": "webpack-dev-server --content-base web/public/ --config web/webpack/web.dev.config.js --port 3001 --inline --hot",
-    "queue-prod": "node queue.js --database 'https://convos-dev.firebaseio.com' --serviceAccount './src/Convos-Dev-7747d1ef1d84.json'",
-    "queue-dev": "node queue.js --database 'https://convos-dev.firebaseio.com' --serviceAccount './src/Convos-Dev-7747d1ef1d84.json'",
-    "clear-cache": "gulp clear-cache"
+    "start": "node node_modules/react-native/local-cli/cli.js start"
   },
   "dependencies": {
     "apphub": "^0.5.1",
